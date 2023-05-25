@@ -15,7 +15,7 @@
 **[Optional]** If what is being submitted is an individual Lab or Assignment, you may simply include your name and email address. Otherwise list the members of your group.
 
 * [Shiwen(Lareina) Yang](sh836690@dal.ca) - *(Developer)*
-* [Name](email@dal.ca) - *(Role)*
+* [Name](email@dal.ca) - *(Developer)*
 * [Name](email@dal.ca) - *(Role)*
 * [Name](email@dal.ca) - *(Role)*
 * [Name](email@dal.ca) - *(Role)*
