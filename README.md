@@ -15,7 +15,7 @@
 **[Optional]** If what is being submitted is an individual Lab or Assignment, you may simply include your name and email address. Otherwise list the members of your group.
 
 * [Shiwen(Lareina) Yang](sh836690@dal.ca) - *(Developer)*
-* [Name](email@dal.ca) - *(Developer)*
+* [Vrund Patel](vrund.patel@dal.ca) - *(Developer)*
 * [Name](email@dal.ca) - *(Role)*
 * [Name](email@dal.ca) - *(Role)*
 * [Name](email@dal.ca) - *(Role)*
@@ -107,3 +107,12 @@ Copy and paste the snippet of code you are referencing
 * Hat tip to anyone whose code was used
 * Inspiration
 * etc
+
+
+References:
+
+1. Mail icon
+https://illustoon.com/?id=2752
+
+2. call icon
+https://www.pngmart.com/image/518501
