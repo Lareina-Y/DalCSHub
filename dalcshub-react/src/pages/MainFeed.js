@@ -44,7 +44,7 @@ export const MainFeed =  () =>  {
 			<Box sx={{ width: '100%' }}>
 				<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
 					<Tabs value={value} onChange={handleChange}>
-					<Tab label="Followed Course" />
+					<Tab label="My Courses" />
 					<Tab label="Saved Posts" />
 					</Tabs>
 				</Box>
