@@ -27,14 +27,59 @@ code {
 }
 
 .contact1{
+  text-align: left;
   margin: 3%;
-  padding-top: 5px;
+  padding: 5px;
   box-shadow: 10px 10px 20px gray;
 }
 
 .contact2{
+  text-align: center;
   margin: 3%;
-  padding-bottom: 5px;
+  padding-bottom: 7px;
   box-shadow: 10px 10px 20px gray;
 }
+
+.contact1 textarea{
+  max-width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  overflow: auto;
+}
+
+.contact1 input[type="text"] {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+
+@media screen and (max-width: 400px) {
+
+  .contactus{
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+    width: 100%;
+  }
+  
+  .contactbox{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 5px;
+  }
+
+  .contact1 textarea {
+    max-width: 100%;
+    box-sizing: border-box;
+    resize: vertical;
+    overflow: auto;
+  }
+  
+  .contact1 input[type="text"] {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+}
+
 
