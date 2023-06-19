@@ -4,7 +4,7 @@ import { AppBar, Box, Toolbar, IconButton, Avatar, Button, Tooltip, Typography, 
 import MenuIcon from '@mui/icons-material/Menu';
 import userImage from '../assets/images/user.jpg'
 
-const pages = ['Main Feed', 'Browse Courses', 'Admin Dashboard'];
+const pages = ['Main Feed', 'Browse Courses', 'Admin Dashboard', 'FAQ'];
 const settings = ['Profile', 'Logout'];
 
 export const NavBar = () => {
