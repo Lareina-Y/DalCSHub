@@ -119,14 +119,16 @@ const LandingPage = () => {
               style={{
                 display: "flex",
                 justifyContent: "center",
-                width: "80%",
-                marginBottom: "1.5rem",
+                width: "100%",
+                maxWidth: "1200px",
+                margin: "0 auto",
+                flexWrap: "wrap",
+                gap: "1.5rem",
               }}
             >
               <Card
                 style={{
-                  width: "30%",
-                  marginRight: "2em",
+                  flex: "1 0 400px",
                   background: "#1976d2",
                   color: "white",
                 }}
@@ -143,8 +145,7 @@ const LandingPage = () => {
               </Card>
               <Card
                 style={{
-                  width: "30%",
-                  marginRight: "2em",
+                  flex: "1 0 400px",
                   background: "#1976d2",
                   color: "white",
                 }}
@@ -161,8 +162,7 @@ const LandingPage = () => {
               </Card>
               <Card
                 style={{
-                  width: "30%",
-                  marginRight: "2em",
+                  flex: "1 0 400px",
                   background: "#1976d2",
                   color: "white",
                 }}
@@ -172,9 +172,8 @@ const LandingPage = () => {
                   <p>Welcome to DalCSHub !!</p>
                   <p>
                     Get connected with the Dalhousie Computer Science Society,
-                    mentor current students , share your valuable expierences.
+                    mentor current students, share your valuable experiences.
                   </p>
-                  <p></p>
                 </CardContent>
               </Card>
             </div>
@@ -182,7 +181,7 @@ const LandingPage = () => {
               variant="contained"
               color="primary"
               onClick={buttonClicked}
-              style={{ marginTop: "5em" }}
+              style={{ marginTop: "2rem" }}
             >
               Get started
             </Button>
