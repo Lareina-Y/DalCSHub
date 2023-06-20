@@ -1,26 +1,39 @@
 // reference: starter from https://mui.com/material-ui/react-app-bar/
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AppBar, Box, Toolbar, IconButton, Avatar, Button, Tooltip, Typography, MenuItem, Menu, Container } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import userImage from '../assets/images/user.jpg'
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Avatar,
+  Button,
+  Tooltip,
+  Typography,
+  MenuItem,
+  Menu,
+  Container,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import userImage from "../assets/images/user.jpg";
+import "../App.css";
 
 const pages = [
   {
-    name:'Main Feed',
-    link: '/main'
-  }, 
+    name: "Main Feed",
+    link: "/main",
+  },
   {
-    name: 'Contact',
-    link: '/contact'
-  }, 
-  { 
-    name: 'FAQ',
-    link: '/faq'
-  }
+    name: "Contact",
+    link: "/contact",
+  },
+  {
+    name: "FAQ",
+    link: "/faq",
+  },
 ];
 
-const settings = ['Profile', 'Logout'];
+const settings = ["Profile", "Logout"];
 
 export const NavBar = () => {
   const navigate = useNavigate();
@@ -43,7 +56,7 @@ export const NavBar = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: "#962061" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -53,17 +66,17 @@ export const NavBar = () => {
             href="/"
             sx={{
               mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
+              display: { xs: "none", md: "flex" },
+              fontFamily: "monospace",
               fontWeight: 700,
-              color: 'inherit',
-              textDecoration: 'none',
+              color: "inherit",
+              textDecoration: "none",
             }}
           >
             DalCSHub
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-haspopup="true"
@@ -75,23 +88,25 @@ export const NavBar = () => {
             <Menu
               anchorEl={anchorElNav}
               anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
+                vertical: "bottom",
+                horizontal: "left",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
+                vertical: "top",
+                horizontal: "left",
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', md: 'none' },
+                display: { xs: "block", md: "none" },
               }}
             >
               {pages.map((page) => (
                 <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center" component="a" href={page.link}>{page.name}</Typography>
+                  <Typography textAlign="center" component="a" href={page.link}>
+                    {page.name}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -104,23 +119,23 @@ export const NavBar = () => {
             href="/"
             sx={{
               mr: 2,
-              display: { xs: 'flex', md: 'none' },
+              display: { xs: "flex", md: "none" },
               flexGrow: 1,
-              fontFamily: 'monospace',
+              fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
             }}
           >
             DalCSHub
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
                 key={page.name}
-                onClick={() => navigate(`..${page.link}`) }
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                onClick={() => navigate(`..${page.link}`)}
+                sx={{ my: 2, color: "white", display: "block", fontFamily: "Helvetica Neue" }}
               >
                 {page.name}
               </Button>
@@ -134,16 +149,16 @@ export const NavBar = () => {
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: '45px' }}
+              sx={{ mt: "45px" }}
               anchorEl={anchorElUser}
               anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
@@ -159,4 +174,4 @@ export const NavBar = () => {
       </Container>
     </AppBar>
   );
-}
+};

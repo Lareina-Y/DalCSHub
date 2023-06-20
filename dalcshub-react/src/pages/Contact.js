@@ -2,6 +2,7 @@ import React from 'react'
 import MailImg from '../assets/images/mail-img.png'
 import { Page, PageTitle} from "../components"
 import Typography from '@mui/material/Typography'
+import "../App.css";
 
 export function Contact() {
   return (
@@ -32,11 +33,9 @@ export function Contact() {
               <button id="contact-btn2" href="mailto:contactdalcshub@dal.ca">Email</button>
             </div>
         </div>
-
       </div>
-
     </div>
-  )
+  );
 }
 
-export default Contact
+export default Contact;
