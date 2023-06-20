@@ -25,7 +25,7 @@ export const PageTitle = ({
             style={{
               textDecoration: "none",
               fontWeight: 700,
-              fontFamily: "Helvetica Neue",
+              fontFamily: "Verdana, Geneva, sans-serif",
             }}
           >
             {title}
