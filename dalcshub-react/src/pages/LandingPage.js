@@ -3,6 +3,7 @@ import video from "../assets/videos/background.mp4";
 import { useNavigate } from "react-router-dom";
 import arrow from "../assets/images/arrow.png";
 import { Card, CardContent, Button } from "@mui/material";
+import "../App.css";
 
 const LandingPage = () => {
   const [redirect, setRedirect] = useState(false);
@@ -56,6 +57,7 @@ const LandingPage = () => {
                   color: "white",
                   textAlign: "center",
                   fontSize: "4rem",
+                  fontFamily: "monospace",
                 }}
               >
                 DalCSHub
@@ -131,15 +133,15 @@ const LandingPage = () => {
                   flex: "1 0 400px",
                   background: "#1976d2",
                   color: "white",
+                  backgroundColor: "#962061",
                 }}
               >
                 <CardContent>
                   <h2>Student</h2>
-                  <p>Welcome DalCSHubers !! </p>
+                  <p>Welcome DalCSHubers! </p>
                   <p>
-                    Get connected with your colleagues and is a one-stop
-                    solution for sharing insights and inquires about various
-                    Dalhousie courses.
+                    Connect with your colleagues and access a comprehensive platform for sharing
+                    insights and inquiries about various university courses.
                   </p>
                 </CardContent>
               </Card>
@@ -148,15 +150,15 @@ const LandingPage = () => {
                   flex: "1 0 400px",
                   background: "#1976d2",
                   color: "white",
+                  backgroundColor: "#962061",
                 }}
               >
                 <CardContent>
                   <h2>Teacher</h2>
-                  <p>Welcome to DalCSHub !!</p>
+                  <p>Welcome to DalCSHub!</p>
                   <p>
-                    Get connected with your students, enable course content
-                    sharing and provide easy to use station for interesting
-                    discussions.
+                    Engage with your students, effortlessly share course content, and foster
+                    exciting discussions through our user-friendly platform.
                   </p>
                 </CardContent>
               </Card>
@@ -165,14 +167,16 @@ const LandingPage = () => {
                   flex: "1 0 400px",
                   background: "#1976d2",
                   color: "white",
+                  backgroundColor: "#962061",
                 }}
               >
                 <CardContent>
                   <h2>Alumni</h2>
-                  <p>Welcome to DalCSHub !!</p>
+                  <p>Welcome to DalCSHub!</p>
                   <p>
-                    Get connected with the Dalhousie Computer Science Society,
-                    mentor current students, share your valuable experiences.
+                    Join the Dalhousie University Computer Science Society to mentor current
+                    students and share your valuable experiences, while connecting with like-minded
+                    individuals in the field of computer science.
                   </p>
                 </CardContent>
               </Card>
@@ -181,7 +185,7 @@ const LandingPage = () => {
               variant="contained"
               color="primary"
               onClick={buttonClicked}
-              style={{ marginTop: "2rem" }}
+              style={{ marginTop: "2rem", backgroundColor: "#962061" }}
             >
               Get started
             </Button>

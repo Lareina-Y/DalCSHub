@@ -12,3 +12,7 @@
     width: 80%; /* Width for mobile */
   }
 }
+
+* {
+  font-family: "Helvetica Neue";
+}

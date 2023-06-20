@@ -1,18 +1,14 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-.contactus{
+.contactus {
   text-align: center;
   margin: auto;
   padding: 10px;
@@ -20,27 +16,27 @@ code {
   height: 75vh;
 }
 
-.contactbox{
+.contactbox {
   display: grid;
   justify-content: space-between;
   grid-template-columns: 50% 50%;
 }
 
-.contact1{
+.contact1 {
   text-align: left;
   margin: 3%;
   padding: 10px;
   box-shadow: 10px 10px 20px gray;
 }
 
-.contact2{
+.contact2 {
   text-align: center;
   margin: 3%;
   padding-bottom: 7px;
   box-shadow: 10px 10px 20px gray;
 }
 
-.contact1 textarea{
+.contact1 textarea {
   max-width: 100%;
   box-sizing: border-box;
   resize: vertical;
@@ -52,25 +48,24 @@ code {
   box-sizing: border-box;
 }
 
-#contact-btn{
+#contact-btn {
   margin-top: 3%;
   background-color: palegreen;
 }
 
-#contact-btn2{
+#contact-btn2 {
   background-color: palegreen;
 }
 
 @media screen and (max-width: 400px) {
-
-  .contactus{
+  .contactus {
     text-align: center;
     margin: auto;
     padding: 10px;
     width: 100%;
   }
-  
-  .contactbox{
+
+  .contactbox {
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 5px;
@@ -82,12 +77,9 @@ code {
     resize: vertical;
     overflow: auto;
   }
-  
+
   .contact1 input[type="text"] {
     max-width: 100%;
     box-sizing: border-box;
   }
-  
 }
-
-
