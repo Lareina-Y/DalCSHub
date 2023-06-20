@@ -4,7 +4,7 @@ export const CourseCard = (props) => {
   const { name, description, followed, bgImage } = props;
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card>
       <CardMedia component="img" alt="course background" height="140" image={bgImage} />
       <CardContent>
         <Typography

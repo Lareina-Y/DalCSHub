@@ -1,4 +1,3 @@
-import { NavBar } from "../components";
 import { Box } from "@mui/material";
 import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 import Typography from "@mui/material/Typography";

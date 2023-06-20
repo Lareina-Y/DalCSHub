@@ -92,8 +92,18 @@ Copy and paste the snippet of code you are referencing
 
 References:
 
-1. Mail icon
+1. Mail icon, [Online]. Available:
 https://illustoon.com/?id=2752
+[Accessed: Jun-2023]. 
 
-2. call icon
+2. Call icon, [Online]. Available:
 https://www.pngmart.com/image/518501
+[Accessed: Jun-2023]. 
+
+3. Course Background Image, [Online]. Available:
+https://github.com/wrappixel/materialpro-react-lite/tree/master/package/src/assets/images/bg
+[Accessed: Jun-2023]. 
+
+4. Material UI [Online]. Available: https://mui.com/ [Accessed: May-2023]. 
+
+5. Dalhousie CS Course Descriptions [Online]. Available: https://academiccalendar.dal.ca/Catalog/ViewCatalog.aspx?pageid=viewcatalog&catalogid=105&chapterid=6392&topicgroupid=27853&loaduseredits=False [Accessed: 20-Jun-2023]. 
