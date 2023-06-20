@@ -11,14 +11,14 @@ export const CourseCard = (props) => {
           gutterBottom
           variant="h5"
           component="div"
-          sx={{ fontFamily: "Helvetica Neue", fontWeight: "500" }}
+          sx={{ fontFamily: "Verdana, Geneva, sans-serif", fontWeight: "600" }}
         >
           {name}
         </Typography>
         <Typography
           variant="body2"
           color="text.secondary"
-          sx={{ fontFamily: "Helvetica Neue", fontWeight: "500" }}
+          sx={{ fontFamily: "Verdana, Geneva, sans-serif", fontWeight: "500" }}
         >
           {description}
         </Typography>
