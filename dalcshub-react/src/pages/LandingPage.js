@@ -1,16 +1,13 @@
-import React, { useState } from "react";
 import video from "../assets/videos/background.mp4";
 import { useNavigate } from "react-router-dom";
 import arrow from "../assets/images/arrow.png";
 import { Card, CardContent, Button } from "@mui/material";
 import "../App.css";
 
-const LandingPage = () => {
-  const [redirect, setRedirect] = useState(false);
+export const LandingPage = () => {
   const navigate = useNavigate();
 
   const buttonClicked = () => {
-    setRedirect(true);
     navigate("/main");
   };
 
@@ -28,8 +25,7 @@ const LandingPage = () => {
         justifyContent: "flex-start",
         textAlign: "center",
       }}
-    >
-      {!redirect && (
+    >     
         <div
           style={{
             position: "fixed",
@@ -77,7 +73,7 @@ const LandingPage = () => {
               Date accessed: 19 June, 2023
               Help taken: The arrow image was taken from this link
           */}
-                <img src={arrow} style={{ width: "100px", height: "100px" }} />
+                <img src={arrow} alt={"arrow"} style={{ width: "100px", height: "100px" }} />
               </div>
             </div>
 
@@ -191,9 +187,6 @@ const LandingPage = () => {
             </Button>
           </div>
         </div>
-      )}
     </div>
   );
 };
-
-export default LandingPage;
