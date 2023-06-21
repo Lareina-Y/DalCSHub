@@ -1,24 +1,17 @@
-import React from 'react'
 import MailImg from '../assets/images/mail-img.png'
-import { PageTitle } from "../components"
-import Typography from '@mui/material/Typography'
-import { Box } from '@mui/material';
-import { Button } from '@mui/material';
+import { Page, PageTitle } from "../components"
+import { Box, Button, Typography } from '@mui/material';
 
-export function Contact() {
+export const Contact = () => {
   return (
     <Page>      
-
         <PageTitle  title={'Contact DalCSHub'} link={'/contact'} center/>
-
-            <Box sx={{justifyContent:"center",alignItems:"center", display:"flex", marginBottom:5}}>
-              <Typography variant='body'>
-                Have a Question? We are here to help!
-              </Typography>
-            </Box>
-
+        <Box sx={{justifyContent:"center",alignItems:"center", display:"flex", marginBottom:5}}>
+          <Typography variant='body'>
+            Have a Question? We are here to help!
+          </Typography>
+        </Box>
         <div class='contactbox'>
-
             <div class='contact1' style={{padding: "3%"}}>
               <div style={{padding: "3%", height: "350px"}}>
                 <Box 
@@ -56,13 +49,11 @@ export function Contact() {
               </Box>
             </div>
             
-
             <div class="contact2" style={{padding: "3%"}}>
               <div style={{padding: "3%", height: "350px"}}>       
                 <Box 
                   sx={{
                   margin: 3
-
                 }}>
                   <Typography variant='h5'>Send Us An Email</Typography>
                   <br></br>
@@ -89,5 +80,3 @@ export function Contact() {
     </Page>
   );
 }
-
-export default Contact;
