@@ -43,3 +43,7 @@ https://github.com/wrappixel/materialpro-react-lite/tree/master/package/src/asse
 4. Material UI [Online]. Available: https://mui.com/ [Accessed: May-2023]. 
 
 5. Dalhousie CS Course Descriptions [Online]. Available: https://academiccalendar.dal.ca/Catalog/ViewCatalog.aspx?pageid=viewcatalog&catalogid=105&chapterid=6392&topicgroupid=27853&loaduseredits=False [Accessed: 20-Jun-2023]. 
+
+6. Freeiconspng.com “White Down Arrow PNG Transparent Background, Free Download #41944 - FreeIconsPNG,” [Online]. Available: https://www.freeiconspng.com/img/41944 [Accessed: 20-Jun-2023]. 
+‌
+7. High-speed photography of blue ink diffusion in water - pexels [Online]. Available: https://www.pexels.com/video/high-speed-photography-of-blue-ink-diffusion-in-water-9669109/ [Accessed: 20-Jun-2023]. 
