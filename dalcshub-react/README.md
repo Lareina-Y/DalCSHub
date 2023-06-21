@@ -83,17 +83,9 @@ Copy and paste the snippet of code you are referencing
 
 *Repeat as needed*
 
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
-
-
-References:
+## References and Acknowledgements
 
 1. Mail icon
 https://illustoon.com/?id=2752
-
-2. call icon
+2. Call icon
 https://www.pngmart.com/image/518501
