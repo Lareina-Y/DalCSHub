@@ -1,6 +1,6 @@
 import React from 'react'
 import MailImg from '../assets/images/mail-img.png'
-import { Page, PageTitle} from "../components"
+import { PageTitle } from "../components"
 import Typography from '@mui/material/Typography'
 import "../App.css";
 
