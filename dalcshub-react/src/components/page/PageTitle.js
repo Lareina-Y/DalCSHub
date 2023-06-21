@@ -7,13 +7,14 @@ export const PageTitle = ({
   subTitle,
   paddingTop = "20px",
   paddingBottom = "20px",
+  center = false,
   children,
 }) => {
   return (
     <Grid
       container
       direction="row"
-      justifyContent="space-between"
+      justifyContent={center? "center":"space-between"}
       alignContent="center"
       style={{ paddingTop: paddingTop, paddingBottom: paddingBottom }}
     >
