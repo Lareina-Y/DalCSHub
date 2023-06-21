@@ -54,7 +54,7 @@ code {
   background-color: palegreen;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 685px) {
   .contactus {
     text-align: center;
     margin: auto;
