@@ -103,8 +103,8 @@ export const NavBar = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center" component="a" href={page.link}>
+                <MenuItem key={page.name} onClick={() => navigate(`..${page.link}`)}>
+                  <Typography textAlign="center">
                     {page.name}
                   </Typography>
                 </MenuItem>
