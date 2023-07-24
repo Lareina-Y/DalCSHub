@@ -1,4 +1,4 @@
-// Authors:
+// Authors: 
 
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
@@ -9,8 +9,11 @@ const userSchema = new Schema({
     type: {type: String, required: true},
     email: {type: String, required: true, unique: true},
     password: {type: String, required: true},
-    followedCourses: Array,
-    savedPosts: Array
+    followedCourses: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Course', // Course model
+    }],
+    savedPosts: Array,
 }, { timestamps: true });
 
 const User = mongoose.model("users", userSchema);
