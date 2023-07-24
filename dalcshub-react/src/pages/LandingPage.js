@@ -9,7 +9,7 @@ export const LandingPage = () => {
   const navigate = useNavigate();
 
   const buttonClicked = () => {
-    navigate("/main");
+    navigate("/login");
   };
 
   return (

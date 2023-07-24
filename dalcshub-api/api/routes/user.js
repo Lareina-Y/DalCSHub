@@ -3,7 +3,6 @@
 const express = require("express");
 const User = require("../models/user");
 const Course = require("../models/course");
-
 const router = express.Router();
 
 // Lareina: PUT call to follow course
@@ -81,5 +80,69 @@ router.put("/unfollow", async (req, res) => {
     res.status(500).json({ message: "Internal server error!" });
   }
 });
+
+
+//Author: Vrund Patel
+//adding user's details to the database (user's registration)
+router.post('/x', async(req, res) => {
+
+    const {firstName, lastName, email, password} = req.body
+
+    if( !firstName || !lastName || !email || !password ){
+        return res.status(422).json({ error: "Atleast one of field is missing" });
+    }
+
+    try {
+        
+        const exist = await User.findOne({ email: email });
+
+        if(exist){
+            return res.status(422).json({ error: "Email already exist" })
+        }
+
+        const user = new User({firstName, lastName, email, password});
+        const userRegister = await user.save()
+
+        if(userRegister){
+            res.status(201).json({ message: "User registerd successfully :)"})
+        }
+        else{
+            res.status(500).json({ error: "Registration Failed :(" })
+        }
+    } catch (error) {
+        console.log(` error ${error}`)
+    }
+});
+
+//Author: Vrund Patel
+//Authenticates the user crendentials
+router.post('/signin', async(req, res) => {
+    
+    try {
+        
+        const {email, password} = req.body
+
+        if( !email || !password){
+            return res.status(400).json({error: "Atleast one of the field is empty from backend"})
+        }
+
+        const userLogin = await User.findOne( {email: email} )
+        if(userLogin){
+
+            if(password === userLogin.password){
+                res.json({message: "Signin Successful :)"})
+            }
+            else{
+                res.status(400).json({error: "Invalid Credentails :( "})
+            }
+        }
+        else{
+            res.status(400).json({error: "Invalid Credentials :( "})
+        }
+        
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 module.exports = router;
