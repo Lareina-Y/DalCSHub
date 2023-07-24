@@ -6,11 +6,6 @@ const Course = require('../models/course');
 
 const router = express.Router();
 
-// default 
-router.get('/all', (req, res) => {
-    res.send("List all users !")
-});
-
 // Lareina: PUT call to follow course
 router.put('/follow', async (req, res) => {
     const body = req.body;
