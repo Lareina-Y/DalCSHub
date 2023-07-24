@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { Typography, useMediaQuery, Grid, Divider, IconButton, Button } from "@mui/material";
+import { Typography, useMediaQuery, Grid, Divider, Button } from "@mui/material";
 import { Page, PageTitle } from "../components";
+import { Post } from "../components/Post.js";
 import { useTheme } from "@mui/material/styles";
 import bg1 from "../assets/images/bg1.jpg";
-
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 import "../App.css";
 import { flushSync } from "react-dom";
@@ -72,51 +70,41 @@ export const CourseDetail = () => {
         </Grid>
 
         <Grid item sm={3} xs={12}>
-          <Button variant="contained" size="large" color="secondary" href="" fullWidth="true">
+          <Button
+            style={{ marginBottom: "1em" }}
+            variant="contained"
+            size="large"
+            color="secondary"
+            href=""
+            fullWidth="true"
+          >
             Create Post
+          </Button>
+          <Button variant="contained" size="large" color="secondary" href="" fullWidth="true">
+            Follow Course
           </Button>
         </Grid>
       </Grid>
+
       <Divider />
-      <Grid container spacing={2} style={{ padding: "1em", marginTop: "15px" }}>
-        <Grid item sm={12} style={{ backgroundColor: "#F9F9F9", padding: "3em" }}>
-          <Grid container spacing={2}>
-            <Grid item sm={11} xs={11}>
-              <Typography variant="h4" gutterBottom>
-                Tutorial 7 is way too complex!
-              </Typography>
-              <Typography variant="subtitle2" gutterBottom>
-                posted July 20th 12:49pm by Leona Erricson
-              </Typography>
-              <Divider />
-              <Typography variant="body1" gutterBottom style={{ margin: "1vh 0 1vh 0" }}>
-                Hey folks, I’ve been looking into hosting my website but I had no luck with Netlify
-                due to GitLab issues. Are there any alternatives that anyone would recommend?
-              </Typography>
-            </Grid>
-            <Grid item sm={1} xs={1} style={{ textAlign: "center" }}>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  height: "100%",
-                }}
-              >
-                <IconButton size="large" color="secondary" href="">
-                  <ArrowUpwardIcon />
-                </IconButton>
-                <Typography variant="h6" gutterBottom>
-                  0
-                </Typography>
-                <IconButton size="large" color="secondary" href="">
-                  <ArrowDownwardIcon />
-                </IconButton>
-              </div>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
+
+      <Post
+        postTitle={"Tutorial 7 is way too complex!"}
+        postDate={"July 20th 12:49pm"}
+        postAuthor={"Leona Erricson"}
+        postDescription={
+          "Hey folks, I’ve been looking into hosting my website but I had no luck with Netlify due to GitLab issues. Are there any alternatives that anyone would recommend?"
+        }
+        postRating={0}
+      ></Post>
+
+      <Post
+        postTitle={"Tutorial 5 is way too easy!"}
+        postDate={"July 13th 5:20am"}
+        postAuthor={"Nitesh Kumar"}
+        postDescription={"I need a better challenge, this course is too easy for me."}
+        postRating={-13}
+      ></Post>
     </Page>
   );
 };
