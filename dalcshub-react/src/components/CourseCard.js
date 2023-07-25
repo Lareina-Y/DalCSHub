@@ -4,9 +4,9 @@ export const CourseCard = (props) => {
   const { name, description, followed, bgImage } = props;
 
   return (
-    <Card>
+    <Card style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <CardMedia component="img" alt="course background" height="140" image={bgImage} />
-      <CardContent>
+      <CardContent style={{ flexGrow: 1 }}>
         <Typography
           gutterBottom
           variant="h3"
@@ -21,7 +21,7 @@ export const CourseCard = (props) => {
           {description}
         </Typography>
       </CardContent>
-      <CardActions>
+      <CardActions style={{ marginTop: 'auto' }}>
         <Button size="small">
           {followed ? "UnFollow" : "Follow"}
         </Button>

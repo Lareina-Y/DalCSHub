@@ -90,10 +90,10 @@ export const MainFeed = () => {
             <Tab label="Saved Posts" />
           </Tabs>
         </Box>
-        <TabPanel value={value} index={0}>
-          <Grid container direction="row" justifyContent="flex-start" alignItems="stretch" spacing={2}>
+        <TabPanel value={value} index={0} style={{ paddingBottom: '10px'}}>
+          <Grid container direction="row" justifyContent="flex-start" spacing={2}>
             {courses.map((course) => (
-              <Grid item key={course.id} xs={12} sm={6} md={4} lg={3} style={{display: "flex", position: "relative"}}>
+              <Grid item key={course.id} xs={12} sm={6} md={4} lg={3}>
                 <CourseCard
                   name={course.name}
                   description={course.description}
