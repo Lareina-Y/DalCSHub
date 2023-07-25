@@ -9,11 +9,8 @@ const userSchema = new Schema({
     type: {type: String, required: true},
     email: {type: String, required: true, unique: true},
     password: {type: String, required: true},
-    followedCourses: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Course', // Course model
-    }],
-    savedPosts: Array,
+    followedCourses: Array,
+    savedPosts: Array
 }, { timestamps: true });
 
 const User = mongoose.model("users", userSchema);
