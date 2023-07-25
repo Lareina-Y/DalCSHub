@@ -1,10 +1,11 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { MainFeed, FAQ,  Contact, LandingPage } from "./pages";
 import { NavBar } from "./components";
+import { ThemeProvider } from "./providers"
 
 function App() {
   return (
-    <div>
+    <ThemeProvider>
       <BrowserRouter>
           <NavBar />
           <Routes>
@@ -14,7 +15,7 @@ function App() {
             <Route exact path="/contact" element={<Contact></Contact>} />
           </Routes>
       </BrowserRouter> 
-    </div>
+    </ThemeProvider>
   );
 }
 

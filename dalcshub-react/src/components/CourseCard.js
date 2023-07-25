@@ -9,25 +9,23 @@ export const CourseCard = (props) => {
       <CardContent>
         <Typography
           gutterBottom
-          variant="h5"
+          variant="h3"
           component="div"
-          sx={{ fontFamily: "Verdana, Geneva, sans-serif", fontWeight: "600" }}
         >
           {name}
         </Typography>
         <Typography
           variant="body2"
           color="text.secondary"
-          sx={{ fontFamily: "Verdana, Geneva, sans-serif", fontWeight: "500" }}
         >
           {description}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" sx={{ color: "#962061" }}>
+        <Button size="small">
           {followed ? "UnFollow" : "Follow"}
         </Button>
-        <Button size="small" sx={{ color: "#962061" }}>
+        <Button size="small">
           Learn More
         </Button>
       </CardActions>
