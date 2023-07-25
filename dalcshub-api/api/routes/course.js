@@ -5,6 +5,20 @@ const Course = require('../models/course');
 
 const router = express.Router();
 
+// Lareina: Get call to fetch all courses
+router.get('/all', async (req, res) => {
+    try {
+        // find all courses and sorting based on the course number
+        const courses = await Course.find().sort({ number: 1 });
+        res.status(200).json({
+            success: true,
+            data: courses
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Failed to fetch courses' });
+    }
+});
+
 // Lareina: POST call to create a new course
 router.post('/add', async (req, res) => {
     const body = req.body;
