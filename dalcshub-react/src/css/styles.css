@@ -1,5 +1,5 @@
 /* Author: Vrund Patel */
-
+/* 
 body {
     display: flex;
     align-items: center;
@@ -31,12 +31,12 @@ body {
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-  }
+  } */
   
   #error-tag {
     color: red;
   }
-  
+/*   
   #regis-btn {
     width: 100%;
     padding: 10px;
@@ -57,7 +57,7 @@ body {
     margin-top: 20px;
     color: #666;
   }
-  
+   */
   a {
     color: #007bff;
     text-decoration: none;

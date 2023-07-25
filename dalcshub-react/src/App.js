@@ -12,24 +12,31 @@ import { ThemeProvider } from "./providers";
 import { CssBaseline } from "@mui/material";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import { ThemeProvider } from "./providers";
+import { UserProvider } from "./components/userContext";
 
 function App() {
+
   return (
     <ThemeProvider>
-      <CssBaseline />
-      <BrowserRouter>
-          <NavBar />
-          <Routes>
-            <Route exact path="/" element={<LandingPage />} />
-            <Route exact path='/login' element={ <Login /> }></Route>
-            <Route exact path='/register' element={ <Register /> }></Route>
-            <Route exact path="/main" element={<MainFeed />} />
-            <Route exact path="/browse-courses" element={<BrowseCourses />} />
-            <Route exact path="/create-post" element={<CreatePost />} />
-            <Route exact path="/faq" element={<FAQ />} />
-            <Route exact path="/contact" element={<Contact />} />
-          </Routes>
-      </BrowserRouter> 
+      <UserProvider>
+        <CssBaseline />
+        <BrowserRouter>
+            <NavBar />
+            
+            <Routes>
+              <Route exact path="/" element={<LandingPage />} />
+              <Route exact path='/login' element={ <Login /> }></Route>
+              <Route exact path='/register' element={ <Register /> }></Route>
+              <Route exact path="/main" element={<MainFeed />} />
+              <Route exact path="/browse-courses" element={<BrowseCourses />} />
+              <Route exact path="/create-post" element={<CreatePost />} />
+              <Route exact path="/faq" element={<FAQ />} />
+              <Route exact path="/contact" element={<Contact />} />
+            </Routes>
+          
+        </BrowserRouter> 
+      </UserProvider>
     </ThemeProvider>
   );
 }

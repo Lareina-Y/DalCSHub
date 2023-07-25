@@ -86,9 +86,9 @@ router.put("/unfollow", async (req, res) => {
 //adding user's details to the database (user's registration)
 router.post('/x', async(req, res) => {
 
-    const {firstName, lastName, email, password} = req.body
+    const {firstName, lastName, type, email, password} = req.body
 
-    if( !firstName || !lastName || !email || !password ){
+    if( !firstName || !lastName || !type || !email || !password ){
         return res.status(422).json({ error: "Atleast one of field is missing" });
     }
 
@@ -100,7 +100,7 @@ router.post('/x', async(req, res) => {
             return res.status(422).json({ error: "Email already exist" })
         }
 
-        const user = new User({firstName, lastName, email, password});
+        const user = new User({firstName, lastName, type, email, password});
         const userRegister = await user.save()
 
         if(userRegister){
