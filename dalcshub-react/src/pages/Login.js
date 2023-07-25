@@ -1,12 +1,11 @@
 //Author: Vrund Patel
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link} from 'react-router-dom';
 import { useUser } from '../providers/userContext';
 import { Grid, TextField, Button, Typography } from '@mui/material';
 
-const Login = () => {
+export const Login = () => {
 
   const {setUser}  = useUser(); 
   const navigate = useNavigate();
@@ -136,5 +135,3 @@ const Login = () => {
     </Grid>
   );
 };
-
-export default Login;

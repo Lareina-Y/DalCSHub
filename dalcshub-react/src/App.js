@@ -6,7 +6,7 @@ import {
   LandingPage,
   BrowseCourses,
   CreatePost,
-  Login ,
+  Login,
   Register 
 } from "./pages";
 import { NavBar } from "./components";

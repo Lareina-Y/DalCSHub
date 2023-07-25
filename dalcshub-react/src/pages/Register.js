@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Grid, TextField, Button, Typography } from '@mui/material';
 
-const Register = () => {
+export const Register = () => {
   const [input, setInput] = useState({
     fName: '',
     lName: '',
@@ -249,6 +249,4 @@ const Register = () => {
     </Grid>
   );
 };
-
-export default Register;
 
