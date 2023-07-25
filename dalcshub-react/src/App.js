@@ -1,5 +1,7 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import { MainFeed, FAQ,  Contact, LandingPage } from "./pages";
+import { MainFeed, FAQ, Contact, LandingPage } from "./pages";
+import { CourseDetail } from "./pages/CourseDetail";
+import { CreatePost } from "./pages/CreatePost";
 import { NavBar } from "./components";
 import { ThemeProvider } from "./providers"
 
