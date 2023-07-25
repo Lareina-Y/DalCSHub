@@ -12,6 +12,10 @@ const postSchema = new Schema({
   courseId: { type: Number, required: true },
 });
 
+<<<<<<< HEAD
 const Post = mongoose.model("posts", postSchema);
+=======
+const Post = mongoose.model("Post", postSchema);
+>>>>>>> bdcf47e (created post model)
 
 module.exports = Post;
