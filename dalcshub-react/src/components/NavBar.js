@@ -62,7 +62,7 @@ export const NavBar = () => {
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
-        <Toolbar disableGutters variant="dense" >
+        <Toolbar disableGutters variant="dense">
           <Typography
             variant="h3"
             noWrap
@@ -106,10 +106,11 @@ export const NavBar = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page.name} onClick={() => navigate(`..${page.link}`)}>
-                  <Typography textAlign="center">
-                    {page.name}
-                  </Typography>
+                <MenuItem
+                  key={page.name}
+                  onClick={() => navigate(`..${page.link}`)}
+                >
+                  <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -137,7 +138,12 @@ export const NavBar = () => {
               <Button
                 key={page.name}
                 onClick={() => navigate(`..${page.link}`)}
-                sx={{ my: 1, color: "white", display: "block", fontFamily: "Helvetica Neue" }}
+                sx={{
+                  my: 1,
+                  color: "white",
+                  display: "block",
+                  fontFamily: "Helvetica Neue",
+                }}
               >
                 {page.name}
               </Button>

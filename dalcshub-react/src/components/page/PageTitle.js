@@ -14,7 +14,7 @@ export const PageTitle = ({
     <Grid
       container
       direction="row"
-      justifyContent={center? "center":"space-between"}
+      justifyContent={center ? "center" : "space-between"}
       alignContent="center"
       style={{ paddingTop: paddingTop, paddingBottom: paddingBottom }}
     >

@@ -6,7 +6,8 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 
 export const Post = (props) => {
-  const { postTitle, postAuthor, postDate, postDescription, postRating } = props;
+  const { postTitle, postAuthor, postDate, postDescription, postRating } =
+    props;
 
   return (
     <Grid container spacing={2} style={{ padding: "1em", marginTop: "15px" }}>
@@ -20,7 +21,11 @@ export const Post = (props) => {
               posted {postDate} by {postAuthor}
             </Typography>
             <Divider />
-            <Typography variant="body1" gutterBottom style={{ margin: "1vh 0 1vh 0" }}>
+            <Typography
+              variant="body1"
+              gutterBottom
+              style={{ margin: "1vh 0 1vh 0" }}
+            >
               {postDescription}
             </Typography>
           </Grid>

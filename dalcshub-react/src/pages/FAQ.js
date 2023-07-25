@@ -1,7 +1,12 @@
-import { Accordion, AccordionSummary, AccordionDetails, Typography } from "@mui/material";
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
+} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Page, PageTitle } from "../components";
-import { theme } from '../utils'
+import { theme } from "../utils";
 import "../App.css";
 
 export const FAQ = () => {
@@ -19,15 +24,16 @@ export const FAQ = () => {
           aria-controls="panel1a-content"
           expandIcon={<ExpandMoreIcon />}
         >
-          <Typography variant="h3" color='primary'> 
-              Is this a service provided by Dalhousie University?
+          <Typography variant="h3" color="primary">
+            Is this a service provided by Dalhousie University?
           </Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ boxShadow: 5 }}>
           <Typography variant="body1">
-            No. This website was built and maintained by Dalhousie students for Dalhousie students
-            to provide them with a community and various resources to help them make the best
-            decision in choosing their courses on their academic journey.
+            No. This website was built and maintained by Dalhousie students for
+            Dalhousie students to provide them with a community and various
+            resources to help them make the best decision in choosing their
+            courses on their academic journey.
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -39,14 +45,15 @@ export const FAQ = () => {
           aria-controls="panel2a-content"
           expandIcon={<ExpandMoreIcon />}
         >
-          <Typography variant="h3" color='primary'>
+          <Typography variant="h3" color="primary">
             How can I keep track of my courses of interest?
           </Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ boxShadow: 5 }}>
           <Typography variant="body1">
-            You can follow the courses you are interested in, where you will see them show in the
-            Main Feed. Also, you can save specific posts to return to them later.
+            You can follow the courses you are interested in, where you will see
+            them show in the Main Feed. Also, you can save specific posts to
+            return to them later.
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -58,14 +65,14 @@ export const FAQ = () => {
           aria-controls="panel3a-content"
           expandIcon={<ExpandMoreIcon />}
         >
-          <Typography variant="h3" color='primary'>
-              What if I can't find the information I am looking for?
+          <Typography variant="h3" color="primary">
+            What if I can't find the information I am looking for?
           </Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ boxShadow: 5 }}>
           <Typography variant="body1">
-            You can always create your own post and hopefully a student or instructor from the
-            community can help answer your question.
+            You can always create your own post and hopefully a student or
+            instructor from the community can help answer your question.
           </Typography>
         </AccordionDetails>
       </Accordion>

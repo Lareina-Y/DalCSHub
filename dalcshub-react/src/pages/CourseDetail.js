@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Typography, useMediaQuery, Grid, Divider, Button } from "@mui/material";
+import {
+  Typography,
+  useMediaQuery,
+  Grid,
+  Divider,
+  Button,
+} from "@mui/material";
 import { Page, PageTitle } from "../components";
 import { Post } from "../components/Post.js";
 import { useTheme } from "@mui/material/styles";
@@ -42,14 +48,20 @@ export const CourseDetail = () => {
               textShadow: "1px 1px 3px rgba(0, 0, 0, 1)",
               color: "white",
               fontWeight: 500,
-              fontSize: useMediaQuery(useTheme().breakpoints.down("sm")) ? "3em" : "5em",
+              fontSize: useMediaQuery(useTheme().breakpoints.down("sm"))
+                ? "3em"
+                : "5em",
             }}
           >
             CSCI 4177: Advanced Web Services
           </Typography>
         </Grid>
       </Grid>
-      <Grid container spacing={2} style={{ padding: "1em", marginBottom: "15px" }}>
+      <Grid
+        container
+        spacing={2}
+        style={{ padding: "1em", marginBottom: "15px" }}
+      >
         <Grid item sm={3} xs={12}>
           <Typography variant="body1" gutterBottom>
             <b>Instructor:</b> INSTRUCTOR NAME
@@ -63,9 +75,10 @@ export const CourseDetail = () => {
         </Grid>
         <Grid item sm={6} xs={12}>
           <Typography variant="body1" gutterBottom>
-            This course provides a hands-on learning environment for advanced web development
-            techniques, such as HTML5 APIs for the creation of dynamic web graphics as well as
-            adding offline functionality to web applications and documentation.
+            This course provides a hands-on learning environment for advanced
+            web development techniques, such as HTML5 APIs for the creation of
+            dynamic web graphics as well as adding offline functionality to web
+            applications and documentation.
           </Typography>
         </Grid>
 
@@ -80,7 +93,13 @@ export const CourseDetail = () => {
           >
             Create Post
           </Button>
-          <Button variant="contained" size="large" color="secondary" href="" fullWidth="true">
+          <Button
+            variant="contained"
+            size="large"
+            color="secondary"
+            href=""
+            fullWidth="true"
+          >
             Follow Course
           </Button>
         </Grid>
@@ -102,7 +121,9 @@ export const CourseDetail = () => {
         postTitle={"Tutorial 5 is way too easy!"}
         postDate={"July 13th 5:20am"}
         postAuthor={"Nitesh Kumar"}
-        postDescription={"I need a better challenge, this course is too easy for me."}
+        postDescription={
+          "I need a better challenge, this course is too easy for me."
+        }
         postRating={-13}
       ></Post>
     </Page>

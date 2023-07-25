@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Typography, useMediaQuery, TextField, Grid, Divider, Button } from "@mui/material";
+import {
+  Typography,
+  useMediaQuery,
+  TextField,
+  Grid,
+  Divider,
+  Button,
+} from "@mui/material";
 import { Page, PageTitle } from "../components";
 import { useTheme } from "@mui/material/styles";
 import bg1 from "../assets/images/bg1.jpg";
@@ -44,7 +51,9 @@ export const CreatePost = () => {
               textShadow: "1px 1px 3px rgba(0, 0, 0, 1)",
               color: "white",
               fontWeight: 500,
-              fontSize: useMediaQuery(useTheme().breakpoints.down("sm")) ? "3em" : "5em",
+              fontSize: useMediaQuery(useTheme().breakpoints.down("sm"))
+                ? "3em"
+                : "5em",
             }}
           >
             CSCI 4177: Advanced Web Services
@@ -52,7 +61,11 @@ export const CreatePost = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} style={{ padding: "1em", marginBottom: "15px" }}>
+      <Grid
+        container
+        spacing={2}
+        style={{ padding: "1em", marginBottom: "15px" }}
+      >
         <Grid item sm={3} xs={12}>
           <Typography variant="body1" gutterBottom>
             <b>Instructor:</b> INSTRUCTOR NAME
@@ -66,16 +79,24 @@ export const CreatePost = () => {
         </Grid>
         <Grid item sm={9} xs={12}>
           <Typography variant="body1" gutterBottom>
-            This course provides a hands-on learning environment for advanced web development
-            techniques, such as HTML5 APIs for the creation of dynamic web graphics as well as
-            adding offline functionality to web applications and documentation.
+            This course provides a hands-on learning environment for advanced
+            web development techniques, such as HTML5 APIs for the creation of
+            dynamic web graphics as well as adding offline functionality to web
+            applications and documentation.
           </Typography>
         </Grid>
       </Grid>
 
       <Divider />
 
-      <Grid container style={{ backgroundColor: "#F9F9F9", marginTop: "15px", padding: "3em" }}>
+      <Grid
+        container
+        style={{
+          backgroundColor: "#F9F9F9",
+          marginTop: "15px",
+          padding: "3em",
+        }}
+      >
         <Grid item sm={12}>
           <Typography variant="h4" gutterBottom>
             Create a New Post
@@ -100,7 +121,12 @@ export const CreatePost = () => {
               required
               fullWidth
             />
-            <Button type="submit" size="large" variant="contained" color="secondary">
+            <Button
+              type="submit"
+              size="large"
+              variant="contained"
+              color="secondary"
+            >
               Submit
             </Button>
           </form>

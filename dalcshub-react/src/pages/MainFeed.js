@@ -90,9 +90,14 @@ export const MainFeed = () => {
             <Tab label="Saved Posts" />
           </Tabs>
         </Box>
-        <TabPanel value={value} index={0} style={{ paddingBottom: '10px'}}>
-          {courses.length > 0 ? 
-            <Grid container direction="row" justifyContent="flex-start" spacing={2}>
+        <TabPanel value={value} index={0} style={{ paddingBottom: "10px" }}>
+          {courses.length > 0 ? (
+            <Grid
+              container
+              direction="row"
+              justifyContent="flex-start"
+              spacing={2}
+            >
               {courses.map((course) => (
                 <Grid item key={course.id} xs={12} sm={6} md={4} lg={3}>
                   <CourseCard
@@ -104,7 +109,13 @@ export const MainFeed = () => {
                 </Grid>
               ))}
             </Grid>
-            : <Typography> No course has been followed yet ! Go to <Link href={'/browse-courses'}>Browse Courses Page</Link></Typography>}
+          ) : (
+            <Typography>
+              {" "}
+              No course has been followed yet ! Go to{" "}
+              <Link href={"/browse-courses"}>Browse Courses Page</Link>
+            </Typography>
+          )}
         </TabPanel>
         <TabPanel value={value} index={1}>
           <Typography>No post has been saved yet !</Typography>

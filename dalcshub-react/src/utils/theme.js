@@ -1,46 +1,46 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from "@mui/material/styles";
 
 const PaletteConfiguration = {
   primary: {
-    main: '#962061'
+    main: "#962061",
   },
   background: {
-    default: '#FFFFFF',
-    secondary: '#962061',
-    light: '#F3F3F3'
+    default: "#FFFFFF",
+    secondary: "#962061",
+    light: "#F3F3F3",
   },
-} 
+};
 
 const TypographyConfiguration = {
   h1: {
-      fontSize: '2.125rem',
-      fontWeight: 'bold',
-      fontFamily: "Verdana, Geneva, sans-serif",
+    fontSize: "2.125rem",
+    fontWeight: "bold",
+    fontFamily: "Verdana, Geneva, sans-serif",
   },
   h2: {
-      fontSize: '1.4rem',
-      fontWeight: 'bold',
-      fontFamily: "Verdana, Geneva, sans-serif",
+    fontSize: "1.4rem",
+    fontWeight: "bold",
+    fontFamily: "Verdana, Geneva, sans-serif",
   },
   h3: {
-      fontSize: '1.2rem',
-      fontWeight: 'bold',
-      fontFamily: "Verdana, Geneva, sans-serif",
+    fontSize: "1.2rem",
+    fontWeight: "bold",
+    fontFamily: "Verdana, Geneva, sans-serif",
   },
   h4: {
-      fontSize: '1rem',
-      fontWeight: 'bold',
-      fontFamily: "Verdana, Geneva, sans-serif",
+    fontSize: "1rem",
+    fontWeight: "bold",
+    fontFamily: "Verdana, Geneva, sans-serif",
   },
   body1: {
-      fontSize: '1rem',
-      fontFamily: "Verdana, Geneva, sans-serif",
+    fontSize: "1rem",
+    fontFamily: "Verdana, Geneva, sans-serif",
   },
   body2: {
-      fontSize: '0.8rem',
-      fontFamily: "Verdana, Geneva, sans-serif",
+    fontSize: "0.8rem",
+    fontFamily: "Verdana, Geneva, sans-serif",
   },
-} 
+};
 
 const ThemeConfiguration = {
   palette: PaletteConfiguration,
