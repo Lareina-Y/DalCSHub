@@ -17,16 +17,14 @@ mongoose.connect(mongoURL, {
 
 const userRoutes = require("./api/routes/user")
 const courseRoutes = require("./api/routes/course")
+const postRoutes = require("./api/routes/post")
 
 app.use(express.json());
 
-const PORT = process.env.PORT
-
 // Routes
 app.use('/api/course', courseRoutes);
-
-// app.use(require('./api/routes/user')); 
 app.use('/api/user', userRoutes);
+app.use('/api/post', postRoutes);
 
 app.use("/", (req, res) => {
     return res.status(404).json({

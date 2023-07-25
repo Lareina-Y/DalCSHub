@@ -5,3 +5,5 @@ export * from "./LandingPage";
 export * from "./BrowseCourses";
 export * from "./CreatePost";
 export * from "./CourseDetail";
+export * from "./Login";
+export * from "./Register";
