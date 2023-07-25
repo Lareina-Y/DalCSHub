@@ -12,7 +12,6 @@ import { ThemeProvider } from "./providers";
 import { CssBaseline } from "@mui/material";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import { ThemeProvider } from "./providers";
 import { UserProvider } from "./providers/userContext";
 
 function App() {
