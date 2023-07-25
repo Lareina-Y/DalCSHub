@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Tabs, Tab, Typography, Box, Grid } from "@mui/material";
+import { Tabs, Tab, Typography, Box, Grid, Link } from "@mui/material";
 import { Page, PageTitle, CourseCard } from "../components";
 // [3] Background Images from : https://github.com/wrappixel/materialpro-react-lite/tree/master/package/src/assets/images/bg
 import bg1 from "../assets/images/bg1.jpg";
@@ -91,21 +91,23 @@ export const MainFeed = () => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0} style={{ paddingBottom: '10px'}}>
-          <Grid container direction="row" justifyContent="flex-start" spacing={2}>
-            {courses.map((course) => (
-              <Grid item key={course.id} xs={12} sm={6} md={4} lg={3}>
-                <CourseCard
-                  name={course.name}
-                  description={course.description}
-                  followed={course.followed}
-                  bgImage={course.bgImage}
-                />
-              </Grid>
-            ))}
-          </Grid>
+          {courses.length > 0 ? 
+            <Grid container direction="row" justifyContent="flex-start" spacing={2}>
+              {courses.map((course) => (
+                <Grid item key={course.id} xs={12} sm={6} md={4} lg={3}>
+                  <CourseCard
+                    name={course.name}
+                    description={course.description}
+                    followed={course.followed}
+                    bgImage={course.bgImage}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+            : <Typography> No course has been followed yet ! Go to <Link href={'/browse-courses'}>Browse Courses Page</Link></Typography>}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          No post has been saved yet
+          <Typography>No post has been saved yet !</Typography>
         </TabPanel>
       </Box>
     </Page>

@@ -24,6 +24,10 @@ const pages = [
     link: "/main",
   },
   {
+    name: "Browse Courses",
+    link: "/browse-courses",
+  },
+  {
     name: "Contact",
     link: "/contact",
   },
@@ -58,7 +62,7 @@ export const NavBar = () => {
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar disableGutters variant="dense" >
           <Typography
             variant="h3"
             noWrap
@@ -133,7 +137,7 @@ export const NavBar = () => {
               <Button
                 key={page.name}
                 onClick={() => navigate(`..${page.link}`)}
-                sx={{ my: 2, color: "white", display: "block", fontFamily: "Helvetica Neue" }}
+                sx={{ my: 1, color: "white", display: "block", fontFamily: "Helvetica Neue" }}
               >
                 {page.name}
               </Button>
