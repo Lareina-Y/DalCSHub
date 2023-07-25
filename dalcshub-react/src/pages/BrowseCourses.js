@@ -84,6 +84,7 @@ export const BrowseCourses = () => {
 
       { loading && <CircularProgress fullScreen /> }
       { !loading && filteredCourses.length > 0 && filteredCourses.map((course) => (
+          // TODO: Lareina - refactor <CardActionArea> and <CardActions> layout
           <Card key={course._id} variant="outlined" >
             <CardActionArea onClick={() => console.log("detail")} disableRipple>
               <Grid container direction="row" justifyContent="space-between" alignItems="center">
@@ -96,7 +97,7 @@ export const BrowseCourses = () => {
                       <Typography variant="body2">{course.description}</Typography>
                       <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1} flexWrap="wrap" sx={{ marginTop: '10px' }}>
                         {course.flags.map((flag) => 
-                          <Chip label={flag} color="primary" size="small" variant="outlined" onClick={() => setSearchKey(flag)} />
+                          <Chip key={course.number + flag} label={flag} color="primary" size="small" variant="outlined" onClick={() => setSearchKey(flag)} />
                         )}
                       </Stack>
                   </CardContent>
