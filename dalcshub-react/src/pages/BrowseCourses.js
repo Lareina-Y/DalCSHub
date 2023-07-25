@@ -45,7 +45,7 @@ export const BrowseCourses = () => {
 
   useEffect( () => {
     const newfilteredCourses = courses.filter((course) => {
-      const courseDetails = `${course.number} ${course.title} ${course.subject} ${course.description} ${course.flags.join(' ')}`;
+      const courseDetails = `${course.subject} ${course.number} ${course.title} ${course.description} ${course.flags.join(' ')}`;
       return courseDetails.toLowerCase().includes(searchKey.toLowerCase());
     });
     setFilteredCourses(newfilteredCourses);
