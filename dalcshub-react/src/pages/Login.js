@@ -128,7 +128,7 @@ export const Login = () => {
             Login
           </Button>
           <Typography variant="body2" align="center" marginTop="8px">
-            Forgot Password? <Link to={'/Register'}>Sign Up</Link>
+            Forgot Password? <Link to={'/register'}>Sign Up</Link>
           </Typography>
         </form>
       </Grid>

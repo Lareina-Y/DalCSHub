@@ -1,6 +1,6 @@
 // reference: starter from https://mui.com/material-ui/react-app-bar/
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   AppBar,
   Box,
@@ -43,6 +43,14 @@ export const NavBar = () => {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+
+  const location = useLocation();
+  const hideNavBarOnPaths = ['/', '/login', '/register'];
+
+  if (hideNavBarOnPaths.includes(location.pathname)) {
+    // hide the NavBar on landing, login and register pages
+    return null;
+  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);

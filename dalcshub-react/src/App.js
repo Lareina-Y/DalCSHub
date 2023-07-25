@@ -18,8 +18,8 @@ function App() {
 
   return (
     <ThemeProvider>
+      <CssBaseline />
       <UserProvider>
-        <CssBaseline />
         <BrowserRouter>
             <NavBar />
             <Routes>
