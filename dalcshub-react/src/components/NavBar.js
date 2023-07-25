@@ -56,11 +56,11 @@ export const NavBar = () => {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#962061" }}>
+    <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
-            variant="h6"
+            variant="h3"
             noWrap
             component="a"
             href="/"
@@ -68,7 +68,6 @@ export const NavBar = () => {
               mr: 2,
               display: { xs: "none", md: "flex" },
               fontFamily: "monospace",
-              fontWeight: 700,
               color: "inherit",
               textDecoration: "none",
             }}
@@ -113,7 +112,7 @@ export const NavBar = () => {
           </Box>
 
           <Typography
-            variant="h5"
+            variant="h3"
             noWrap
             component="a"
             href="/"
@@ -122,7 +121,6 @@ export const NavBar = () => {
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
               fontFamily: "monospace",
-              fontWeight: 700,
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",

@@ -4,30 +4,28 @@ export const CourseCard = (props) => {
   const { name, description, followed, bgImage } = props;
 
   return (
-    <Card>
+    <Card style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <CardMedia component="img" alt="course background" height="140" image={bgImage} />
-      <CardContent>
+      <CardContent style={{ flexGrow: 1 }}>
         <Typography
           gutterBottom
-          variant="h5"
+          variant="h3"
           component="div"
-          sx={{ fontFamily: "Verdana, Geneva, sans-serif", fontWeight: "600" }}
         >
           {name}
         </Typography>
         <Typography
           variant="body2"
           color="text.secondary"
-          sx={{ fontFamily: "Verdana, Geneva, sans-serif", fontWeight: "500" }}
         >
           {description}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small" sx={{ color: "#962061" }}>
+      <CardActions style={{ marginTop: 'auto' }}>
+        <Button size="small">
           {followed ? "UnFollow" : "Follow"}
         </Button>
-        <Button size="small" sx={{ color: "#962061" }}>
+        <Button size="small">
           Learn More
         </Button>
       </CardActions>

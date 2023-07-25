@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import arrow from "../assets/images/arrow.png";
 import { Card, CardContent, Button } from "@mui/material";
 import "../App.css";
+import { theme } from '../utils'
 
 export const LandingPage = () => {
   const navigate = useNavigate();
@@ -127,9 +128,8 @@ export const LandingPage = () => {
               <Card
                 style={{
                   flex: "1 0 400px",
-                  background: "#1976d2",
                   color: "white",
-                  backgroundColor: "#962061",
+                  backgroundColor: theme.palette.background.secondary,
                 }}
               >
                 <CardContent>
@@ -144,9 +144,8 @@ export const LandingPage = () => {
               <Card
                 style={{
                   flex: "1 0 400px",
-                  background: "#1976d2",
                   color: "white",
-                  backgroundColor: "#962061",
+                  backgroundColor: theme.palette.background.secondary,
                 }}
               >
                 <CardContent>
@@ -161,9 +160,8 @@ export const LandingPage = () => {
               <Card
                 style={{
                   flex: "1 0 400px",
-                  background: "#1976d2",
                   color: "white",
-                  backgroundColor: "#962061",
+                  backgroundColor: theme.palette.background.secondary,
                 }}
               >
                 <CardContent>
@@ -181,7 +179,7 @@ export const LandingPage = () => {
               variant="contained"
               color="primary"
               onClick={buttonClicked}
-              style={{ marginTop: "2rem", backgroundColor: "#962061" }}
+              style={{ marginTop: "2rem"}}
             >
               Get started
             </Button>
