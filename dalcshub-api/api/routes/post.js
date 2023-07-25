@@ -4,7 +4,7 @@ const Post = require('../models/post')
 const router = express.Router();
 
 // get post by ID
-router.get('/post/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     const id = req.params.id;
 
     try {
@@ -46,9 +46,6 @@ router.post('/add', async (req, res) => {
             "message": "Post has been added"
         })
     }).catch(err =>{
-        if (err.code === 11000) { // MongoDB error code for duplicate key (Lareina)
-             res.status(409).json({ success: false, message: "Course already exists." });
-        }
         res.status(400).send({message: "Post request cannot be submitted " + err});
     })
 })

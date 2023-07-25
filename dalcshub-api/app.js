@@ -5,6 +5,7 @@ const app = express(); // this indicates app is using express method to run
 
 const userRoutes = require("./api/routes/user");
 const courseRoutes = require("./api/routes/course");
+const postRoutes = require("./api/routes/post");
 
 const mongoURL =
   "mongodb+srv://dalcshub:summer23@main.avjsilz.mongodb.net/dalcshub?retryWrites=true&w=majority";
@@ -24,6 +25,7 @@ app.use(express.json());
 // Routes
 app.use("/api/course", courseRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/post", postRoutes);
 
 app.use("/", (req, res) => {
   return res.status(404).json({
