@@ -9,6 +9,7 @@ import bg4 from "../assets/images/bg4.jpg";
 import bg5 from "../assets/images/bg5.jpg";
 import "../App.css";
 
+
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
 
