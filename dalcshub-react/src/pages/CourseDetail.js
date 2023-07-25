@@ -6,8 +6,7 @@ import {
   Divider,
   Button,
 } from "@mui/material";
-import { Page, PageTitle } from "../components";
-// import { Post } from "../components/Post.js";
+import { Page, Post} from "../components";
 import { useTheme } from "@mui/material/styles";
 import bg1 from "../assets/images/bg1.jpg";
 
