@@ -4,10 +4,50 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
+import { useState, useEffect } from "react";
 
 export const Post = (props) => {
-  const { postTitle, postAuthor, postDate, postDescription, postRating } =
+  const { postTitle, postAuthor, postDate, postDescription, postRating, children } =
     props;
+
+  const [posts, setPosts] = useState([]);
+  const [likes, setLikes] = useState(postRating);
+
+  const handleLike = (title) => {
+    let requiredPost = posts.filter((post) => post.postTitle === title);
+    setLikes(requiredPost[0].postRating + 1)
+  };
+
+  const handleDisLike = (title) => {
+    let requiredPost = posts.filter((post) => post.postTitle === title);
+    if(likes - 1 > 0){
+      setLikes(requiredPost[0].postRating - 1)
+    }
+    else{
+      setLikes(0)
+    }
+   
+
+  };
+
+  const getLatest = async () => {
+    try {
+      const response = await fetch("/api/post");
+      if (response.status === 200) {
+        const result = await response.json();
+        setPosts(result.data);
+
+      } else {
+        console.error("Failed");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+   getLatest()
+}, [handleLike,handleDisLike]);
 
   return (
     <Grid container spacing={2} style={{ padding: "1em", marginTop: "15px" }}>
@@ -41,15 +81,16 @@ export const Post = (props) => {
               <IconButton size="large" color="secondary" href="">
                 <BookmarkBorderIcon />
               </IconButton>
-              <IconButton size="large" color="secondary" href="">
+              <IconButton size="large" color="secondary" href="" onClick={() => handleLike(postTitle)}>
                 <ArrowUpwardIcon />
               </IconButton>
               <Typography variant="h6" gutterBottom>
-                {postRating}
+                {likes}
               </Typography>
-              <IconButton size="large" color="secondary" href="">
+              <IconButton size="large" color="secondary" href="" onClick={() => handleDisLike(postTitle)}>
                 <ArrowDownwardIcon />
               </IconButton>
+              {children}
             </div>
           </Grid>
         </Grid>

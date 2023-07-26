@@ -1,17 +1,16 @@
 //Author: Vrund Patel
 
-import React, { useState } from 'react';
-import { useNavigate, Link} from 'react-router-dom';
-import { useUser } from '../providers';
-import { Grid, TextField, Button, Typography } from '@mui/material';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useUser } from "../providers";
+import { Grid, TextField, Button, Typography } from "@mui/material";
 
 export const Login = () => {
-
-  const {setUser}  = useUser(); 
+  const { setUser } = useUser();
   const navigate = useNavigate();
   const [loginInput, setLoginInput] = useState({
-    loginEmail: '',
-    loginPassword: ''
+    loginEmail: "",
+    loginPassword: "",
   });
 
   const handleChange = (e) => {
@@ -20,7 +19,7 @@ export const Login = () => {
 
     setLoginInput({
       ...loginInput,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -35,8 +34,8 @@ export const Login = () => {
       verifyLoginCredentials();
 
       setLoginInput({
-        loginEmail: '',
-        loginPassword: ''
+        loginEmail: "",
+        loginPassword: "",
       });
     }
   };
@@ -48,18 +47,18 @@ export const Login = () => {
 
     // email
     if (!loginInput.loginEmail) {
-      loginError.loginEmail = 'Email is required';
+      loginError.loginEmail = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(loginInput.loginEmail)) {
-      loginError.loginEmail = 'Enter a valid email';
+      loginError.loginEmail = "Enter a valid email";
     } else {
-      loginError.loginEmail = '';
+      loginError.loginEmail = "";
     }
 
     // password
     if (!loginInput.loginPassword) {
-      loginError.loginPassword = 'Password is required';
+      loginError.loginPassword = "Password is required";
     } else {
-      loginError.loginPassword = '';
+      loginError.loginPassword = "";
     }
 
     return loginError;
@@ -67,27 +66,25 @@ export const Login = () => {
 
   const verifyLoginCredentials = async () => {
     const { loginEmail, loginPassword } = loginInput;
-    const res = await fetch('/api/user/signin', {
-      method: 'POST',
+    const res = await fetch("/api/user/signin", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         email: loginEmail,
-        password: loginPassword
-      })
+        password: loginPassword,
+      }),
     });
 
     if (res.status === 200) {
       const result = await res.json();
       setUser(result.data);
 
-      window.alert('Login Successful');
-      console.log('Login Successful');
-      navigate('/main');
+      navigate("/main");
     } else {
-      console.log('At least one of the fields is invalid from front end');
-      window.alert('At least one of the fields is invalid');
+      console.log("At least one of the fields is invalid from front end");
+      window.alert("At least one of the fields is invalid");
     }
   };
 
@@ -95,7 +92,6 @@ export const Login = () => {
     <Grid container justifyContent="center" alignItems="center" height="100vh">
       <Grid item xs={10} sm={6} md={4}>
         <form onSubmit={handleSubmit}>
-
           <Typography variant="h5" align="center" gutterBottom>
             Login
           </Typography>
@@ -126,7 +122,7 @@ export const Login = () => {
             Login
           </Button>
           <Typography variant="body2" align="center" marginTop="8px">
-            Forgot Password? <Link to={'/register'}>Sign Up</Link>
+            Forgot Password? <Link to={"/register"}>Sign Up</Link>
           </Typography>
         </form>
       </Grid>

@@ -7,3 +7,4 @@ export * from "./CreatePost";
 export * from "./CourseDetail";
 export * from "./Login";
 export * from "./Register";
+export * from "./CreateComment";

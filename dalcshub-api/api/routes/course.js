@@ -77,6 +77,7 @@ router.post("/add", async (req, res) => {
 // Kent: GET call to get course based on course number
 router.get("/:courseNumber", async (req, res) => {
   const courseNumber = req.params.courseNumber;
+
   try {
     const course = await Course.findOne({ number: courseNumber });
     if (!course) {
