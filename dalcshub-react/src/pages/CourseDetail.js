@@ -44,6 +44,7 @@ export const CourseDetail = () => {
   };
 
   // get post based on course number
+  // TODO: determine if this is the best way to get author details, given the GuardedRoute in place
   const getPostsByCourse = async (courseNumber) => {
     try {
       const response = await fetch(`/api/post/course/${courseNumber}`);

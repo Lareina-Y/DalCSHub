@@ -27,6 +27,7 @@ export const CreatePost = () => {
   const navigate = useNavigate();
 
   // extract user from local storage for author details
+  // TODO: determine if this is the best way to get author details, given the GuardedRoute in place
   const userFromStorage = JSON.parse(localStorage.getItem("currentUser"));
 
   // get and identify course to display based on course number
