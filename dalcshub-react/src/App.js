@@ -12,7 +12,7 @@ import {
   CreateComment,
 } from "./pages";
 import { NavBar } from "./components";
-import { ThemeProvider, UserProvider} from "./providers";
+import { ThemeProvider, UserProvider, SnackbarProvider } from "./providers";
 import { CssBaseline } from "@mui/material";
 
 function App() {
@@ -21,19 +21,21 @@ function App() {
       <CssBaseline />
       <UserProvider>
         <BrowserRouter>
-          <NavBar />
-          <Routes>
-            <Route exact path="/" element={<LandingPage />} />
-            <Route exact path="/login" element={<Login />} />
-            <Route exact path="/register" element={<Register />} />
-            <Route exact path="/main" element={<MainFeed />} />
-            <Route exact path="/browse-courses" element={<BrowseCourses />} />
-            <Route exact path="/create-post/:courseNumber" element={<CreatePost />} />
-            <Route exact path="/course-details/:courseNumber" element={<CourseDetail />} />
-            <Route exact path="/faq" element={<FAQ />} />
-            <Route exact path="/contact" element={<Contact />} />
-            <Route exact path="/comment/:post_id" element={<CreateComment/>} />
-          </Routes>
+          <SnackbarProvider>
+            <NavBar />
+            <Routes>
+              <Route exact path="/" element={<LandingPage />} />
+              <Route exact path="/login" element={<Login />} />
+              <Route exact path="/register" element={<Register />} />
+              <Route exact path="/main" element={<MainFeed />} />
+              <Route exact path="/browse-courses" element={<BrowseCourses />} />
+              <Route exact path="/create-post/:courseNumber" element={<CreatePost />} />
+              <Route exact path="/course-details/:courseNumber" element={<CourseDetail />} />
+              <Route exact path="/faq" element={<FAQ />} />
+              <Route exact path="/contact" element={<Contact />} />
+              <Route exact path="/comment/:post_id" element={<CreateComment/>} />
+            </Routes>
+          </SnackbarProvider>
         </BrowserRouter>
       </UserProvider>
     </ThemeProvider>
