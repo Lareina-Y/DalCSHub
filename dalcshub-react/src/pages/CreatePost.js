@@ -5,15 +5,28 @@ import { useParams } from "react-router-dom";
 import { Typography, useMediaQuery, TextField, Grid, Divider, Button } from "@mui/material";
 import { Page } from "../components";
 import { useTheme } from "@mui/material/styles";
-import bg1 from "../assets/images/bg1.jpg";
+import { useUser, useSnackbar } from "../providers";
 
 import "../App.css";
+// [4] Default Course Background Image from :
+// https://www.buytvinternetphone.com/blog/images/programming-the-rca-universal-remote-without-a-code-search-button.jpg
+import defaultCoursebg from "../assets/images/default-course-bg.jpeg";
 
 export const CreatePost = () => {
+  const theme = useTheme();
+  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const { openSnackbar } = useSnackbar();
+  const { user: currentUser, userDetailRefresh } = useUser();
+  const { _id: userId, followedCourses: followedCoursesIds } = currentUser;
+
   const { courseNumber } = useParams();
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [course, setCourse] = useState({});
+
+  // extract user from local storage for author details
+  const userFromStorage = JSON.parse(localStorage.getItem("currentUser"));
 
   // get and identify course to display based on course number
   const getCourseDetails = async (courseNumber) => {
@@ -24,6 +37,7 @@ export const CreatePost = () => {
         const result = await response.json();
         setCourse(result.data);
         console.log("Course details: ", result);
+        console.log("User: ", userId);
       } else {
         console.error("Failed");
       }
@@ -31,9 +45,6 @@ export const CreatePost = () => {
       console.error(error);
     }
   };
-
-  // access localStorage to get user information
-  const user = JSON.parse(localStorage.getItem("user"));
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -54,8 +65,8 @@ export const CreatePost = () => {
         body: JSON.stringify({
           title: title,
           message: message,
-          author: "Jane Doe", // REPLACE WITH USER FROM LOCAL STORAGE
-          date: new Date().toISOString(),
+          author: userFromStorage.firstName + " " + userFromStorage.lastName,
+          date: new Date().toLocaleString(),
           courseId: course.number,
         }),
       });
@@ -63,9 +74,14 @@ export const CreatePost = () => {
       const data = await res.json();
       console.log("Successfully created post: ", data);
 
-      // clear form after successful submission
-      setTitle("");
-      setMessage("");
+      if (res.status === 200) {
+        openSnackbar("Post created successfully", "success");
+        // clear form after successful submission
+        setTitle("");
+        setMessage("");
+      } else {
+        openSnackbar("Failed to create post", "error");
+      }
     } catch (error) {
       console.error("Error creating post:", error);
     }
@@ -83,7 +99,7 @@ export const CreatePost = () => {
       <Grid
         container
         style={{
-          backgroundImage: `url(${bg1})`,
+          backgroundImage: `url(${course.image ?? defaultCoursebg})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           width: "100%",
@@ -105,7 +121,7 @@ export const CreatePost = () => {
               textShadow: "1px 1px 3px rgba(0, 0, 0, 1)",
               color: "white",
               fontWeight: 500,
-              fontSize: useMediaQuery(useTheme().breakpoints.down("sm")) ? "3em" : "5em",
+              fontSize: smallScreen ? "2em" : "3em",
             }}
           >
             {course.title}

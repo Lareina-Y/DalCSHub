@@ -1,9 +1,9 @@
 //Author: Shiwen(Lareina) Yang
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Tabs, Tab, Typography, Box, Grid } from "@mui/material";
 import { Page, PageTitle, CourseCard, CircularProgress } from "../components";
-import { useUser } from '../providers';
+import { useUser } from "../providers";
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -20,8 +20,8 @@ const TabPanel = (props) => {
 };
 
 export const MainFeed = () => {
-  const { user : currentUser } = useUser();
-  const { _id: userId, followedCourses : followedCoursesIds } = currentUser;
+  const { user: currentUser } = useUser();
+  const { _id: userId, followedCourses: followedCoursesIds } = currentUser;
 
   const [tabIndex, setTabIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -29,12 +29,12 @@ export const MainFeed = () => {
 
   const fetchFollowedCourses = async (followedCoursesIds) => {
     try {
-      const response = await fetch("/api/course/get_by_ids" , {
-        method: 'POST',
+      const response = await fetch("/api/course/get_by_ids", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ "courseIds": followedCoursesIds })
+        body: JSON.stringify({ courseIds: followedCoursesIds }),
       });
       if (response.status === 200) {
         const result = await response.json();
@@ -51,6 +51,16 @@ export const MainFeed = () => {
   useEffect(() => {
     fetchFollowedCourses(followedCoursesIds);
   }, [followedCoursesIds]);
+
+  // store current user in local storage
+  useEffect(() => {
+    const storedUser = localStorage.getItem("currentUser");
+    if (storedUser !== currentUser) {
+      const currentUserString = JSON.stringify(currentUser);
+      console.log(currentUserString);
+      localStorage.setItem("currentUser", currentUserString);
+    }
+  }, [currentUser]);
 
   return (
     <Page>
@@ -71,19 +81,14 @@ export const MainFeed = () => {
         <TabPanel value={tabIndex} index={0}>
           {loading && <CircularProgress fullScreen />}
           {!loading && followedCourses.length > 0 && (
-            <Grid
-              container
-              direction="row"
-              justifyContent="flex-start"
-              spacing={2}
-            >
+            <Grid container direction="row" justifyContent="flex-start" spacing={2}>
               {followedCourses.map((course) => (
                 <Grid item key={course._id} xs={12} sm={6} md={4} lg={3}>
                   <CourseCard
                     userId={userId}
                     courseId={course._id}
                     courseNumber={course.number}
-                    title={course.subject + ' ' + course.number + ' ' + course.title}
+                    title={course.subject + " " + course.number + " " + course.title}
                     creditHours={course.credit_hours}
                     flags={course.flags}
                     followed={true}
@@ -92,10 +97,10 @@ export const MainFeed = () => {
                 </Grid>
               ))}
             </Grid>
-          )} 
+          )}
           {!loading && followedCourses.length === 0 && (
             <Typography>
-              No course has been followed yet ! Go to{' '}
+              No course has been followed yet ! Go to{" "}
               <Link to={"/browse-courses"}>Browse Courses Page</Link> !
             </Typography>
           )}
