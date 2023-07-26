@@ -1,5 +1,4 @@
 //Author: Shiwen(Lareina) Yang
-
 import { useState, useEffect } from "react";
 import {
   Grid,
@@ -16,10 +15,15 @@ import {
   Chip,
 } from "@mui/material";
 import { Page, PageTitle, CircularProgress } from "../components";
+import { useUser } from '../providers';
+import { handleFollowOrUnfollowQuery } from "../utils"
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
 
 export const BrowseCourses = () => {
+  const { user : currentUser, userDetailRefresh } = useUser();
+  const { _id: userId, followedCourses : followedCoursesIds } = currentUser;
+
   const [loading, setLoading] = useState(true);
   const [searchKey, setSearchKey] = useState("");
   const [courses, setCourses] = useState([]);
@@ -56,7 +60,7 @@ export const BrowseCourses = () => {
 
   const followOnclick = (event, courseId) => {
     event.stopPropagation(); // Prevent the event from propagating to the parent CardActionArea
-    console.log("Follow button onclick", courseId);
+    handleFollowOrUnfollowQuery(userId, courseId, !followedCoursesIds.includes(courseId), userDetailRefresh)
   };
 
   return (
@@ -145,10 +149,10 @@ export const BrowseCourses = () => {
                       disableRipple
                       size="small"
                       variant="outlined"
-                      color="primary"
+                      color={followedCoursesIds.includes(course._id) ? "info" : "primary"}
                       onClick={(event) => followOnclick(event, course._id)}
                     >
-                      Follow
+                      {followedCoursesIds.includes(course._id) ? "Unfollow" : "Follow" }
                     </Button>
                   </CardActions>
                 </Grid>
