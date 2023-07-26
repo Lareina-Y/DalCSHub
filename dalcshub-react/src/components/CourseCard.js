@@ -14,39 +14,37 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useUser } from '../providers';
+import { useNavigate } from 'react-router-dom';
+import { styled } from "@mui/material/styles";
+import { handleFollowOrUnfollowQuery } from "../utils"
 // [4] Default Course Background Image from : 
 // https://www.buytvinternetphone.com/blog/images/programming-the-rca-universal-remote-without-a-code-search-button.jpg
 import defaultCoursebg from "../assets/images/default-course-bg.jpeg";
 
+const MuiCard = styled(Card)(({ deleting }) => ({
+  display: "flex", 
+  flexDirection: "column", 
+  height: "100%",
+  opacity: deleting ? 0 : 1,
+  transition: 'all 1s ease-in',
+}));
+
 export const CourseCard = (props) => {
-  const { userId, courseId, name, flags, creditHours, followed, bgImage } = props;
+  const navigate = useNavigate();
+  const { userId, courseId, title, courseNumber, flags, creditHours, followed, bgImage } = props;
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const { userDetailRefresh } = useUser();
 
-  const handleFollowOnClick = async () => {
-    try {
-      const url = followed ? "/api/user/unfollow": "/api/user/follow";
-      const response = await fetch(url , {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ "userId": userId, "courseId": courseId })
-      });
-      if (response.status === 200) {
-        // TODO: Lareina - Notification message
-      } else {
-        console.error("Failed to follow/unfollow course");
-      }
-      setDialogOpen(false);
-      userDetailRefresh(userId);
-    } catch (error) {
-      console.error(error);
-    }
+  const handleFollowOrUnfollowOnClick = async () => {
+    setDeleting(true);
+    await handleFollowOrUnfollowQuery(userId, courseId, !followed, userDetailRefresh);
+    setDialogOpen(false);
+    setDeleting(false);
   }
 
   const handleLearnMoreOnClick = () => {
-    console.log("go to the Course Detail Page", courseId)
+    navigate(`/course-details/${courseNumber}`);
   }
 
   return (
@@ -60,16 +58,16 @@ export const CourseCard = (props) => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to unfollow <strong>{name}</strong>?
+            Are you sure you want to unfollow <strong>{title}</strong>?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDialogOpen(false)} variant="contained" color="neutral">Discard</Button>
-          <Button onClick={handleFollowOnClick} autoFocus variant="contained">Unfollow</Button>
+          <Button onClick={handleFollowOrUnfollowOnClick} autoFocus variant="contained">Unfollow</Button>
         </DialogActions>
       </Dialog>
 
-      <Card style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      <MuiCard deleting={deleting}>
         <CardMedia
           component="img"
           alt="course background"
@@ -78,7 +76,7 @@ export const CourseCard = (props) => {
         />
         <CardContent style={{ flexGrow: 1 }}>
           <Typography variant="h3" gutterBottom>
-            {name}
+            {title}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Credit hours: {creditHours}
@@ -90,13 +88,13 @@ export const CourseCard = (props) => {
         <CardActions style={{ marginTop: "auto" }}>
           <Button 
             size="small" 
-            onClick={() => { if (followed) { setDialogOpen(true)} else {handleFollowOnClick();} }}
+            onClick={() => { if (followed) { setDialogOpen(true)} else {handleFollowOrUnfollowOnClick();} }}
           >
             {followed ? "UnFollow" : "Follow"}
           </Button>
           <Button size="small" onClick={handleLearnMoreOnClick}>Learn More</Button>
         </CardActions>
-      </Card>
+      </MuiCard>
     </>
   );
 };

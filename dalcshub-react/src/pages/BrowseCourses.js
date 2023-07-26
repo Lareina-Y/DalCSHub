@@ -1,5 +1,4 @@
 //Author: Shiwen(Lareina) Yang
-
 import { useState, useEffect } from "react";
 import {
   Grid,
@@ -15,11 +14,18 @@ import {
   IconButton,
   Chip,
 } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
 import { Page, PageTitle, CircularProgress } from "../components";
+import { useUser } from '../providers';
+import { handleFollowOrUnfollowQuery } from "../utils"
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
 
 export const BrowseCourses = () => {
+  const navigate = useNavigate();
+  const { user : currentUser, userDetailRefresh } = useUser();
+  const { _id: userId, followedCourses : followedCoursesIds } = currentUser;
+
   const [loading, setLoading] = useState(true);
   const [searchKey, setSearchKey] = useState("");
   const [courses, setCourses] = useState([]);
@@ -31,10 +37,10 @@ export const BrowseCourses = () => {
       if (response.status === 200) {
         const result = await response.json();
         setCourses(result.data);
-        setLoading(false);
       } else {
         console.error("Failed to fetch courses");
       }
+      setLoading(false);
     } catch (error) {
       console.error(error);
     }
@@ -54,9 +60,13 @@ export const BrowseCourses = () => {
     setFilteredCourses(newfilteredCourses);
   }, [searchKey, courses]);
 
-  const followOnclick = (event, courseId) => {
+  const followOrUnfollowOnclick = (event, courseId) => {
     event.stopPropagation(); // Prevent the event from propagating to the parent CardActionArea
-    console.log("Follow button onclick", courseId);
+    handleFollowOrUnfollowQuery(userId, courseId, !followedCoursesIds.includes(courseId), userDetailRefresh)
+  };
+
+  const courseCardOnclick = (courseNumber) => {
+    navigate(`/course-details/${courseNumber}`)
   };
 
   return (
@@ -91,7 +101,10 @@ export const BrowseCourses = () => {
         filteredCourses.map((course) => (
           // TODO: Lareina - refactor <CardActionArea> and <CardActions> layout
           <Card key={course._id} variant="outlined">
-            <CardActionArea onClick={() => console.log("detail")} disableRipple>
+            <CardActionArea 
+              onClick={() => courseCardOnclick(course.number)} 
+              disableRipple
+            >
               <Grid
                 container
                 direction="row"
@@ -145,10 +158,10 @@ export const BrowseCourses = () => {
                       disableRipple
                       size="small"
                       variant="outlined"
-                      color="primary"
-                      onClick={(event) => followOnclick(event, course._id)}
+                      color={followedCoursesIds.includes(course._id) ? "info" : "primary"}
+                      onClick={(event) => followOrUnfollowOnclick(event, course._id)}
                     >
-                      Follow
+                      {followedCoursesIds.includes(course._id) ? "Unfollow" : "Follow" }
                     </Button>
                   </CardActions>
                 </Grid>
