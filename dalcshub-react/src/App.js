@@ -9,6 +9,7 @@ import {
   Login,
   Register,
   CourseDetail,
+  CreateComment,
 } from "./pages";
 import { NavBar } from "./components";
 import { ThemeProvider, UserProvider} from "./providers";
@@ -31,6 +32,7 @@ function App() {
             <Route exact path="/course-details/:courseNumber" element={<CourseDetail />} />
             <Route exact path="/faq" element={<FAQ />} />
             <Route exact path="/contact" element={<Contact />} />
+            <Route exact path="/comment/:post_id" element={<CreateComment/>} />
           </Routes>
         </BrowserRouter>
       </UserProvider>
