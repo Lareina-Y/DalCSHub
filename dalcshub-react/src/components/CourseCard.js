@@ -91,7 +91,7 @@ export const CourseCard = (props) => {
             Credit hours: {creditHours}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {flags}
+            {flags.join(", ")}
           </Typography>
         </CardContent>
         <CardActions style={{ marginTop: "auto" }}>
