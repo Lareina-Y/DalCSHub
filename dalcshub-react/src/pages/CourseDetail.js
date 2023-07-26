@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import { Typography, useMediaQuery, Grid, Divider, Button } from "@mui/material";
 import { Page, Post, CircularProgress } from "../components";
-import { useUser } from '../providers';
+import { useUser, useSnackbar } from '../providers';
 import { handleFollowOrUnfollowQuery } from "../utils"
 import "../App.css";
 // [4] Default Course Background Image from : 
@@ -16,6 +16,7 @@ export const CourseDetail = () => {
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const { openSnackbar } = useSnackbar();
   const { user : currentUser, userDetailRefresh } = useUser();
   const { _id: userId, followedCourses : followedCoursesIds } = currentUser;
 
@@ -68,8 +69,14 @@ export const CourseDetail = () => {
   // set button href to create post page with course number
   const createPostHref = `/create-post/${course.number}`;
 
-  const followOrUnfollowOnclick = (courseId) => {
-    handleFollowOrUnfollowQuery(userId, courseId, !followedCoursesIds.includes(courseId), userDetailRefresh)
+  const followOrUnfollowOnclick = async (courseId) => {
+    const response = await handleFollowOrUnfollowQuery(
+      userId, 
+      courseId, 
+      !followedCoursesIds.includes(courseId), 
+      userDetailRefresh
+    )
+    openSnackbar(response.message, response.success ? "success" : "error");
   };
 
   if (loading) return (<CircularProgress fullScreen />);

@@ -19,7 +19,7 @@ export function UserProvider({ children }) {
     updatedAt: '',
   });
 
-  const userDetailRefresh = useCallback( 
+  const userDetailRefresh = useCallback ( 
     async (userId) => {
       const res = await fetch(`/api/user/${userId}`);
       if (res.status === 200) {

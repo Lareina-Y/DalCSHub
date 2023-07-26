@@ -13,7 +13,7 @@ import {
   DialogContentText
 } from "@mui/material";
 import { useState } from "react";
-import { useUser } from '../providers';
+import { useUser, useSnackbar } from '../providers';
 import { useNavigate } from 'react-router-dom';
 import { styled } from "@mui/material/styles";
 import { handleFollowOrUnfollowQuery } from "../utils"
@@ -31,15 +31,24 @@ const MuiCard = styled(Card)(({ deleting }) => ({
 
 export const CourseCard = (props) => {
   const navigate = useNavigate();
+
+  const { userDetailRefresh } = useUser();
+  const { openSnackbar } = useSnackbar();
+
   const { userId, courseId, title, courseNumber, flags, creditHours, followed, bgImage } = props;
   const [dialogOpen, setDialogOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
-  const { userDetailRefresh } = useUser();
-
+  
   const handleFollowOrUnfollowOnClick = async () => {
-    setDeleting(true);
-    await handleFollowOrUnfollowQuery(userId, courseId, !followed, userDetailRefresh);
     setDialogOpen(false);
+    setDeleting(true);
+    const response = await handleFollowOrUnfollowQuery(
+      userId, 
+      courseId, 
+      !followed,
+      userDetailRefresh
+    )
+    openSnackbar(response.message, response.success ? "success" : "error");
     setDeleting(false);
   }
 

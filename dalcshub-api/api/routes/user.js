@@ -14,7 +14,7 @@ router.put("/follow", async (req, res) => {
     if (!userId || !courseId) {
       return res
         .status(404)
-        .json({ success: false, data: "Incorrect Request!" });
+        .json({ success: false, message: "Incorrect Request!" });
     }
 
     const user = await User.findById(userId);
@@ -30,7 +30,7 @@ router.put("/follow", async (req, res) => {
     if (user.followedCourses.includes(courseId)) {
       return res
         .status(409)
-        .json({ message: "User is already following the course" });
+        .json({ success: false, message: "User is already following the course" });
     }
 
     // Update the user's followedCourses array with the course ID
@@ -39,7 +39,7 @@ router.put("/follow", async (req, res) => {
 
     res.json({ success: true, message: "Course followed successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Internal server error!" });
+    res.status(500).json({ success: false, message: "Internal server error!" });
   }
 });
 
@@ -52,7 +52,7 @@ router.put("/unfollow", async (req, res) => {
     if (!userId || !courseId) {
       return res
         .status(404)
-        .json({ success: false, data: "Incorrect Request!" });
+        .json({ success: false, message: "Incorrect Request!" });
     }
 
     const user = await User.findById(userId);
@@ -68,7 +68,7 @@ router.put("/unfollow", async (req, res) => {
     if (!user.followedCourses.includes(courseId)) {
       return res
         .status(409)
-        .json({ message: "User is not following the course" });
+        .json({ success: false, message: "User is not following the course" });
     }
 
     // Update the user's followedCourses array without the course ID
@@ -77,7 +77,7 @@ router.put("/unfollow", async (req, res) => {
 
     res.json({ success: true, message: "Course unfollowed successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Internal server error!" });
+    res.status(500).json({ success: false, message: "Internal server error!" });
   }
 });
 

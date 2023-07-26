@@ -1,9 +1,9 @@
 
-
+// Lareina: The Request to update the Follow status
 export const handleFollowOrUnfollowQuery = async (userId, courseId, isFollowQuery, userDetailRefresh) => {
     try {
       const url = isFollowQuery ? "/api/user/follow" : "/api/user/unfollow";
-      const response = await fetch(url , {
+      const response = await fetch (url , {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -11,12 +11,12 @@ export const handleFollowOrUnfollowQuery = async (userId, courseId, isFollowQuer
         body: JSON.stringify({ "userId": userId, "courseId": courseId })
       });
       if (response.status === 200) {
-        // TODO: Lareina - Notification message
-      } else {
-        console.error("Failed to follow/unfollow course");
-      }
-      userDetailRefresh(userId);
+        userDetailRefresh(userId);
+      } 
+      const result = await response.json();
+      return result;
     } catch (error) {
       console.error(error);
+      throw error;
     }
-  }
+}
