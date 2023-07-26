@@ -2,17 +2,28 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Typography, useMediaQuery, Grid, Divider, Button } from "@mui/material";
-import { Page, Post } from "../components";
 import { useTheme } from "@mui/material/styles";
-import bg1 from "../assets/images/bg1.jpg";
-
+import { Typography, useMediaQuery, Grid, Divider, Button } from "@mui/material";
+import { Page, Post, CircularProgress } from "../components";
+import { useUser } from '../providers';
+import { handleFollowOrUnfollowQuery } from "../utils"
 import "../App.css";
+// [4] Default Course Background Image from : 
+// https://www.buytvinternetphone.com/blog/images/programming-the-rca-universal-remote-without-a-code-search-button.jpg
+import defaultCoursebg from "../assets/images/default-course-bg.jpeg";
+
 
 export const CourseDetail = () => {
+  const theme = useTheme();
+  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const { user : currentUser, userDetailRefresh } = useUser();
+  const { _id: userId, followedCourses : followedCoursesIds } = currentUser;
+
   const { courseNumber } = useParams();
-  const [posts, setPosts] = useState([]);
-  const [course, setCourse] = useState({});
+  const [ posts, setPosts ] = useState([]);
+  const [ course, setCourse ] = useState({});
+  const [ loading, setLoading ] = useState(true);
 
   // get and identify course to display based on course number
   const getCourseDetails = async (courseNumber) => {
@@ -48,9 +59,13 @@ export const CourseDetail = () => {
   };
 
   useEffect(() => {
-    getPosts();
-    getCourseDetails(courseNumber);
-  }, []);
+    const fetchData = async () => {
+        await getCourseDetails(courseNumber);
+        await getPosts();
+        setLoading(false);
+    };
+    fetchData();
+  }, [courseNumber]);
 
   // filter posts for display based on course number
   const postsFromCourse = posts.filter((post) => post.courseId === course.number);
@@ -58,12 +73,18 @@ export const CourseDetail = () => {
   // set button href to create post page with course number
   const createPostHref = `/create-post/${course.number}`;
 
+  const followOrUnfollowOnclick = (courseId) => {
+    handleFollowOrUnfollowQuery(userId, courseId, !followedCoursesIds.includes(courseId), userDetailRefresh)
+  };
+
+  if (loading) return (<CircularProgress fullScreen />);
+
   return (
     <Page>
       <Grid
         container
         style={{
-          backgroundImage: `url(${bg1})`,
+          backgroundImage: `url(${course.image ?? defaultCoursebg})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           width: "100%",
@@ -79,13 +100,13 @@ export const CourseDetail = () => {
           sx={{ textAlign: "left", marginBottom: "0px" }}
         >
           <Typography
-            variant="h2"
+            variant="h1"
             gutterBottom
             sx={{
               textShadow: "1px 1px 3px rgba(0, 0, 0, 1)",
               color: "white",
               fontWeight: 500,
-              fontSize: useMediaQuery(useTheme().breakpoints.down("sm")) ? "3em" : "5em",
+              fontSize: smallScreen ? "2em" : "3em",
             }}
           >
             {course.title}
@@ -93,7 +114,11 @@ export const CourseDetail = () => {
         </Grid>
       </Grid>
       <Grid container spacing={2} style={{ padding: "1em", marginBottom: "15px" }}>
-        <Grid item sm={3} xs={12}>
+        {/* TODO: kent - connect to backend */}
+        <Grid item xs={12} sm={5} md={3}>
+          <Typography variant="body1" gutterBottom>
+            <b>Number:</b> {course.subject} {course.number}
+          </Typography>
           <Typography variant="body1" gutterBottom>
             <b>Instructor:</b> Dr. Marriot Klassen
           </Typography>
@@ -104,13 +129,12 @@ export const CourseDetail = () => {
             <b>Status:</b> Active - Summer 2023
           </Typography>
         </Grid>
-        <Grid item sm={6} xs={12}>
+        <Grid item xs={12} sm={7} md={6}>
           <Typography variant="body1" gutterBottom>
             {course.description}
           </Typography>
         </Grid>
-
-        <Grid item sm={3} xs={12}>
+        <Grid item xs={12} sm={12} md={3}>
           <Button
             style={{ marginBottom: "1em" }}
             variant="contained"
@@ -121,8 +145,14 @@ export const CourseDetail = () => {
           >
             Create Post
           </Button>
-          <Button variant="contained" size="large" color="secondary" href="" fullWidth>
-            Follow Course
+          <Button 
+            variant="contained" 
+            size="large" 
+            color="secondary" 
+            onClick={() => followOrUnfollowOnclick(course._id)} 
+            fullWidth
+          >
+            {followedCoursesIds.includes(course._id) ? "Unfollow" : "Follow" }
           </Button>
         </Grid>
       </Grid>
@@ -131,6 +161,7 @@ export const CourseDetail = () => {
 
       {postsFromCourse.map((post) => (
         <Post
+          key={post._id}
           postTitle={post.postTitle}
           postDate={post.timeCreated}
           postAuthor={post.postAuthor}
@@ -138,6 +169,10 @@ export const CourseDetail = () => {
           postRating={post.postRating}
         ></Post>
       ))}
+      {postsFromCourse.length === 0 &&
+        <Typography variant="body1" sx={{ paddingTop: "20px" }}>
+          There is no posts yet !
+        </Typography>}
     </Page>
   );
 };
