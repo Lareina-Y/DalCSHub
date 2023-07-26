@@ -81,7 +81,6 @@ export const Login = () => {
       const result = await res.json();
       setUser(result.data);
 
-      window.alert("Login Successful");
       navigate("/main");
     } else {
       console.log("At least one of the fields is invalid from front end");
