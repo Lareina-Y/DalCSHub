@@ -31,10 +31,10 @@ export const BrowseCourses = () => {
       if (response.status === 200) {
         const result = await response.json();
         setCourses(result.data);
-        setLoading(false);
       } else {
         console.error("Failed to fetch courses");
       }
+      setLoading(false);
     } catch (error) {
       console.error(error);
     }

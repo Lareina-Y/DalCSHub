@@ -2,9 +2,8 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import { Tabs, Tab, Typography, Box, Grid } from "@mui/material";
-import { Page, PageTitle, CourseCard } from "../components";
+import { Page, PageTitle, CourseCard, CircularProgress } from "../components";
 import { useUser } from '../providers';
-// [3] Background Images from : https://github.com/wrappixel/materialpro-react-lite/tree/master/package/src/assets/images/bg
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -25,6 +24,7 @@ export const MainFeed = () => {
   const { _id: userId, followedCourses : followedCoursesIds } = currentUser;
 
   const [tabIndex, setTabIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
   const [followedCourses, setFollowedCourses] = useState([]);
 
   const fetchFollowedCourses = async (followedCoursesIds) => {
@@ -42,6 +42,7 @@ export const MainFeed = () => {
       } else {
         console.error("Failed to fetch courses");
       }
+      setLoading(false);
     } catch (error) {
       console.error(error);
     }
@@ -68,7 +69,8 @@ export const MainFeed = () => {
           </Tabs>
         </Box>
         <TabPanel value={tabIndex} index={0} style={{ paddingBottom: "10px" }}>
-          {followedCourses.length > 0 ? (
+          {loading && <CircularProgress fullScreen />}
+          {!loading && followedCourses.length > 0 && (
             <Grid
               container
               direction="row"
@@ -80,7 +82,8 @@ export const MainFeed = () => {
                   <CourseCard
                     userId={userId}
                     courseId={course._id}
-                    name={course.subject + ' ' + course.number + ' ' + course.title}
+                    courseNumber={course.number}
+                    title={course.subject + ' ' + course.number + ' ' + course.title}
                     creditHours={course.credit_hours}
                     flags={course.flags}
                     followed={true}
@@ -89,7 +92,8 @@ export const MainFeed = () => {
                 </Grid>
               ))}
             </Grid>
-          ) : (
+          )} 
+          {!loading && followedCourses.length === 0 && (
             <Typography>
               No course has been followed yet ! Go to{' '}
               <Link to={"/browse-courses"}>Browse Courses Page</Link> !

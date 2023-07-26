@@ -14,12 +14,14 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useUser } from '../providers';
+import { useNavigate } from 'react-router-dom';
 // [4] Default Course Background Image from : 
 // https://www.buytvinternetphone.com/blog/images/programming-the-rca-universal-remote-without-a-code-search-button.jpg
 import defaultCoursebg from "../assets/images/default-course-bg.jpeg";
 
 export const CourseCard = (props) => {
-  const { userId, courseId, name, flags, creditHours, followed, bgImage } = props;
+  const navigate = useNavigate();
+  const { userId, courseId, title, courseNumber, flags, creditHours, followed, bgImage } = props;
   const [dialogOpen, setDialogOpen] = useState(false);
   const { userDetailRefresh } = useUser();
 
@@ -46,7 +48,7 @@ export const CourseCard = (props) => {
   }
 
   const handleLearnMoreOnClick = () => {
-    console.log("go to the Course Detail Page", courseId)
+    navigate(`/course-details/${courseNumber}`);
   }
 
   return (
@@ -60,7 +62,7 @@ export const CourseCard = (props) => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to unfollow <strong>{name}</strong>?
+            Are you sure you want to unfollow <strong>{title}</strong>?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -78,7 +80,7 @@ export const CourseCard = (props) => {
         />
         <CardContent style={{ flexGrow: 1 }}>
           <Typography variant="h3" gutterBottom>
-            {name}
+            {title}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Credit hours: {creditHours}
