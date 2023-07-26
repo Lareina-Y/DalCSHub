@@ -145,4 +145,24 @@ router.post('/signin', async(req, res) => {
     }
 })
 
+//Lareina: Get user detail by id
+router.get('/:id', async(req, res) => {
+  const userId = req.params.id;
+    try {
+        if(!userId) {
+            return res.status(404).json({success: false, data: "Incorrect Request!"});
+        }
+    } catch(err) {
+        return res.status(500).json({message: "Internal server error!"});
+    }
+
+    try {
+      User.findById(userId)
+        .then((user) => res.status(200).json({ success: true, data: user}))
+        .catch((err) => res.status(500).json({ success: false, error: 'Error fetching user by Id' }));
+    } catch (error) {
+      return res.status(500).json({ success: false, message: "Failed to user by Id" });
+    }
+})
+
 module.exports = router;

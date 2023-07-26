@@ -13,6 +13,7 @@ import {
   DialogContentText
 } from "@mui/material";
 import { useState } from "react";
+import { useUser } from '../providers';
 // [4] Default Course Background Image from : 
 // https://www.buytvinternetphone.com/blog/images/programming-the-rca-universal-remote-without-a-code-search-button.jpg
 import defaultCoursebg from "../assets/images/default-course-bg.jpeg";
@@ -20,23 +21,25 @@ import defaultCoursebg from "../assets/images/default-course-bg.jpeg";
 export const CourseCard = (props) => {
   const { userId, courseId, name, flags, creditHours, followed, bgImage } = props;
   const [dialogOpen, setDialogOpen] = useState(false);
+  const { userDetailRefresh } = useUser();
 
   const handleFollowOnClick = async () => {
     try {
       const url = followed ? "/api/user/unfollow": "/api/user/follow";
       const response = await fetch(url , {
-        method: 'POST',
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ "userId": userId, "courseId": courseId })
       });
       if (response.status === 200) {
-        console.log("ok");
+        // TODO: Lareina - Notification message
       } else {
         console.error("Failed to follow/unfollow course");
       }
       setDialogOpen(false);
+      userDetailRefresh(userId);
     } catch (error) {
       console.error(error);
     }
