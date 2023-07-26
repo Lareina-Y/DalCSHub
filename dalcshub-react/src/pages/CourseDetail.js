@@ -4,25 +4,24 @@ import { useParams } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import { Typography, useMediaQuery, Grid, Divider, Button } from "@mui/material";
 import { Page, Post, CircularProgress } from "../components";
-import { useUser } from '../providers';
-import { handleFollowOrUnfollowQuery } from "../utils"
+import { useUser } from "../providers";
+import { handleFollowOrUnfollowQuery } from "../utils";
 import "../App.css";
-// [4] Default Course Background Image from : 
+// [4] Default Course Background Image from :
 // https://www.buytvinternetphone.com/blog/images/programming-the-rca-universal-remote-without-a-code-search-button.jpg
 import defaultCoursebg from "../assets/images/default-course-bg.jpeg";
-
 
 export const CourseDetail = () => {
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const { user : currentUser, userDetailRefresh } = useUser();
-  const { _id: userId, followedCourses : followedCoursesIds } = currentUser;
+  const { user: currentUser, userDetailRefresh } = useUser();
+  const { _id: userId, followedCourses: followedCoursesIds } = currentUser;
 
   const { courseNumber } = useParams();
-  const [ posts, setPosts ] = useState([]);
-  const [ course, setCourse ] = useState({});
-  const [ loading, setLoading ] = useState(true);
+  const [posts, setPosts] = useState([]);
+  const [course, setCourse] = useState({});
+  const [loading, setLoading] = useState(true);
 
   // get and identify course to display based on course number
   const getCourseDetails = async (courseNumber) => {
@@ -58,9 +57,9 @@ export const CourseDetail = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-        await getCourseDetails(courseNumber);
-        await getPostsByCourse(courseNumber);
-        setLoading(false);
+      await getCourseDetails(courseNumber);
+      await getPostsByCourse(courseNumber);
+      setLoading(false);
     };
     fetchData();
   }, [courseNumber]);
@@ -69,10 +68,15 @@ export const CourseDetail = () => {
   const createPostHref = `/create-post/${course.number}`;
 
   const followOrUnfollowOnclick = (courseId) => {
-    handleFollowOrUnfollowQuery(userId, courseId, !followedCoursesIds.includes(courseId), userDetailRefresh)
+    handleFollowOrUnfollowQuery(
+      userId,
+      courseId,
+      !followedCoursesIds.includes(courseId),
+      userDetailRefresh
+    );
   };
 
-  if (loading) return (<CircularProgress fullScreen />);
+  if (loading) return <CircularProgress fullScreen />;
 
   return (
     <Page>
@@ -115,7 +119,7 @@ export const CourseDetail = () => {
             <b>Number:</b> {course.subject} {course.number}
           </Typography>
           <Typography variant="body1" gutterBottom>
-            <b>Instructor:</b> Dr. Marriot Klassen
+            <b>Instructor:</b> Dr. Jane Doe
           </Typography>
           <Typography variant="body1" gutterBottom>
             <b>Offering:</b> Fall/Winter/Summer
@@ -140,14 +144,14 @@ export const CourseDetail = () => {
           >
             Create Post
           </Button>
-          <Button 
-            variant="contained" 
-            size="large" 
-            color="secondary" 
-            onClick={() => followOrUnfollowOnclick(course._id)} 
+          <Button
+            variant="contained"
+            size="large"
+            color="secondary"
+            onClick={() => followOrUnfollowOnclick(course._id)}
             fullWidth
           >
-            {followedCoursesIds.includes(course._id) ? "Unfollow" : "Follow" }
+            {followedCoursesIds.includes(course._id) ? "Unfollow" : "Follow"}
           </Button>
         </Grid>
       </Grid>
@@ -164,10 +168,11 @@ export const CourseDetail = () => {
           postRating={post.postRating}
         ></Post>
       ))}
-      {posts.length === 0 &&
+      {posts.length === 0 && (
         <Typography variant="body1" sx={{ paddingTop: "20px" }}>
-          There is no posts yet !
-        </Typography>}
+          There are no posts yet!
+        </Typography>
+      )}
     </Page>
   );
 };
