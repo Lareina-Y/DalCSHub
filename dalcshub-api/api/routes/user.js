@@ -89,7 +89,7 @@ router.post('/x', async(req, res) => {
     const {firstName, lastName, type, email, password} = req.body
 
     if( !firstName || !lastName || !type || !email || !password ){
-        return res.status(422).json({ error: "Atleast one of field is missing" });
+        return res.status(422).json({ error: "At least one of field is missing" });
     }
 
     try {
@@ -130,7 +130,7 @@ router.post('/signin', async(req, res) => {
         if(userLogin){
 
             if(password === userLogin.password){
-                res.json({message: "Signin Successful :)"})
+                res.status(200).json({message: "Signin Successful :)", data: userLogin})
             }
             else{
                 res.status(400).json({error: "Invalid Credentails :( "})

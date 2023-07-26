@@ -1,8 +1,12 @@
+//Author: Shiwen(Lareina) Yang
 import { createTheme } from "@mui/material/styles";
 
 const PaletteConfiguration = {
   primary: {
     main: "#962061",
+  },
+  neutral: {
+    main: "#F0F4F7"
   },
   background: {
     default: "#FFFFFF",
