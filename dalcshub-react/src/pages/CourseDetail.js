@@ -149,7 +149,6 @@ export const CourseDetail = () => {
             style={{ marginBottom: "1em" }}
             variant="contained"
             size="large"
-            color="primary"
             href={createPostHref}
             fullWidth
           >
@@ -158,7 +157,6 @@ export const CourseDetail = () => {
           <Button
             variant="contained"
             size="large"
-            color="secondary"
             onClick={() => followOrUnfollowOnclick(course._id)}
             fullWidth
           >
@@ -178,7 +176,7 @@ export const CourseDetail = () => {
           postDescription={post.postDescription}
           postRating={post.postRating}
         >
-          <Button variant="contained" color="primary" onClick={() => handlePostClick(post._id)}>
+          <Button variant="contained" onClick={() => handlePostClick(post._id)}>
             Reply
           </Button>
         </Post>
