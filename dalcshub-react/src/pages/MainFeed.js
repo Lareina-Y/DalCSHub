@@ -1,9 +1,21 @@
+<<<<<<< Updated upstream
 //Author: Shiwen(Lareina) Yang
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Tabs, Tab, Typography, Box, Grid } from "@mui/material";
 import { Page, PageTitle, CourseCard, CircularProgress } from "../components";
 import { useUser } from "../providers";
+=======
+//Author: Shiwen(Lareina) Yang & Khaled Al-Mahbashi
+import { Link } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { Tabs, Tab, Typography, Box, Grid } from "@mui/material";
+import { Page, PageTitle, CourseCard, CircularProgress } from "../components";
+import { useUser } from '../providers';
+import { Post } from '../components';
+
+
+>>>>>>> Stashed changes
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -52,6 +64,7 @@ export const MainFeed = () => {
     fetchFollowedCourses(followedCoursesIds);
   }, [followedCoursesIds]);
 
+<<<<<<< Updated upstream
   // store current user in local storage
   useEffect(() => {
     const storedUser = localStorage.getItem("currentUser");
@@ -62,6 +75,50 @@ export const MainFeed = () => {
     }
   }, [currentUser]);
 
+=======
+  // Khaled: fetching saved posts by Id, lines (58-98 and some lines in return)
+  
+  const [savedPosts, setSavedPosts] = useState([]);
+
+  useEffect(() => {
+    // Call the backend API to retrieve the saved post IDs
+    fetchSavedPosts().then((savedPostIds) => {
+      setSavedPosts(savedPostIds);
+    });
+  }, []);
+
+  // Function to fetch the saved post IDs from the User API
+  const fetchSavedPosts = async () => {
+    try {
+      const userId = userId;
+      const response = await fetch(`/api/user/savedPosts`);
+
+      if (response.ok) {
+        const data = await response.json();
+        return data; // Return the array of saved post IDs
+      } else {
+        console.error('Failed to fetch saved posts:', response.status);
+        return []; // Return empty array 
+      }
+    } catch (err) {
+      console.error('Error fetching saved posts:', err);
+      return []; // Return empty array 
+    }
+  };
+
+  // Fetch the post information using the post ID from the Post API
+  const getPostById = async (postId) => {
+    try {
+      // Call the backend API to get the post by ID
+      const response = await fetch(`/api/post/${postId}`);
+      const data = await response.json();
+      return data;
+    } catch (err) {
+      console.error('Error fetching post:', err);
+      return null;
+    }
+  };
+>>>>>>> Stashed changes
   return (
     <Page>
       <PageTitle title={"Main Feed"} link={"/"} />
@@ -106,7 +163,13 @@ export const MainFeed = () => {
           )}
         </TabPanel>
         <TabPanel value={tabIndex} index={1}>
-          <Typography>No post has been saved yet !</Typography>
+          {/* <Typography>No post has been saved yet !</Typography> */}
+          <Typography>Saved Posts</Typography>
+          {savedPosts.map((postId) => (
+            <div key={postId}>
+              <Post post={getPostById(postId)} />
+            </div>
+          ))}          
         </TabPanel>
       </Box>
     </Page>

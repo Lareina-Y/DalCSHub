@@ -1,4 +1,4 @@
-// Authors: Kent Chew
+// Authors: Kent Chew & Khaled Al-Mahbashi
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -12,10 +12,6 @@ const postSchema = new Schema({
   courseId: { type: Number, required: true },
 });
 
-<<<<<<< HEAD
 const Post = mongoose.model("posts", postSchema);
-=======
-const Post = mongoose.model("Post", postSchema);
->>>>>>> bdcf47e (created post model)
 
 module.exports = Post;
