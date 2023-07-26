@@ -18,7 +18,6 @@ export const CourseDetail = () => {
   const getCourseDetails = async (courseNumber) => {
     try {
       const response = await fetch(`/api/course/${courseNumber}`);
-      console.log(response.status);
       if (response.status === 200) {
         const result = await response.json();
         setCourse(result.data);
@@ -31,10 +30,10 @@ export const CourseDetail = () => {
     }
   };
 
-  // get all posts from API
-  const getPosts = async () => {
+  // get post based on course number
+  const getPostsByCourse = async (courseNumber) => {
     try {
-      const response = await fetch("/api/post");
+      const response = await fetch(`/api/post/course/${courseNumber}`);
       if (response.status === 200) {
         const result = await response.json();
         setPosts(result.data);
@@ -48,12 +47,9 @@ export const CourseDetail = () => {
   };
 
   useEffect(() => {
-    getPosts();
     getCourseDetails(courseNumber);
+    getPostsByCourse(courseNumber);
   }, []);
-
-  // filter posts for display based on course number
-  const postsFromCourse = posts.filter((post) => post.courseId === course.number);
 
   // set button href to create post page with course number
   const createPostHref = `/create-post/${course.number}`;
@@ -129,7 +125,7 @@ export const CourseDetail = () => {
 
       <Divider />
 
-      {postsFromCourse.map((post) => (
+      {posts.map((post) => (
         <Post
           postTitle={post.postTitle}
           postDate={post.timeCreated}
