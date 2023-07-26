@@ -21,6 +21,29 @@ router.get("/all", async (req, res) => {
   }
 });
 
+// Lareina: Get call to fetch specific courses based on ids
+router.get("/get_by_ids", async (req, res) => {
+    const body = req.body;
+
+    try {
+      if (!body || Object.keys(body).length == 0 || !Array.isArray(body.courseIds)) {
+        return res.status(400).json({ success: false,  error: 'Incorrect Request!' });
+      }
+    } catch (err) {
+      return res.status(500).json({ message: "Internal server error!" });
+    }
+
+    try {
+      Course.find({ _id: { $in: body.courseIds } })
+        .sort({ number: 1 })
+        .then((courses) => res.status(200).json({ success: true, data: courses}))
+        .catch((err) => res.status(500).json({ success: false, error: 'Error fetching courses' }));
+    } catch (error) {
+      console.log(error)
+      return res.status(500).json({ success: false, message: "Failed to fetch courses" });
+    }
+});
+
 // Lareina: POST call to create a new course
 router.post("/add", async (req, res) => {
   const body = req.body;
