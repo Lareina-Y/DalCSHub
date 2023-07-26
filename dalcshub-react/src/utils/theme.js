@@ -5,6 +5,9 @@ const PaletteConfiguration = {
   primary: {
     main: "#962061",
   },
+  neutral: {
+    main: "#F0F4F7"
+  },
   background: {
     default: "#FFFFFF",
     secondary: "#962061",

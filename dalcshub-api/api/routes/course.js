@@ -21,8 +21,8 @@ router.get("/all", async (req, res) => {
   }
 });
 
-// Lareina: Get call to fetch specific courses based on ids
-router.get("/get_by_ids", async (req, res) => {
+// Lareina: Post call to fetch specific courses based on ids
+router.post("/get_by_ids", async (req, res) => {
     const body = req.body;
 
     try {
