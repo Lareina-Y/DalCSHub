@@ -73,10 +73,9 @@ export const CourseDetail = () => {
     navigate(`/comment/:${post_id}`);
   };
 
-  console.log(posts);
-
-  // set button href to create post page with course number
-  const createPostHref = `/create-post/${course.number}`;
+  const handleCreatePostClick = () => {
+    navigate(`/create-post/${courseNumber}`);
+  };
 
   const followOrUnfollowOnclick = async (courseId) => {
     const response = await handleFollowOrUnfollowQuery(
@@ -151,7 +150,7 @@ export const CourseDetail = () => {
             variant="contained"
             size="large"
             color="secondary"
-            href={createPostHref}
+            onClick={handleCreatePostClick}
             fullWidth
           >
             Create Post

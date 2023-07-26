@@ -1,7 +1,7 @@
 // Author: Kent Chew
 
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Typography, useMediaQuery, TextField, Grid, Divider, Button } from "@mui/material";
 import { Page } from "../components";
 import { useTheme } from "@mui/material/styles";
@@ -24,6 +24,7 @@ export const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [course, setCourse] = useState({});
+  const navigate = useNavigate();
 
   // extract user from local storage for author details
   const userFromStorage = JSON.parse(localStorage.getItem("currentUser"));
@@ -85,6 +86,10 @@ export const CreatePost = () => {
     } catch (error) {
       console.error("Error creating post:", error);
     }
+  };
+
+  const handleBackButtonClick = () => {
+    navigate(`/course-details/${courseNumber}`);
   };
 
   useEffect(() => {
@@ -195,7 +200,7 @@ export const CreatePost = () => {
               Submit
             </Button>
             <Button
-              href={cancelHref}
+              onClick={handleBackButtonClick}
               size="large"
               variant="contained"
               style={{ margin: "0 1em 1em 0" }}
