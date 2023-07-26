@@ -1,4 +1,4 @@
-// Authors: Shiwen(Lareina)
+// Authors: Shiwen(Lareina), Kent
 
 const express = require("express");
 const Course = require("../models/course");

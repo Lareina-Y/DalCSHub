@@ -1,4 +1,4 @@
-// Authors: Shiwen(Lareina)
+// Authors: Shiwen(Lareina), Vrund Patel
 
 const express = require("express");
 const User = require("../models/user");
