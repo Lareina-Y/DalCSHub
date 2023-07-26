@@ -21,11 +21,11 @@ import { handleFollowOrUnfollowQuery } from "../utils"
 // https://www.buytvinternetphone.com/blog/images/programming-the-rca-universal-remote-without-a-code-search-button.jpg
 import defaultCoursebg from "../assets/images/default-course-bg.jpeg";
 
-const MuiCard = styled(Card)(({ deleting }) => ({
+const MuiCard = styled(Card)(({ opacity }) => ({
   display: "flex", 
   flexDirection: "column", 
   height: "100%",
-  opacity: deleting ? 0 : 1,
+  opacity: opacity,
   transition: 'all 1s ease-in',
 }));
 
@@ -76,7 +76,7 @@ export const CourseCard = (props) => {
         </DialogActions>
       </Dialog>
 
-      <MuiCard deleting={deleting}>
+      <MuiCard opacity={deleting ? 0 : 1}>
         <CardMedia
           component="img"
           alt="course background"
