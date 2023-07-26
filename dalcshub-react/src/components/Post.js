@@ -7,27 +7,26 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { useState, useEffect } from "react";
 
 export const Post = (props) => {
-  const { postTitle, postAuthor, postDate, postDescription, postRating, children } =
-    props;
+  const { postTitle, postAuthor, postDate, postDescription, postRating, children } = props;
 
   const [posts, setPosts] = useState([]);
   const [likes, setLikes] = useState(postRating);
 
+  // convert postDate to just show YYYY-MM-DD as string
+  const formattedDate = new Date(postDate).toISOString().slice(0, 10);
+
   const handleLike = (title) => {
     let requiredPost = posts.filter((post) => post.postTitle === title);
-    setLikes(requiredPost[0].postRating + 1)
+    setLikes(requiredPost[0].postRating + 1);
   };
 
   const handleDisLike = (title) => {
     let requiredPost = posts.filter((post) => post.postTitle === title);
-    if(likes - 1 > 0){
-      setLikes(requiredPost[0].postRating - 1)
+    if (likes - 1 > 0) {
+      setLikes(requiredPost[0].postRating - 1);
+    } else {
+      setLikes(0);
     }
-    else{
-      setLikes(0)
-    }
-   
-
   };
 
   const getLatest = async () => {
@@ -36,7 +35,6 @@ export const Post = (props) => {
       if (response.status === 200) {
         const result = await response.json();
         setPosts(result.data);
-
       } else {
         console.error("Failed");
       }
@@ -46,8 +44,8 @@ export const Post = (props) => {
   };
 
   useEffect(() => {
-   getLatest()
-}, [handleLike,handleDisLike]);
+    getLatest();
+  }, [handleLike, handleDisLike]);
 
   return (
     <Grid container spacing={2} style={{ padding: "1em", marginTop: "15px" }}>
@@ -58,14 +56,10 @@ export const Post = (props) => {
               {postTitle}
             </Typography>
             <Typography variant="subtitle2" gutterBottom>
-              posted {postDate} by {postAuthor}
+              posted {formattedDate} by {postAuthor}
             </Typography>
             <Divider />
-            <Typography
-              variant="body1"
-              gutterBottom
-              style={{ margin: "1vh 0 1vh 0" }}
-            >
+            <Typography variant="body1" gutterBottom style={{ margin: "1vh 0 1vh 0" }}>
               {postDescription}
             </Typography>
           </Grid>
@@ -81,13 +75,23 @@ export const Post = (props) => {
               <IconButton size="large" color="secondary" href="">
                 <BookmarkBorderIcon />
               </IconButton>
-              <IconButton size="large" color="secondary" href="" onClick={() => handleLike(postTitle)}>
+              <IconButton
+                size="large"
+                color="secondary"
+                href=""
+                onClick={() => handleLike(postTitle)}
+              >
                 <ArrowUpwardIcon />
               </IconButton>
               <Typography variant="h6" gutterBottom>
                 {likes}
               </Typography>
-              <IconButton size="large" color="secondary" href="" onClick={() => handleDisLike(postTitle)}>
+              <IconButton
+                size="large"
+                color="secondary"
+                href=""
+                onClick={() => handleDisLike(postTitle)}
+              >
                 <ArrowDownwardIcon />
               </IconButton>
               {children}
