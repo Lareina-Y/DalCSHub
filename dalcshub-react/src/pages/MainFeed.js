@@ -11,8 +11,8 @@ const TabPanel = (props) => {
   return (
     <div role="tabpanel" hidden={value !== index} {...other}>
       {value === index && (
-        <Box sx={{ pt: 3 }}>
-          <Typography>{children}</Typography>
+        <Box sx={{ pt: 3, pb: "10px" }}>
+          {children}
         </Box>
       )}
     </div>
@@ -68,7 +68,7 @@ export const MainFeed = () => {
             <Tab label="Saved Posts" />
           </Tabs>
         </Box>
-        <TabPanel value={tabIndex} index={0} style={{ paddingBottom: "10px" }}>
+        <TabPanel value={tabIndex} index={0}>
           {loading && <CircularProgress fullScreen />}
           {!loading && followedCourses.length > 0 && (
             <Grid
