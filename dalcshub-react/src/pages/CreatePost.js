@@ -1,28 +1,82 @@
-import { useState } from "react";
-import {
-  Typography,
-  useMediaQuery,
-  TextField,
-  Grid,
-  Divider,
-  Button,
-} from "@mui/material";
-import { Page, PageTitle } from "../components";
+// Author: Kent Chew
+
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Typography, useMediaQuery, TextField, Grid, Divider, Button } from "@mui/material";
+import { Page } from "../components";
 import { useTheme } from "@mui/material/styles";
 import bg1 from "../assets/images/bg1.jpg";
 
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-
 import "../App.css";
-import { flushSync } from "react-dom";
 
 export const CreatePost = () => {
-  const [value, setValue] = useState(0);
+  const { courseNumber } = useParams();
+  const [title, setTitle] = useState("");
+  const [message, setMessage] = useState("");
+  const [course, setCourse] = useState({});
 
-  const handleChange = (_, newValue) => {
-    setValue(newValue);
+  // get and identify course to display based on course number
+  const getCourseDetails = async (courseNumber) => {
+    try {
+      const response = await fetch(`/api/course/${courseNumber}`);
+      console.log(response.status);
+      if (response.status === 200) {
+        const result = await response.json();
+        setCourse(result.data);
+        console.log("Course details: ", result);
+      } else {
+        console.error("Failed");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  // access localStorage to get user information
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
+
+  const handleMessageChange = (event) => {
+    setMessage(event.target.value);
+  };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const res = await fetch("/api/post/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: title,
+          message: message,
+          author: "Jane Doe", // REPLACE WITH USER FROM LOCAL STORAGE
+          date: new Date().toISOString(),
+          courseId: course.number,
+        }),
+      });
+
+      const data = await res.json();
+      console.log("Successfully created post: ", data);
+
+      // clear form after successful submission
+      setTitle("");
+      setMessage("");
+    } catch (error) {
+      console.error("Error creating post:", error);
+    }
+  };
+
+  useEffect(() => {
+    getCourseDetails(courseNumber);
+  }, []);
+
+  // set cancel button href to return to course detail page
+  const cancelHref = `/course-details/${course.number}`;
 
   return (
     <Page>
@@ -51,24 +105,18 @@ export const CreatePost = () => {
               textShadow: "1px 1px 3px rgba(0, 0, 0, 1)",
               color: "white",
               fontWeight: 500,
-              fontSize: useMediaQuery(useTheme().breakpoints.down("sm"))
-                ? "3em"
-                : "5em",
+              fontSize: useMediaQuery(useTheme().breakpoints.down("sm")) ? "3em" : "5em",
             }}
           >
-            CSCI 4177: Advanced Web Services
+            {course.title}
           </Typography>
         </Grid>
       </Grid>
 
-      <Grid
-        container
-        spacing={2}
-        style={{ padding: "1em", marginBottom: "15px" }}
-      >
+      <Grid container spacing={2} style={{ padding: "1em", marginBottom: "15px" }}>
         <Grid item sm={3} xs={12}>
           <Typography variant="body1" gutterBottom>
-            <b>Instructor:</b> INSTRUCTOR NAME
+            <b>Instructor:</b> Dr. Marriot Klassen
           </Typography>
           <Typography variant="body1" gutterBottom>
             <b>Offering:</b> Fall/Winter/Summer
@@ -79,10 +127,7 @@ export const CreatePost = () => {
         </Grid>
         <Grid item sm={9} xs={12}>
           <Typography variant="body1" gutterBottom>
-            This course provides a hands-on learning environment for advanced
-            web development techniques, such as HTML5 APIs for the creation of
-            dynamic web graphics as well as adding offline functionality to web
-            applications and documentation.
+            {course.description}
           </Typography>
         </Grid>
       </Grid>
@@ -104,13 +149,15 @@ export const CreatePost = () => {
 
           <Divider />
 
-          <form>
+          <form onSubmit={handleSubmit}>
             <TextField
               style={{ margin: "1em 0 1em 0" }}
               label="Title"
               variant="outlined"
               required
               fullWidth
+              value={title}
+              onChange={handleTitleChange}
             />
             <TextField
               style={{ marginBottom: "1em" }}
@@ -120,14 +167,26 @@ export const CreatePost = () => {
               variant="outlined"
               required
               fullWidth
+              value={message}
+              onChange={handleMessageChange}
             />
             <Button
               type="submit"
               size="large"
               variant="contained"
               color="secondary"
+              style={{ margin: "0 1em 1em 0" }}
             >
               Submit
+            </Button>
+            <Button
+              href={cancelHref}
+              size="large"
+              variant="contained"
+              color="secondary"
+              style={{ margin: "0 1em 1em 0" }}
+            >
+              Back
             </Button>
           </form>
         </Grid>

@@ -1,12 +1,16 @@
-const mongoose = require('mongoose');
+// Authors: Kent Chew
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const postSchema = new Schema({
-    title: {type: String, required: true},
-    description: {type: String, required: true},
-    author: {type: String, required: true},
-    date: {type: Date, default: Date.now}
-})
+  postTitle: { type: String, required: true },
+  postDescription: { type: String, required: true },
+  postAuthor: { type: String, required: true },
+  postRating: { type: Number, required: true, default: 0 },
+  likedBy: { type: Array, required: true },
+  timeCreated: { type: Date, required: true },
+  courseId: { type: Number, required: true },
+});
 
 const Post = mongoose.model("posts", postSchema);
 

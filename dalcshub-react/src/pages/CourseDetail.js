@@ -1,24 +1,62 @@
-import { useState } from "react";
-import {
-  Typography,
-  useMediaQuery,
-  Grid,
-  Divider,
-  Button,
-} from "@mui/material";
-import { Page, Post} from "../components";
+// Author: Kent Chew
+
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Typography, useMediaQuery, Grid, Divider, Button } from "@mui/material";
+import { Page, Post } from "../components";
 import { useTheme } from "@mui/material/styles";
 import bg1 from "../assets/images/bg1.jpg";
 
 import "../App.css";
-import { flushSync } from "react-dom";
 
 export const CourseDetail = () => {
-  const [value, setValue] = useState(0);
+  const { courseNumber } = useParams();
+  const [posts, setPosts] = useState([]);
+  const [course, setCourse] = useState({});
 
-  const handleChange = (_, newValue) => {
-    setValue(newValue);
+  // get and identify course to display based on course number
+  const getCourseDetails = async (courseNumber) => {
+    try {
+      const response = await fetch(`/api/course/${courseNumber}`);
+      console.log(response.status);
+      if (response.status === 200) {
+        const result = await response.json();
+        setCourse(result.data);
+        console.log("Course details: ", result);
+      } else {
+        console.error("Failed");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  // get all posts from API
+  const getPosts = async () => {
+    try {
+      const response = await fetch("/api/post");
+      if (response.status === 200) {
+        const result = await response.json();
+        setPosts(result.data);
+        console.log("Posts:", result);
+      } else {
+        console.error("Failed");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getPosts();
+    getCourseDetails(courseNumber);
+  }, []);
+
+  // filter posts for display based on course number
+  const postsFromCourse = posts.filter((post) => post.courseId === course.number);
+
+  // set button href to create post page with course number
+  const createPostHref = `/create-post/${course.number}`;
 
   return (
     <Page>
@@ -47,23 +85,17 @@ export const CourseDetail = () => {
               textShadow: "1px 1px 3px rgba(0, 0, 0, 1)",
               color: "white",
               fontWeight: 500,
-              fontSize: useMediaQuery(useTheme().breakpoints.down("sm"))
-                ? "3em"
-                : "5em",
+              fontSize: useMediaQuery(useTheme().breakpoints.down("sm")) ? "3em" : "5em",
             }}
           >
-            CSCI 4177: Advanced Web Services
+            {course.title}
           </Typography>
         </Grid>
       </Grid>
-      <Grid
-        container
-        spacing={2}
-        style={{ padding: "1em", marginBottom: "15px" }}
-      >
+      <Grid container spacing={2} style={{ padding: "1em", marginBottom: "15px" }}>
         <Grid item sm={3} xs={12}>
           <Typography variant="body1" gutterBottom>
-            <b>Instructor:</b> INSTRUCTOR NAME
+            <b>Instructor:</b> Dr. Marriot Klassen
           </Typography>
           <Typography variant="body1" gutterBottom>
             <b>Offering:</b> Fall/Winter/Summer
@@ -74,10 +106,7 @@ export const CourseDetail = () => {
         </Grid>
         <Grid item sm={6} xs={12}>
           <Typography variant="body1" gutterBottom>
-            This course provides a hands-on learning environment for advanced
-            web development techniques, such as HTML5 APIs for the creation of
-            dynamic web graphics as well as adding offline functionality to web
-            applications and documentation.
+            {course.description}
           </Typography>
         </Grid>
 
@@ -87,18 +116,12 @@ export const CourseDetail = () => {
             variant="contained"
             size="large"
             color="secondary"
-            href=""
-            fullWidth="true"
+            href={createPostHref}
+            fullWidth
           >
             Create Post
           </Button>
-          <Button
-            variant="contained"
-            size="large"
-            color="secondary"
-            href=""
-            fullWidth="true"
-          >
+          <Button variant="contained" size="large" color="secondary" href="" fullWidth>
             Follow Course
           </Button>
         </Grid>
@@ -106,25 +129,15 @@ export const CourseDetail = () => {
 
       <Divider />
 
-      <Post
-        postTitle={"Tutorial 7 is way too complex!"}
-        postDate={"July 20th 12:49pm"}
-        postAuthor={"Leona Erricson"}
-        postDescription={
-          "Hey folks, I’ve been looking into hosting my website but I had no luck with Netlify due to GitLab issues. Are there any alternatives that anyone would recommend?"
-        }
-        postRating={0}
-      ></Post>
-
-      <Post
-        postTitle={"Tutorial 5 is way too easy!"}
-        postDate={"July 13th 5:20am"}
-        postAuthor={"Nitesh Kumar"}
-        postDescription={
-          "I need a better challenge, this course is too easy for me."
-        }
-        postRating={-13}
-      ></Post>
+      {postsFromCourse.map((post) => (
+        <Post
+          postTitle={post.postTitle}
+          postDate={post.timeCreated}
+          postAuthor={post.postAuthor}
+          postDescription={post.postDescription}
+          postRating={post.postRating}
+        ></Post>
+      ))}
     </Page>
   );
 };
