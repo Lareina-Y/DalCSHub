@@ -30,7 +30,7 @@ export const CreateComment = () => {
 
     const fetchComments = async () => {
         try {
-          const response = await fetch("/api/postReplies/fetch");
+          const response = await fetch("/api/reply/fetch");
           if (response.status === 200) {
             const result = await response.json();
             setpreviousComments(result.data);
@@ -62,12 +62,12 @@ export const CreateComment = () => {
        setshowPost(result);
     };
 
-    
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         try {
-          const res = await fetch("/api/postReplies/addComment", {
+          const res = await fetch("/api/reply/addComment", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -75,7 +75,7 @@ export const CreateComment = () => {
             body: JSON.stringify({
               replied_post_id: formattedPostId,
               commentDescription: content,
-              author: "Jane Doe", // for testing purpose
+              author_name: "John Snow",  // for testing purpose
               date: new Date().toISOString(),
             }),
           });
