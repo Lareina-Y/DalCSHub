@@ -4,8 +4,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Typography, useMediaQuery, Grid, Divider, Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { Page, Post, CircularProgress } from "../components";
-import { useUser } from "../providers";
-import { handleFollowOrUnfollowQuery } from "../utils";
+import { useUser, useSnackbar } from '../providers';
+import { handleFollowOrUnfollowQuery } from "../utils"
 import "../App.css";
 // [4] Default Course Background Image from :
 // https://www.buytvinternetphone.com/blog/images/programming-the-rca-universal-remote-without-a-code-search-button.jpg
@@ -16,8 +16,9 @@ export const CourseDetail = () => {
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const { user: currentUser, userDetailRefresh } = useUser();
-  const { _id: userId, followedCourses: followedCoursesIds } = currentUser;
+  const { openSnackbar } = useSnackbar();
+  const { user : currentUser, userDetailRefresh } = useUser();
+  const { _id: userId, followedCourses : followedCoursesIds } = currentUser;
 
   const { courseNumber } = useParams();
   const [posts, setPosts] = useState([]);
@@ -78,13 +79,14 @@ export const CourseDetail = () => {
   // set button href to create post page with course number
   const createPostHref = `/create-post/${course.number}`;
 
-  const followOrUnfollowOnclick = (courseId) => {
-    handleFollowOrUnfollowQuery(
-      userId,
-      courseId,
-      !followedCoursesIds.includes(courseId),
+  const followOrUnfollowOnclick = async (courseId) => {
+    const response = await handleFollowOrUnfollowQuery(
+      userId, 
+      courseId, 
+      !followedCoursesIds.includes(courseId), 
       userDetailRefresh
-    );
+    )
+    openSnackbar(response.message, response.success ? "success" : "error");
   };
 
   if (loading) return <CircularProgress fullScreen />;
@@ -149,7 +151,6 @@ export const CourseDetail = () => {
             style={{ marginBottom: "1em" }}
             variant="contained"
             size="large"
-            color="primary"
             href={createPostHref}
             fullWidth
           >
@@ -158,7 +159,6 @@ export const CourseDetail = () => {
           <Button
             variant="contained"
             size="large"
-            color="secondary"
             onClick={() => followOrUnfollowOnclick(course._id)}
             fullWidth
           >
@@ -178,7 +178,7 @@ export const CourseDetail = () => {
           postDescription={post.postDescription}
           postRating={post.postRating}
         >
-          <Button variant="contained" color="primary" onClick={() => handlePostClick(post._id)}>
+          <Button variant="contained" onClick={() => handlePostClick(post._id)}>
             Reply
           </Button>
         </Post>

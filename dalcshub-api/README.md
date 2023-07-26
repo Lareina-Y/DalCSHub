@@ -6,7 +6,7 @@
 DalCSHub is a platform for students, instructors, and alumni to come together and share their learning experiences with one another. The REST API is written in Node.js and Express.js.
 
 - _Date Created_: 7 July 2023
-- _Last Modification Date_:
+- _Last Modification Date_: 26 July 2023
 - _Lab URL_: <https://git.cs.dal.ca/chew/4177-group-22>
 - _Hosted URL_: <https://csci4177-dalcshub-api.onrender.com/>
 
@@ -24,6 +24,7 @@ DalCSHub is a platform for students, instructors, and alumni to come together an
 2. Run "npm install"
 3. Run "npm start" to run the api locally
 4. Open it on browser/Postman on URL - <http://localhost:8080/>
+5. Alternatively, you may use the hosted url above.
 
 ## References and Acknowledgements
 
