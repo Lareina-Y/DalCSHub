@@ -137,7 +137,7 @@ export const BrowseCourses = () => {
                         {course.subject} {course.number} | {course.title}{" "}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        - 20 Followers
+                        {/* TODO: Lareina - count the number of followers for each course */}
                       </Typography>
                     </Stack>
                     <Typography variant="body2">
