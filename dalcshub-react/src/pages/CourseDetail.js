@@ -20,6 +20,21 @@ export const CourseDetail = () => {
     setValue(newValue);
   };
 
+  // get all posts from API
+  const getPosts = async () => {
+    try {
+      const response = await fetch("/api/post/all");
+      const jsonData = await response.json();
+      
+      console.log(jsonData);
+    } catch (err) {
+      console.error("Failed to fetch posts");
+      console.error(err.message);
+    }
+  };
+
+  getPosts();
+
   return (
     <Page>
       <Grid
@@ -88,7 +103,7 @@ export const CourseDetail = () => {
             size="large"
             color="secondary"
             href=""
-            fullWidth="true"
+            fullWidth
           >
             Create Post
           </Button>
@@ -97,7 +112,7 @@ export const CourseDetail = () => {
             size="large"
             color="secondary"
             href=""
-            fullWidth="true"
+            fullWidth
           >
             Follow Course
           </Button>
@@ -105,6 +120,9 @@ export const CourseDetail = () => {
       </Grid>
 
       <Divider />
+
+     
+
 
       <Post
         postTitle={"Tutorial 7 is way too complex!"}

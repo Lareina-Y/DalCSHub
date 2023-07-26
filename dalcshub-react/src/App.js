@@ -7,7 +7,8 @@ import {
   BrowseCourses,
   CreatePost,
   Login,
-  Register 
+  Register, 
+  CourseDetail
 } from "./pages";
 import { NavBar } from "./components";
 import { ThemeProvider, UserProvider} from "./providers";
@@ -27,6 +28,7 @@ function App() {
               <Route exact path="/main" element={<MainFeed />} />
               <Route exact path="/browse-courses" element={<BrowseCourses />} />
               <Route exact path="/create-post" element={<CreatePost />} />
+              <Route exact path="/course-details" element={<CourseDetail />} />
               <Route exact path="/faq" element={<FAQ />} />
               <Route exact path="/contact" element={<Contact />} />
             </Routes>
