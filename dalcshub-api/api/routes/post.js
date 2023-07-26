@@ -20,7 +20,7 @@ router.get("/:id", (req, res) => {
   }
 });
 
-// Kent: Get all posts
+// Kent: get all posts
 router.get("/", async (req, res) => {
   try {
     // Find all posts and sort based on the timeCreated field
@@ -31,6 +31,20 @@ router.get("/", async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ success: false, message: "Failed to fetch posts" });
+  }
+});
+
+// Kent: get all posts with specific course id
+router.get("/course/:id", async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    Post.find({ courseId: id })
+      .sort({ timeCreated: -1 })
+      .then((posts) => res.status(200).json({ success: true, data: posts }))
+      .catch((err) => res.status(500).json({ success: false, error: "Error fetching posts" }));
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Failed to fetch posts" });
   }
 });
 

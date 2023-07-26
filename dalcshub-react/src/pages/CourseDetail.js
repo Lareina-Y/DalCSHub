@@ -1,5 +1,4 @@
 // Author: Kent Chew
-
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
@@ -29,7 +28,6 @@ export const CourseDetail = () => {
   const getCourseDetails = async (courseNumber) => {
     try {
       const response = await fetch(`/api/course/${courseNumber}`);
-      console.log(response.status);
       if (response.status === 200) {
         const result = await response.json();
         setCourse(result.data);
@@ -42,10 +40,10 @@ export const CourseDetail = () => {
     }
   };
 
-  // get all posts from API
-  const getPosts = async () => {
+  // get post based on course number
+  const getPostsByCourse = async (courseNumber) => {
     try {
-      const response = await fetch("/api/post");
+      const response = await fetch(`/api/post/course/${courseNumber}`);
       if (response.status === 200) {
         const result = await response.json();
         setPosts(result.data);
@@ -61,14 +59,11 @@ export const CourseDetail = () => {
   useEffect(() => {
     const fetchData = async () => {
         await getCourseDetails(courseNumber);
-        await getPosts();
+        await getPostsByCourse(courseNumber);
         setLoading(false);
     };
     fetchData();
   }, [courseNumber]);
-
-  // filter posts for display based on course number
-  const postsFromCourse = posts.filter((post) => post.courseId === course.number);
 
   // set button href to create post page with course number
   const createPostHref = `/create-post/${course.number}`;
@@ -159,7 +154,7 @@ export const CourseDetail = () => {
 
       <Divider />
 
-      {postsFromCourse.map((post) => (
+      {posts.map((post) => (
         <Post
           key={post._id}
           postTitle={post.postTitle}
@@ -169,7 +164,7 @@ export const CourseDetail = () => {
           postRating={post.postRating}
         ></Post>
       ))}
-      {postsFromCourse.length === 0 &&
+      {posts.length === 0 &&
         <Typography variant="body1" sx={{ paddingTop: "20px" }}>
           There is no posts yet !
         </Typography>}
