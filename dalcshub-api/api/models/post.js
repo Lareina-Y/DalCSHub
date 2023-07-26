@@ -1,4 +1,4 @@
-// Authors: Kent Chew
+// Authors: Kent Chew & Khaled Al-Mahbashi
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 

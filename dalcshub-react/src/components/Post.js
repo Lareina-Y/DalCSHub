@@ -1,11 +1,12 @@
-//Author:
+//Author: Kent Chew
 import { Grid, Divider, IconButton, Button, Typography } from "@mui/material";
-
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
+import { useUser } from '../providers';
 import { useState, useEffect } from "react";
+import { CourseDetail } from "../pages/CourseDetail";
 
 export const Post = (props) => {
   const { postTitle, postAuthor, postDate, postDescription, postRating, children } = props;
@@ -44,6 +45,33 @@ export const Post = (props) => {
     }
   };
 
+
+  const { user : currentUser, userDetailRefresh } = useUser();
+  const { _id: userId} = currentUser;
+
+  //Khaled: Handle save button click
+  const handleSaveClick = async (postId) => {
+    try {
+        // Call the backend API to save the post
+        const response = await fetch(`/api/user/savePost`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ postId }), // Send the post ID in the request body
+        });
+  
+        if (response.ok) {
+          console.log('Post saved!');
+          // update UI here to indicate that saved
+        } else {
+          console.error('Failed to save post:', response.status);
+        }
+      } catch (error) {
+        console.error('Error saving post:', error);
+      }
+    };
+
   useEffect(() => {
     getLatest();
   }, [handleLike, handleDisLike]);
@@ -73,15 +101,10 @@ export const Post = (props) => {
                 height: "100%",
               }}
             >
-              <IconButton size="large" color="secondary" href="">
-                <BookmarkBorderIcon />
-              </IconButton>
-              <IconButton
-                size="large"
-                color="secondary"
-                href=""
-                onClick={() => handleLike(postTitle)}
-              >
+                <IconButton onClick={handleSaveClick} size="large" color="secondary" href="">
+                    <BookmarkBorderIcon />
+                </IconButton>
+              <IconButton size="large" color="secondary" href="" onClick={() => handleLike(postTitle)}>
                 <ArrowUpwardIcon />
               </IconButton>
               <Typography variant="h6" gutterBottom>
