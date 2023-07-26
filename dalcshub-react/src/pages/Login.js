@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate, Link} from 'react-router-dom';
-import { useUser } from '../providers/userContext';
+import { useUser } from '../providers';
 import { Grid, TextField, Button, Typography } from '@mui/material';
 
 export const Login = () => {
@@ -78,18 +78,16 @@ export const Login = () => {
       })
     });
 
-    const data = res.json();
+    if (res.status === 200) {
+      const result = await res.json();
+      setUser(result.data);
 
-    if (res.status === 400 || !data) {
-      console.log('At least one of the fields is invalid from front end');
-      window.alert('At least one of the fields is invalid');
-    } else {
       window.alert('Login Successful');
       console.log('Login Successful');
-
-      setUser(res)
-
       navigate('/main');
+    } else {
+      console.log('At least one of the fields is invalid from front end');
+      window.alert('At least one of the fields is invalid');
     }
   };
 

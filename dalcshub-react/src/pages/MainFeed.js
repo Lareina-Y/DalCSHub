@@ -1,3 +1,5 @@
+//Author: Shiwen(Lareina) Yang
+
 import { useState } from "react";
 import { Tabs, Tab, Typography, Box, Grid, Link } from "@mui/material";
 import { Page, PageTitle, CourseCard } from "../components";
@@ -7,8 +9,6 @@ import bg2 from "../assets/images/bg2.jpg";
 import bg3 from "../assets/images/bg3.jpg";
 import bg4 from "../assets/images/bg4.jpg";
 import bg5 from "../assets/images/bg5.jpg";
-import "../App.css";
-
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -112,9 +112,7 @@ export const MainFeed = () => {
             </Grid>
           ) : (
             <Typography>
-              {" "}
-              No course has been followed yet ! Go to{" "}
-              <Link href={"/browse-courses"}>Browse Courses Page</Link>
+              No course has been followed yet ! Go to <Link href={"/browse-courses"}>Browse Courses Page</Link>
             </Typography>
           )}
         </TabPanel>

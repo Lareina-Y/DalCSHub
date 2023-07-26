@@ -1,3 +1,4 @@
+//Author: Shiwen(Lareina) Yang
 import { createTheme } from "@mui/material/styles";
 
 const PaletteConfiguration = {

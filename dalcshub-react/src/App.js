@@ -10,12 +10,10 @@ import {
   Register 
 } from "./pages";
 import { NavBar } from "./components";
-import { ThemeProvider } from "./providers";
+import { ThemeProvider, UserProvider} from "./providers";
 import { CssBaseline } from "@mui/material";
-import { UserProvider } from "./providers/userContext";
 
 function App() {
-
   return (
     <ThemeProvider>
       <CssBaseline />

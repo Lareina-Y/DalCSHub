@@ -1,16 +1,37 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useMemo, useCallback } from "react";
 
-const UserContext = createContext();
+export const UserContext = createContext();
 
 export function useUser() {
   return useContext(UserContext);
 }
 
 export function UserProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({
+    _id: '',
+    firstName: '',
+    lastName: '',
+    type: '',
+    email: '',
+    followedCourses: [],
+    savedPosts: [],
+    createdAt: '',
+    updatedAt: '',
+  });
+
+  const userDetailRefresh = useCallback(
+    () => {
+      setUser({});
+    }, []
+  );
+
+  const userContextValue = useMemo(
+    () => ({user, setUser, userDetailRefresh}),
+    [user, setUser, userDetailRefresh]
+  );
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={userContextValue}>
       {children}
     </UserContext.Provider>
   );
