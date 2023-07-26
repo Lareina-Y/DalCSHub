@@ -18,13 +18,16 @@ mongoose.connect(mongoURL, {
 const userRoutes = require("./api/routes/user")
 const courseRoutes = require("./api/routes/course")
 const postRoutes = require("./api/routes/post")
+const postRepliesRoutes = require("./api/routes/postReplies")
 
 app.use(express.json());
 
 // Routes
 app.use('/api/course', courseRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/postReplies', postRepliesRoutes);
 app.use('/api/post', postRoutes);
+
 
 app.use("/", (req, res) => {
     return res.status(404).json({

@@ -1,8 +1,8 @@
 // Author: Kent Chew
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useTheme } from "@mui/material/styles";
+import { useParams, useNavigate } from "react-router-dom";
 import { Typography, useMediaQuery, Grid, Divider, Button } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import { Page, Post, CircularProgress } from "../components";
 import { useUser } from "../providers";
 import { handleFollowOrUnfollowQuery } from "../utils";
@@ -10,6 +10,7 @@ import "../App.css";
 // [4] Default Course Background Image from :
 // https://www.buytvinternetphone.com/blog/images/programming-the-rca-universal-remote-without-a-code-search-button.jpg
 import defaultCoursebg from "../assets/images/default-course-bg.jpeg";
+
 
 export const CourseDetail = () => {
   const theme = useTheme();
@@ -22,11 +23,14 @@ export const CourseDetail = () => {
   const [posts, setPosts] = useState([]);
   const [course, setCourse] = useState({});
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   // get and identify course to display based on course number
   const getCourseDetails = async (courseNumber) => {
     try {
       const response = await fetch(`/api/course/${courseNumber}`);
+
+      console.log(response.status);
       if (response.status === 200) {
         const result = await response.json();
         setCourse(result.data);
@@ -63,6 +67,13 @@ export const CourseDetail = () => {
     };
     fetchData();
   }, [courseNumber]);
+
+  const handlePostClick = (post_id) => {
+    console.log(post_id)
+    navigate(`/comment/:${post_id}`);
+  };
+
+  console.log(posts)
 
   // set button href to create post page with course number
   const createPostHref = `/create-post/${course.number}`;
@@ -138,7 +149,7 @@ export const CourseDetail = () => {
             style={{ marginBottom: "1em" }}
             variant="contained"
             size="large"
-            color="secondary"
+            color="primary"
             href={createPostHref}
             fullWidth
           >
@@ -166,7 +177,12 @@ export const CourseDetail = () => {
           postAuthor={post.postAuthor}
           postDescription={post.postDescription}
           postRating={post.postRating}
-        ></Post>
+        >
+          <Button variant="contained" color="primary" onClick={() => handlePostClick(post._id)}>
+            Reply
+          </Button>
+        </Post>
+
       ))}
       {posts.length === 0 && (
         <Typography variant="body1" sx={{ paddingTop: "20px" }}>

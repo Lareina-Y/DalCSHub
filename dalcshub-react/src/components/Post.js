@@ -6,16 +6,16 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 
 export const Post = (props) => {
-  const { postTitle, postAuthor, postDate, postDescription, postRating } =
+  const { postTitle, postAuthor, postDate, postDescription, postRating , children} =
     props;
-
+  
   return (
     <Grid container spacing={2} style={{ padding: "1em", marginTop: "15px" }}>
       <Grid item sm={12} style={{ backgroundColor: "#F9F9F9", padding: "3em" }}>
         <Grid container spacing={2}>
           <Grid item sm={11} xs={11}>
             <Typography variant="h4" gutterBottom>
-              {postTitle}
+              {postTitle} 
             </Typography>
             <Typography variant="subtitle2" gutterBottom>
               posted {postDate} by {postAuthor}
@@ -48,8 +48,9 @@ export const Post = (props) => {
                 {postRating}
               </Typography>
               <IconButton size="large" color="secondary" href="">
-                <ArrowDownwardIcon />
+                <ArrowDownwardIcon /> 
               </IconButton>
+              {children}
             </div>
           </Grid>
         </Grid>
