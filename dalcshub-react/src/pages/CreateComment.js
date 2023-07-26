@@ -105,7 +105,7 @@ export const CreateComment = () => {
                         postDescription={post.postDescription}
                         postRating={post.postRating}
                     >
-                        <Button variant="contained" color="primary" onClick={() => handleshowPost()}>
+                        <Button variant="contained" onClick={() => handleshowPost()}>
                             Reply
                         </Button>
                     </Post>
@@ -162,10 +162,10 @@ export const CreateComment = () => {
                         width: '100%',
                     }}
                 >
-                    <Button onClick={handleSubmit} color="primary" variant="contained">
+                    <Button onClick={handleSubmit} variant="contained">
                         Submit Comment
                     </Button>
-                    <Button onClick={handleshowPost} color="primary" variant="contained">
+                    <Button onClick={handleshowPost} variant="contained">
                         Cancel Comment
                     </Button>
                 </div>

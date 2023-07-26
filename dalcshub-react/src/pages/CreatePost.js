@@ -174,7 +174,6 @@ export const CreatePost = () => {
               type="submit"
               size="large"
               variant="contained"
-              color="secondary"
               style={{ margin: "0 1em 1em 0" }}
             >
               Submit
@@ -183,7 +182,6 @@ export const CreatePost = () => {
               href={cancelHref}
               size="large"
               variant="contained"
-              color="secondary"
               style={{ margin: "0 1em 1em 0" }}
             >
               Back

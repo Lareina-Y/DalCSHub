@@ -184,7 +184,6 @@ export const LandingPage = () => {
           </div>
           <Button
             variant="contained"
-            color="primary"
             onClick={buttonClicked}
             style={{ marginTop: "2rem" }}
           >
