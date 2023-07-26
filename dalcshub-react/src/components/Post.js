@@ -1,4 +1,4 @@
-//Author:
+//Author: Kent Chew
 import { Grid, Divider, IconButton, Button, Typography } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
@@ -101,22 +101,10 @@ export const Post = (props) => {
                 height: "100%",
               }}
             >
-<<<<<<< Updated upstream
-              <IconButton size="large" color="secondary" href="">
-                <BookmarkBorderIcon />
-              </IconButton>
-              <IconButton
-                size="large"
-                color="secondary"
-                href=""
-                onClick={() => handleLike(postTitle)}
-              >
-=======
                 <IconButton onClick={handleSaveClick} size="large" color="secondary" href="">
                     <BookmarkBorderIcon />
                 </IconButton>
               <IconButton size="large" color="secondary" href="" onClick={() => handleLike(postTitle)}>
->>>>>>> Stashed changes
                 <ArrowUpwardIcon />
               </IconButton>
               <Typography variant="h6" gutterBottom>
