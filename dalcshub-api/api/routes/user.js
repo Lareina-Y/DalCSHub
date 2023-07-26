@@ -71,7 +71,7 @@ router.put("/unfollow", async (req, res) => {
         .json({ success: false, message: "User is not following the course" });
     }
 
-    // Update the user's followedCourses array without the course ID
+    // Remove the courseId from the user's followedCourses array 
     user.followedCourses.pull(courseId);
     await user.save();
 
