@@ -19,9 +19,15 @@ export function UserProvider({ children }) {
     updatedAt: '',
   });
 
-  const userDetailRefresh = useCallback(
-    () => {
-      setUser({});
+  const userDetailRefresh = useCallback( 
+    async (userId) => {
+      const res = await fetch(`/api/user/${userId}`);
+      if (res.status === 200) {
+        const result = await res.json();
+        setUser(result.data);
+      } else {
+        console.log('At least one of the fields is invalid from front end');
+      }
     }, []
   );
 
