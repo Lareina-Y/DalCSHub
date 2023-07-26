@@ -1,11 +1,3 @@
-<<<<<<< Updated upstream
-//Author: Shiwen(Lareina) Yang
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { Tabs, Tab, Typography, Box, Grid } from "@mui/material";
-import { Page, PageTitle, CourseCard, CircularProgress } from "../components";
-import { useUser } from "../providers";
-=======
 //Author: Shiwen(Lareina) Yang & Khaled Al-Mahbashi
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from "react";
@@ -15,7 +7,6 @@ import { useUser } from '../providers';
 import { Post } from '../components';
 
 
->>>>>>> Stashed changes
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -64,7 +55,6 @@ export const MainFeed = () => {
     fetchFollowedCourses(followedCoursesIds);
   }, [followedCoursesIds]);
 
-<<<<<<< Updated upstream
   // store current user in local storage
   useEffect(() => {
     const storedUser = localStorage.getItem("currentUser");
@@ -75,7 +65,6 @@ export const MainFeed = () => {
     }
   }, [currentUser]);
 
-=======
   // Khaled: fetching saved posts by Id, lines (58-98 and some lines in return)
   
   const [savedPosts, setSavedPosts] = useState([]);
@@ -118,7 +107,6 @@ export const MainFeed = () => {
       return null;
     }
   };
->>>>>>> Stashed changes
   return (
     <Page>
       <PageTitle title={"Main Feed"} link={"/"} />

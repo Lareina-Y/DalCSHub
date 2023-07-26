@@ -137,7 +137,7 @@ router.get('/savedPosts', async (req, res) =>{
     res.status(500).json({ message: "Internal server error!" + error});
   }
 
-
+})
 //Author: Vrund Patel
 //adding user's details to the database (user's registration)
 router.post('/x', async(req, res) => {
