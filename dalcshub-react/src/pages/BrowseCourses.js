@@ -56,7 +56,8 @@ export const BrowseCourses = () => {
       const courseDetails = `${course.subject} ${course.number} ${
         course.title
       } ${course.description} ${course.flags.join(" ")}`;
-      return courseDetails.toLowerCase().includes(searchKey.toLowerCase());
+
+      return courseDetails.toLowerCase().includes(searchKey?.toLowerCase() ?? '');
     });
     setFilteredCourses(newfilteredCourses);
   }, [searchKey, courses]);
@@ -158,7 +159,7 @@ export const BrowseCourses = () => {
                           color="primary"
                           size="small"
                           variant="outlined"
-                          onClick={(event, flag) => flagOnClick(event, flag)}
+                          onClick={(event) => flagOnClick(event, flag)}
                         />
                       ))}
                     </Stack>
