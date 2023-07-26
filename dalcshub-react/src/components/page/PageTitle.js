@@ -1,3 +1,4 @@
+//Author: Shiwen(Lareina) Yang
 import { Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -14,7 +15,7 @@ export const PageTitle = ({
     <Grid
       container
       direction="row"
-      justifyContent={center? "center":"space-between"}
+      justifyContent={center ? "center" : "space-between"}
       alignContent="center"
       style={{ paddingTop: paddingTop, paddingBottom: paddingBottom }}
     >
@@ -22,17 +23,15 @@ export const PageTitle = ({
         <Link to={link} style={{ textDecoration: "none" }}>
           <Typography
             color="textPrimary"
-            variant="h4"
+            variant="h1"
             style={{
               textDecoration: "none",
-              fontWeight: 700,
-              fontFamily: "Verdana, Geneva, sans-serif",
             }}
           >
             {title}
           </Typography>
         </Link>
-        <Typography color="textSecondary" variant="h7">
+        <Typography color="secondary" variant="h2">
           {subTitle}
         </Typography>
       </Grid>
