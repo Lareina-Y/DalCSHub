@@ -15,9 +15,7 @@ router.get("/all", async (req, res) => {
       data: courses,
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ success: false, message: "Failed to fetch courses" });
+    res.status(500).json({ success: false, message: "Failed to fetch courses" });
   }
 });
 
@@ -50,9 +48,7 @@ router.post("/add", async (req, res) => {
 
   try {
     if (Object.keys(body).length == 0) {
-      return res
-        .status(404)
-        .json({ success: false, data: "Incorrect Request!" });
+      return res.status(404).json({ success: false, data: "Incorrect Request!" });
     }
   } catch (err) {
     return res.status(500).json({ message: "Internal server error!" });
@@ -72,14 +68,24 @@ router.post("/add", async (req, res) => {
     .catch((err) => {
       if (err.code === 11000) {
         // MongoDB error code for duplicate key
-        return res
-          .status(409)
-          .json({ success: false, message: "Course already exists." });
+        return res.status(409).json({ success: false, message: "Course already exists." });
       }
-      return res
-        .status(400)
-        .send({ message: "Course request cannot be submitted" + err });
+      return res.status(400).send({ message: "Course request cannot be submitted" + err });
     });
+});
+
+// Kent: GET call to get course based on course number
+router.get("/:courseNumber", async (req, res) => {
+  const courseNumber = req.params.courseNumber;
+  try {
+    const course = await Course.findOne({ number: courseNumber });
+    if (!course) {
+      return res.status(404).json({ success: false, message: "Course not found" });
+    }
+    res.status(200).json({ success: true, data: course });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
 });
 
 module.exports = router;
