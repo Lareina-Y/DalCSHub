@@ -66,6 +66,7 @@ export const Login = () => {
 
   const verifyLoginCredentials = async () => {
     const { loginEmail, loginPassword } = loginInput;
+    console.log(loginEmail, loginPassword, JSON.stringify({"email": loginEmail,  "password": loginPassword}) )
     const res = await fetch(`${API_URL}/api/user/signin`, {
       method: "POST",
       headers: {
@@ -73,7 +74,7 @@ export const Login = () => {
       },
       body: JSON.stringify({
         "email": loginEmail,
-        "password": loginPassword,
+        "password": loginPassword
       }),
     });
 
