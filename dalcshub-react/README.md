@@ -7,8 +7,9 @@ DalCSHub is a platform for students, instructors, and alumni to come together an
 
 - _Date Created_: 22 May 2023
 - _Last Modification Date_: 26 July 2023
-- _Lab URL_: <https://git.cs.dal.ca/chew/4177-group-22>
-- _Hosted URL_: <https://csci4177-dalcshub.netlify.app/>
+- _Host URL_: <https://csci4177-dalcshub.netlify.app/>
+- _API Host URL_: <https://csci4177-dalcshub-api.onrender.com/>
+- _Group Repository_: <https://git.cs.dal.ca/chew/4177-group-22>
 
 ## Authors
 
@@ -20,13 +21,26 @@ DalCSHub is a platform for students, instructors, and alumni to come together an
 
 ## Instructions
 
-1. Clone the GitLab repository using the provided URL and navigate to the local directory
-2. Run "npm install"
-3. Run "npm start"
-4. Visit the application on your local browser via <http://localhost:3000/>
-5. Alternatively, you may visit the website using the live deployment link above.
-6. In "setupProxy.js", please use <https://csci4177-dalcshub-api.onrender.com/>
-   as the target, if you hope to call the hosted API.
+Please follow the following instructions to start the application locally:
+
+### API Server
+
+1. Open a command line interface and navigate to the _dalcshub-api_ directory.
+2. Run "npm install" to ensure that npm is up to date.
+3. Run "npm start" to start the API server.
+4. Use <http://localhost:8080/> on browser/Postman
+5. Alternatively, you may use the hosted API url above.
+
+### React Application
+
+1. Open a command line interface and navigate to the _dalcshub-react_ directory.
+2. Run "npm install" to ensure that npm is up to date.
+3. Run "npm start" to start the React application.
+4. Access the application via http://localhost:3000 (default address, may differ for different setups).
+
+Alternatively, you can access the application via its live deployment link listed at the top of this document.
+
+If you hope to use the hosted API, please go to 'setupProxy.js' to change the target to <https://csci4177-dalcshub-api.onrender.com/>.
 
 ## Assets
 

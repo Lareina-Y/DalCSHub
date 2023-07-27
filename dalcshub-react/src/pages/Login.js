@@ -81,6 +81,10 @@ export const Login = () => {
       const result = await res.json();
       setUser(result.data);
 
+      // TODO: Store the "token" instead
+      const currentUserString = JSON.stringify(result.data);
+      await localStorage.setItem("currentUser", currentUserString);
+      
       navigate("/main");
     } else {
       console.log("At least one of the fields is invalid from front end");

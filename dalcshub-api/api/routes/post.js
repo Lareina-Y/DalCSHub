@@ -1,9 +1,10 @@
 // Author: Khaled Al-Mahbashi & Kent Chew
 const express = require("express");
 const Post = require("../models/post");
+const User =  require("../models/user");
 const router = express.Router();
 
-// get post by ID
+// khaled: get post by ID
 router.get("/:id", (req, res) => {
   const id = req.params.id;
 
@@ -12,7 +13,15 @@ router.get("/:id", (req, res) => {
       if (response == null) {
         res.status(404).send("This post does not exist");
       } else {
-        res.status(200).send("Post information: " + response);
+        res.status(200).send({
+            id: response._id,
+            postTitle: response.postTitle,
+            postDescription: result.postDescription,
+            postDate: result.timeCreated,
+            postAuthor: result.postAuthor,
+            postDescription: result.postDescription,
+            postRating: result.postRating
+        });
       }
     });
   } catch (err) {
@@ -72,6 +81,126 @@ router.post("/add", async (req, res) => {
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 });
+
+// Meet Kumar Patel : Add user to the likedBy Array
+router.post("/updateLikedBy", async (req, res) => {
+  const { userId, postId } = req.body;
+
+  try {
+
+    if (!userId || !postId) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Incorrect Request!" });
+    }
+
+    const user = await User.findById(userId);
+    console.log(user)
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    const post = await Post.findById(postId);
+    console.log(post)
+    if (!post) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Post not found" });
+    }
+
+    if (post.likedBy.includes(userId)) {
+
+      return res.status(409).json({ message: "User has already liked the post" });
+
+    }
+
+
+    post.likedBy.push(userId);
+
+    await post.save();
+
+    res.json({ success: true, message: "LikedBy array updated successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error!" + error  });
+  }
+});
+
+// Meet Kumar Patel and Kent Chew : update Post Rating
+router.put("/updatePostRating", async (req, res) => {
+  const { postId , rating} = req.body;
+
+  try {
+
+    if (!postId) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Incorrect Request!" });
+    }
+
+    const post = await Post.findById(postId);
+    console.log(post)
+    if (!post) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Post not found" });
+    }
+    console.log("post.likedBy")
+  
+    post.postRating = (rating);
+
+    await post.save();
+
+    res.json({ success: true, message: "LikedBy array updated successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error!" + error  });
+  }
+});
+
+// Meet Kumar Patel : Remove user from likedBy Array
+router.post("/removeLikedBy", async (req, res) => {
+  const { userId, postId } = req.body;
+
+  try {
+
+    if (!userId || !postId) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Incorrect Request!" });
+    }
+
+    const user = await User.findById(userId);
+    console.log(user)
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    const post = await Post.findById(postId);
+    console.log(post)
+    if (!post) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Post not found" });
+    }
+
+    if (post.likedBy.includes(userId)) {
+
+      post.likedBy.pull(userId);
+      await post.save();
+      return res.json({ success: true, message: "User disliked the post" });
+
+    }
+
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error!" });
+  }
+});
+
 
 // // add post
 // router.post("/add", async (req, res) => {

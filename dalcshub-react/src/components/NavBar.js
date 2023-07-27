@@ -37,7 +37,16 @@ const pages = [
   },
 ];
 
-const settings = ["Profile", "Logout"];
+const getSettingActions = (logoutOnClick) => [
+  {
+    name: "Profile",
+    onClick: () => {}
+  },
+  {
+    name: "Logout",
+    onClick: logoutOnClick
+  }
+];
 
 export const NavBar = () => {
   const navigate = useNavigate();
@@ -66,6 +75,13 @@ export const NavBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const logoutOnClick = () => {
+    localStorage.setItem("currentUser", null);
+    navigate("/login");
+  }
+
+  const settings = getSettingActions(logoutOnClick);
 
   return (
     <AppBar position="static">
@@ -180,8 +196,8 @@ export const NavBar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting.name} onClick={setting.onClick}>
+                  <Typography textAlign="center">{setting.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>
