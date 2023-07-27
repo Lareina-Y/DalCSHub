@@ -179,7 +179,7 @@ router.post('/signin', async(req, res) => {
         const {email, password} = req.body
 
         if( !email || !password){
-            return res.status(400).json({error: "At least one of the field is empty from backend"})
+            return res.status(400).json({error: "At least one of the field is empty from backend"});
         }
 
         const userLogin = await User.findOne( {email: email} )
@@ -187,14 +187,14 @@ router.post('/signin', async(req, res) => {
         if(userLogin){
 
             if(password === userLogin.password){
-                res.status(200).json({message: "Signin Successful :)", data: userLogin})
+                return res.status(200).json({message: "Signin Successful :)", data: userLogin});
             }
             else{
-                res.status(400).json({error: "Invalid Credentails :( "})
+                return res.status(400).json({error: "Invalid Credentails :( "});
             }
         }
         else{
-            res.status(400).json({error: "Invalid Credentials :( "})
+            return res.status(400).json({error: "Invalid Credentials :( "});
         }
         
     } catch (error) {
