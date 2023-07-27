@@ -183,8 +183,7 @@ router.post('/signin', async(req, res) => {
         }
 
         const userLogin = await User.findOne( {email: email} )
-        console.log("check API: ", userLogin)
-        
+
         if(userLogin){
 
             if(password === userLogin.password){
