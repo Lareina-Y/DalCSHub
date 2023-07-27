@@ -179,10 +179,12 @@ router.post('/signin', async(req, res) => {
         const {email, password} = req.body
 
         if( !email || !password){
-            return res.status(400).json({error: "Atleast one of the field is empty from backend"})
+            return res.status(400).json({error: "At least one of the field is empty from backend"})
         }
 
         const userLogin = await User.findOne( {email: email} )
+        console.log("check API: ", userLogin)
+        
         if(userLogin){
 
             if(password === userLogin.password){
@@ -197,7 +199,8 @@ router.post('/signin', async(req, res) => {
         }
         
     } catch (error) {
-        console.log(error)
+        console.log(error);
+        return res.status(500).json({ success: false, message: "Internal server error!" });
     }
 })
 

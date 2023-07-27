@@ -66,7 +66,8 @@ export const Login = () => {
 
   const verifyLoginCredentials = async () => {
     const { loginEmail, loginPassword } = loginInput;
-    console.log(loginEmail, loginPassword, JSON.stringify({"email": loginEmail,  "password": loginPassword}) )
+    console.log(JSON.stringify({"email": loginEmail,  "password": loginPassword}) );
+    console.log(`${API_URL}/api/user/signin`);
     const res = await fetch(`${API_URL}/api/user/signin`, {
       method: "POST",
       headers: {
@@ -78,9 +79,14 @@ export const Login = () => {
       }),
     });
 
+    console.log("check: ", res);
+
     if (res.status === 200) {
+      console.log("check status: ", res.status);
       const result = await res.json();
       setUser(result.data);
+
+      console.log("check json: ", res.json());
 
       // TODO: Store the "token" instead
       const currentUserString = JSON.stringify(result.data);
