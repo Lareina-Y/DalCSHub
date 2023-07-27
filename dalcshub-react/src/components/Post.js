@@ -221,10 +221,10 @@ export const Post = (props) => {
               </IconButton>
               {children}
             </div >
-          
-        </Grid>
+
+          </Grid>
+        </Grid >
       </Grid >
     </Grid >
-    </Grid >
-);
+  );
 };
