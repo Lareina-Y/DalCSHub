@@ -66,33 +66,35 @@ export const Login = () => {
 
   const verifyLoginCredentials = async () => {
     const { loginEmail, loginPassword } = loginInput;
-  
-    const response = await fetch(`${API_URL}/api/user/signin`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        "email": loginEmail,
-        "password": loginPassword
-      }),
-    });
+    try{
+      const response = await fetch(`${API_URL}/api/user/signin`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "email": loginEmail,
+          "password": loginPassword
+        }),
+      });
 
-    if (response.status === 200) {
-      const result = await response.json();
+      if (response.status === 200) {
+        const result = await response.json();
 
-      console.log("user: ", result.data)
-      setUser(result.data);
+        // console.log("user: ", result.data)
+        setUser(result.data);
 
-      // TODO: Store the "token" instead
-      const currentUserString = JSON.stringify(result.data);
-      await localStorage.setItem("currentUser", currentUserString);
-      
-      navigate("/main");
-    } else {
-      console.log(response.status);
-      console.log("At least one of the fields is invalid from front end");
-      window.alert("At least one of the fields is invalid");
+        // TODO: Store the "token" instead
+        const currentUserString = JSON.stringify(result.data);
+        await localStorage.setItem("currentUser", currentUserString);
+        
+        navigate("/main");
+      } else {
+        console.log("console.log(response.status);", response.status);
+        window.alert("At least one of the fields is invalid");
+      }
+    } catch (e) {
+      console.error(e);
     }
   };
 
