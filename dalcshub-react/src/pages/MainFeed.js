@@ -52,16 +52,6 @@ export const MainFeed = () => {
     fetchFollowedCourses(followedCoursesIds);
   }, [followedCoursesIds]);
 
-  // store current user in local storage
-  useEffect(() => {
-    const storedUser = localStorage.getItem("currentUser");
-    if (storedUser !== currentUser) {
-      const currentUserString = JSON.stringify(currentUser);
-      console.log(currentUserString);
-      localStorage.setItem("currentUser", currentUserString);
-    }
-  }, [currentUser]);
-
   return (
     <Page>
       <PageTitle title={"Main Feed"} link={"/"} />
