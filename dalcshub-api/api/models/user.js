@@ -1,4 +1,4 @@
-// Authors: 
+// Authors: Vrund Patel and Lareina
 
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
