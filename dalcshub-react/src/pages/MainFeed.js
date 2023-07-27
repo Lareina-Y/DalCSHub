@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import { Tabs, Tab, Typography, Box, Grid } from "@mui/material";
-import { Page, PageTitle, Post, CourseCard, CircularProgress } from "../components";
+import { Page, Post, PageTitle, CourseCard, CircularProgress } from "../components";
 import { useUser } from '../providers';
 
 const TabPanel = (props) => {
@@ -52,6 +52,16 @@ export const MainFeed = () => {
     fetchFollowedCourses(followedCoursesIds);
   }, [followedCoursesIds]);
 
+  // store current user in local storage
+  useEffect(() => {
+    const storedUser = localStorage.getItem("currentUser");
+    if (storedUser !== currentUser) {
+      const currentUserString = JSON.stringify(currentUser);
+      console.log(currentUserString);
+      localStorage.setItem("currentUser", currentUserString);
+    }
+  }, [currentUser]);
+
   // Khaled: fetching saved posts by Id, lines (58-98 and some lines in return)
   
   const [savedPosts, setSavedPosts] = useState([]);
@@ -66,7 +76,6 @@ export const MainFeed = () => {
   // Function to fetch the saved post IDs from the User API
   const fetchSavedPosts = async () => {
     try {
-
       const response = await fetch(`/api/user/savedPosts`);
 
       if (response.ok) {
