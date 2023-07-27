@@ -19,7 +19,6 @@ router.get("/:id", (req, res) => {
             postDescription: result.postDescription,
             postDate: result.timeCreated,
             postAuthor: result.postAuthor,
-            postDescription: result.postDescription,
             postRating: result.postRating
         });
       }
@@ -200,38 +199,5 @@ router.post("/removeLikedBy", async (req, res) => {
     res.status(500).json({ message: "Internal server error!" });
   }
 });
-
-
-// // add post
-// router.post("/add", async (req, res) => {
-//   const body = req.body;
-
-//   try {
-//     if (Object.keys(body).length == 0) {
-//       res.status.apply(400).json({ success: false, data: "Incorrect request" });
-//     }
-//   } catch (err) {
-//     return res.status(500).json({ message: "Internal server error" });
-//   }
-
-//   let newPost = await new Post();
-//   newPost.title = body.title;
-//   newPost.author = body.author;
-//   newPost.description = body.description;
-//   newPost.date;
-
-//   newPost
-//     .save()
-//     .then((result) => {
-//       res.status(200).send({
-//         newPost: result,
-//         success: true,
-//         message: "Post has been added",
-//       });
-//     })
-//     .catch((err) => {
-//       res.status(400).send({ message: "Post request cannot be submitted " + err });
-//     });
-// });
 
 module.exports = router;
