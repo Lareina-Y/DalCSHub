@@ -1,11 +1,12 @@
+//Author: Kent Chew
 import { Grid, Divider, IconButton, Button, Typography } from "@mui/material";
-
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
-import { useState, useEffect } from "react";
 import { useUser } from '../providers';
+import { useState, useEffect } from "react";
+import { CourseDetail } from "../pages/CourseDetail";
 
 export const Post = (props) => {
   const { postTitle, postAuthor, postDate, postDescription, postRating, children } = props;
@@ -57,7 +58,7 @@ export const Post = (props) => {
         console.error('Error:', error);
       }
 
-      
+
       try {
         const res = await fetch('/api/post/updatePostRating', {
           method: 'PUT',
@@ -118,88 +119,112 @@ export const Post = (props) => {
               postId: requiredPost[0]._id,
             }),
           });
-  
+
           const data = await res.json();
         } catch (error) {
           console.error('Error:', error);
         }
 
+      }
+    };
+  }
+
+
+  //Khaled: Handle save button click
+  const handleSaveClick = async (postId) => {
+    try {
+      // Call the backend API to save the post
+      const response = await fetch(`/api/user/savePost`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ postId }), // Send the post ID in the request body
+      });
+
+      if (response.ok) {
+        console.log('Post saved!');
+        // update UI here to indicate that saved
+      } else {
+        console.error('Failed to save post:', response.status);
+      }
+    } catch (error) {
+      console.error('Error saving post:', error);
     }
   };
-}
 
 
-
-const getLatest = async () => {
-  try {
-    const response = await fetch("/api/post");
-    if (response.status === 200) {
-      const result = await response.json();
-      setPosts(result.data);
-    } else {
-      console.error("Failed");
+  const getLatest = async () => {
+    try {
+      const response = await fetch("/api/post");
+      if (response.status === 200) {
+        const result = await response.json();
+        setPosts(result.data);
+      } else {
+        console.error("Failed");
+      }
+    } catch (error) {
+      console.error(error);
     }
-  } catch (error) {
-    console.error(error);
-  }
-};
+  };
 
-useEffect(() => {
-  getLatest();
-}, [handleLike, handleDisLike]);
+  useEffect(() => {
+    getLatest();
+  }, [handleLike, handleDisLike]);
 
-return (
-  <Grid container spacing={2} style={{ padding: "1em", marginTop: "15px" }}>
-    <Grid item sm={12} style={{ backgroundColor: "#F9F9F9", padding: "3em" }}>
-      <Grid container spacing={2}>
-        <Grid item sm={11} xs={11}>
-          <Typography variant="h4" gutterBottom>
-            {postTitle}
-          </Typography>
-          <Typography variant="subtitle2" gutterBottom>
-            posted {formattedDate} by {postAuthor}
-          </Typography>
-          <Divider />
-          <Typography variant="body1" gutterBottom style={{ margin: "1vh 0 1vh 0" }}>
-            {postDescription}
-          </Typography>
-        </Grid>
-        <Grid item sm={1} xs={1} style={{ textAlign: "center" }}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              height: "100%",
-            }}
-          >
-            <IconButton size="large" color="secondary" href="">
-              <BookmarkBorderIcon />
-            </IconButton>
-            <IconButton
-              size="large"
-              color="secondary"
-              href=""
-              onClick={() => handleLike(postTitle)}
-            >
-              <ArrowUpwardIcon />
-            </IconButton>
-            <Typography variant="h6" gutterBottom>
-              {postRating}
+  return (
+    <Grid container spacing={2} style={{ padding: "1em", marginTop: "15px" }}>
+      <Grid item sm={12} style={{ backgroundColor: "#F9F9F9", padding: "3em" }}>
+        <Grid container spacing={2}>
+          <Grid item sm={11} xs={11}>
+            <Typography variant="h4" gutterBottom>
+              {postTitle}
             </Typography>
-            <IconButton
-              size="large"
-              color="secondary"
-              href=""
-              onClick={() => handleDisLike(postTitle)}
+            <Typography variant="subtitle2" gutterBottom>
+              posted {formattedDate} by {postAuthor}
+            </Typography>
+            <Divider />
+            <Typography variant="body1" gutterBottom style={{ margin: "1vh 0 1vh 0" }}>
+              {postDescription}
+            </Typography>
+          </Grid>
+          <Grid item sm={1} xs={1} style={{ textAlign: "center" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                height: "100%",
+              }}
             >
-              <ArrowDownwardIcon />
-            </IconButton>
-            {children}
-          </div>
+              <IconButton onClick={handleSaveClick} size="large" color="secondary" href="">
+                <BookmarkBorderIcon />
+              </IconButton>
+              <IconButton
+                size="large"
+                color="secondary"
+                href=""
+                onClick={() => handleLike(postTitle)}
+              >
+                <ArrowUpwardIcon />
+              </IconButton >
+              <Typography variant="h6" gutterBottom>
+                {postRating}
+              </Typography>
+              <IconButton
+                size="large"
+                color="secondary"
+                href=""
+                onClick={() => handleDisLike(postTitle)}
+              >
+                <ArrowDownwardIcon />
+              </IconButton>
+              {children}
+            </div >
+          
         </Grid>
-      </Grid>
-    </Grid>
-  </Grid>
+      </Grid >
+    </Grid >
+    </Grid >
 );
 };
