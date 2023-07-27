@@ -5,10 +5,10 @@ import {
     TextField,
     Typography,
 } from '@mui/material';
+import { API_URL } from "../utils";
 import { useState, useEffect } from "react";
 import { useParams , useNavigate} from 'react-router-dom';
-import { Post } from "../components";
-import { Comment } from '../components/Comment';
+import { Post, Comment } from "../components";
 
 export const CreateComment = () => {
     const { post_id } = useParams();
@@ -22,7 +22,7 @@ export const CreateComment = () => {
     const userFromStorage = JSON.parse(localStorage.getItem("currentUser"));
     const getPosts = async () => {
         try {
-            const response = await fetch("/api/post");
+            const response = await fetch(`${API_URL}/api/post`);
             if (response.status === 200) {
                 const result = await response.json();
                 setPosts(result.data);
@@ -37,7 +37,7 @@ export const CreateComment = () => {
 
     const fetchComments = async () => {
         try {
-            const response = await fetch("/api/reply/fetch");
+            const response = await fetch(`${API_URL}/api/reply/fetch`);
             if (response.status === 200) {
                 const result = await response.json();
                 setpreviousComments(result.data);
@@ -76,7 +76,7 @@ export const CreateComment = () => {
         event.preventDefault();
 
         try {
-            const res = await fetch("/api/reply/addComment", {
+            const res = await fetch(`${API_URL}/api/reply/addComment`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { API_URL } from "../utils";
 import { Grid, TextField, Button, Typography } from '@mui/material';
 
 export const Register = () => {
@@ -117,7 +118,7 @@ export const Register = () => {
     }
 
     try {
-      const res = await fetch('/api/user/x', {
+      const res = await fetch(`${API_URL}/api/user/x`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

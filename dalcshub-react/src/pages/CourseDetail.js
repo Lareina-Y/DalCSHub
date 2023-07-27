@@ -5,7 +5,7 @@ import { Typography, useMediaQuery, Grid, Divider, Button } from "@mui/material"
 import { useTheme } from "@mui/material/styles";
 import { Page, Post, CircularProgress } from "../components";
 import { useUser, useSnackbar } from "../providers";
-import { handleFollowOrUnfollowQuery } from "../utils";
+import { handleFollowOrUnfollowQuery, API_URL } from "../utils";
 import "../App.css";
 // [4] Default Course Background Image from :
 // https://www.buytvinternetphone.com/blog/images/programming-the-rca-universal-remote-without-a-code-search-button.jpg
@@ -28,7 +28,7 @@ export const CourseDetail = () => {
   // get and identify course to display based on course number
   const getCourseDetails = async (courseNumber) => {
     try {
-      const response = await fetch(`/api/course/${courseNumber}`);
+      const response = await fetch(`${API_URL}/api/course/${courseNumber}`);
 
       console.log(response.status);
       if (response.status === 200) {
@@ -47,7 +47,7 @@ export const CourseDetail = () => {
   // TODO: determine if this is the best way to get author details, given the GuardedRoute in place
   const getPostsByCourse = async (courseNumber) => {
     try {
-      const response = await fetch(`/api/post/course/${courseNumber}`);
+      const response = await fetch(`${API_URL}/api/post/course/${courseNumber}`);
       if (response.status === 200) {
         const result = await response.json();
         setPosts(result.data);

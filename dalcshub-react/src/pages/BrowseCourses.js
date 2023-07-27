@@ -17,7 +17,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { Page, PageTitle, CircularProgress } from "../components";
 import { useUser, useSnackbar } from '../providers';
-import { handleFollowOrUnfollowQuery } from "../utils"
+import { handleFollowOrUnfollowQuery, API_URL } from "../utils"
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
 
@@ -34,7 +34,7 @@ export const BrowseCourses = () => {
 
   const fetchCourses = async () => {
     try {
-      const response = await fetch("/api/course/all");
+      const response = await fetch(`${API_URL}/api/course/all`);
       if (response.status === 200) {
         const result = await response.json();
         setCourses(result.data);

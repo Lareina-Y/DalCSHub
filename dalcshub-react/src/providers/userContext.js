@@ -1,5 +1,6 @@
 //Author: Shiwen(Lareina) Yang
 import { createContext, useContext, useState, useMemo, useCallback } from "react";
+import { API_URL } from "../utils";
 
 export const UserContext = createContext();
 
@@ -25,7 +26,7 @@ export function UserProvider({ children }) {
 
   const userDetailRefresh = useCallback ( 
     async (userId) => {
-      const res = await fetch(`/api/user/${userId}`);
+      const res = await fetch(`${API_URL}/api/user/${userId}`);
       if (res.status === 200) {
         const result = await res.json();
         setUser(result.data);

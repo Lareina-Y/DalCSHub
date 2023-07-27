@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Typography, useMediaQuery, TextField, Grid, Divider, Button } from "@mui/material";
 import { Page } from "../components";
+import { API_URL } from "../utils";
 import { useTheme } from "@mui/material/styles";
 import { useUser, useSnackbar } from "../providers";
 
@@ -33,7 +34,7 @@ export const CreatePost = () => {
   // get and identify course to display based on course number
   const getCourseDetails = async (courseNumber) => {
     try {
-      const response = await fetch(`/api/course/${courseNumber}`);
+      const response = await fetch(`${API_URL}/api/course/${courseNumber}`);
       console.log(response.status);
       if (response.status === 200) {
         const result = await response.json();
@@ -59,7 +60,7 @@ export const CreatePost = () => {
     event.preventDefault();
 
     try {
-      const res = await fetch("/api/post/add", {
+      const res = await fetch(`${API_URL}/api/post/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
