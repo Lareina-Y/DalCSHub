@@ -1,5 +1,6 @@
 const express = require("express"); // importing express
 const mongoose = require("mongoose"); // importing mongoose
+const cors = require('cors'); // importing cors
 const app = express(); // this indicates app is using express method to run 
 const mongoURL = "mongodb+srv://dalcshub:summer23@main.avjsilz.mongodb.net/dalcshub?retryWrites=true&w=majority"
 
@@ -14,6 +15,15 @@ mongoose.connect(mongoURL, {
 .catch((err) => {
     console.log("MongoDB connection failed", err)
 });
+
+const allowedOrigins = [
+    'https://csci4177-dalcshub.netlify.app',
+    'https://csci4177-dalcshub.onrender.com',
+    'http://localhost:3000',
+];
+  
+// Enable CORS for specific origins
+app.use(cors({ origin: allowedOrigins }));
 
 const userRoutes = require("./api/routes/user")
 const courseRoutes = require("./api/routes/course")
