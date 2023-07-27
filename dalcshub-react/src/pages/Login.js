@@ -86,6 +86,7 @@ export const Login = () => {
       
       navigate("/main");
     } else {
+      console.log(res);
       console.log("At least one of the fields is invalid from front end");
       window.alert("At least one of the fields is invalid");
     }
