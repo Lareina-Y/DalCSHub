@@ -117,7 +117,7 @@ router.post('/savePost', async (req, res) =>{
 // Khaled: Get saved posts
 router.get('/savedPosts', async (req, res) =>{
   const body = req.body;
-  const { postId } = req.body;
+
   const userId = body;
 
   try {
