@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import { useState, useEffect } from "react";
 import { useParams , useNavigate} from 'react-router-dom';
-import { Page, Post } from "../components";
+import { Post } from "../components";
 import { Comment } from '../components/Comment';
 
 export const CreateComment = () => {

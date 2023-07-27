@@ -95,7 +95,7 @@ export const CreatePost = () => {
 
   useEffect(() => {
     getCourseDetails(courseNumber);
-  }, []);
+  });
 
   return (
     <Page>
