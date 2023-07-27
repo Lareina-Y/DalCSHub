@@ -78,8 +78,7 @@ export const Login = () => {
         }),
       });
 
-      console.log(response.status === 200);
-      if (response.status === 200) {
+      if (response.ok) {
         const result = await response.json();
 
         console.log("user: ", result.data)
