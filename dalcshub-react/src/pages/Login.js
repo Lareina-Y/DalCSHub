@@ -67,7 +67,7 @@ export const Login = () => {
   const verifyLoginCredentials = async () => {
     const { loginEmail, loginPassword } = loginInput;
   
-    const res = await fetch(`${API_URL}/api/user/signin`, {
+    const response = await fetch(`${API_URL}/api/user/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -78,11 +78,10 @@ export const Login = () => {
       }),
     });
 
-    if (res.status === 200) {
-      console.log("before");
-      const result = await res.json();
+    if (response.status === 200) {
+      const result = await response.json();
 
-      console.log(result)
+      console.log("user: ", result.data)
       setUser(result.data);
 
       // TODO: Store the "token" instead
@@ -91,7 +90,7 @@ export const Login = () => {
       
       navigate("/main");
     } else {
-      console.log(res);
+      console.log(response.status);
       console.log("At least one of the fields is invalid from front end");
       window.alert("At least one of the fields is invalid");
     }
