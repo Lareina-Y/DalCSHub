@@ -17,8 +17,8 @@ export const CreatePost = () => {
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const { openSnackbar } = useSnackbar();
-  const { user: currentUser, userDetailRefresh } = useUser();
-  const { _id: userId, followedCourses: followedCoursesIds } = currentUser;
+  const { user: currentUser} = useUser();
+  const { _id: userId } = currentUser;
 
   const { courseNumber } = useParams();
   const [title, setTitle] = useState("");
@@ -96,9 +96,6 @@ export const CreatePost = () => {
   useEffect(() => {
     getCourseDetails(courseNumber);
   }, []);
-
-  // set cancel button href to return to course detail page
-  const cancelHref = `/course-details/${course.number}`;
 
   return (
     <Page>

@@ -1,24 +1,20 @@
 //Author: Kent Chew
-import { Grid, Divider, IconButton, Button, Typography } from "@mui/material";
+import { Grid, Divider, IconButton, Typography } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { useUser } from '../providers';
 import { useState, useEffect } from "react";
-import { CourseDetail } from "../pages/CourseDetail";
 
 export const Post = (props) => {
   const { postTitle, postAuthor, postDate, postDescription, postRating, children } = props;
 
   const [posts, setPosts] = useState([]);
-  const [likes, setLikes] = useState(postRating);
 
   // convert postDate to just show YYYY-MM-DD as string
   const formattedDate = new Date(postDate).toISOString().slice(0, 10);
 
-  const { user: currentUser, userDetailRefresh } = useUser();
-  const { firstName, lastName } = currentUser;
+  const { user: currentUser } = useUser();
 
   const checkIsLiked = (likedByArray) => {
     return likedByArray.includes(currentUser._id);
@@ -26,7 +22,7 @@ export const Post = (props) => {
 
   // Author : Meet Kumar Patel
   const handleLike = async (title) => {
-
+    await getLatest();
     let requiredPost = posts.filter((post) => post.postTitle === title);
     let isLiked = false;
 
@@ -54,6 +50,7 @@ export const Post = (props) => {
         });
 
         const data = await res.json();
+        console.log(data);
       } catch (error) {
         console.error('Error:', error);
       }
@@ -72,17 +69,20 @@ export const Post = (props) => {
         });
 
         const data = await res.json();
+        console.log(data);
       } catch (error) {
         console.error('Error:', error);
       }
 
     }
+    
 
   };
 
   // Author : Meet Kumar Patel
   const handleDisLike = async (title) => {
 
+    await getLatest();
 
     let requiredPost = posts.filter((post) => post.postTitle === title);
 
@@ -104,6 +104,7 @@ export const Post = (props) => {
           });
 
           const data = await res.json();
+          console.log(data);
         } catch (error) {
           console.error('Error:', error);
         }
@@ -121,6 +122,7 @@ export const Post = (props) => {
           });
 
           const data = await res.json();
+          console.log(data);
         } catch (error) {
           console.error('Error:', error);
         }
@@ -170,7 +172,7 @@ export const Post = (props) => {
 
   useEffect(() => {
     getLatest();
-  }, [handleLike, handleDisLike]);
+  }, []);
 
   return (
     <Grid container spacing={2} style={{ padding: "1em", marginTop: "15px" }}>
