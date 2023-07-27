@@ -4,6 +4,7 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import { useUser } from '../providers';
+import { API_URL } from "../utils";
 import { useState, useEffect } from "react";
 
 export const Post = (props) => {
@@ -38,7 +39,7 @@ export const Post = (props) => {
       console.log(currentUser._id)
       console.log(requiredPost[0]._id)
       try {
-        const res = await fetch('/api/post/updateLikedBy', {
+        const res = await fetch(`${API_URL}/api/post/updateLikedBy`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -57,7 +58,7 @@ export const Post = (props) => {
 
 
       try {
-        const res = await fetch('/api/post/updatePostRating', {
+        const res = await fetch(`${API_URL}/api/post/updatePostRating`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -92,7 +93,7 @@ export const Post = (props) => {
 
       if (isLiked) {
         try {
-          const res = await fetch('/api/post/removeLikedBy', {
+          const res = await fetch(`${API_URL}/api/post/removeLikedBy`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -110,7 +111,7 @@ export const Post = (props) => {
         }
 
         try {
-          const res = await fetch('/api/post/updatePostRating', {
+          const res = await fetch(`${API_URL}/api/post/updatePostRating`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -136,7 +137,7 @@ export const Post = (props) => {
   const handleSaveClick = async (postId) => {
     try {
       // Call the backend API to save the post
-      const response = await fetch(`/api/user/savePost`, {
+      const response = await fetch(`${API_URL}/api/user/savePost`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -158,7 +159,7 @@ export const Post = (props) => {
 
   const getLatest = async () => {
     try {
-      const response = await fetch("/api/post");
+      const response = await fetch(`${API_URL}/api/post`);
       if (response.status === 200) {
         const result = await response.json();
         setPosts(result.data);

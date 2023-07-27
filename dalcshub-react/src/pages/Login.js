@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useUser } from "../providers";
+import { API_URL } from "../utils";
 import { Grid, TextField, Button, Typography } from "@mui/material";
 
 export const Login = () => {
@@ -65,7 +66,7 @@ export const Login = () => {
 
   const verifyLoginCredentials = async () => {
     const { loginEmail, loginPassword } = loginInput;
-    const res = await fetch("/api/user/signin", {
+    const res = await fetch(`${API_URL}/api/user/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

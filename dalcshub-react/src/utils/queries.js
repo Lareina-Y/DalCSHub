@@ -1,8 +1,13 @@
 
+export const API_URL = process.env.REACT_APP_API_URL;
+
+
 // Lareina: The Request to update the Follow status
 export const handleFollowOrUnfollowQuery = async (userId, courseId, isFollowQuery, userDetailRefresh) => {
     try {
-      const url = isFollowQuery ? "/api/user/follow" : "/api/user/unfollow";
+      const url = isFollowQuery 
+        ? `${API_URL}/api/user/follow` 
+        : `${API_URL}/api/user/unfollow`;
       const response = await fetch (url , {
         method: 'PUT',
         headers: {

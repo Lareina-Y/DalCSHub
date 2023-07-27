@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Tabs, Tab, Typography, Box, Grid } from "@mui/material";
 import { Page, Post, PageTitle, CourseCard, CircularProgress } from "../components";
 import { useUser } from '../providers';
+import { API_URL } from "../utils";
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
@@ -29,7 +30,7 @@ export const MainFeed = () => {
 
   const fetchFollowedCourses = async (followedCoursesIds) => {
     try {
-      const response = await fetch("/api/course/get_by_ids", {
+      const response = await fetch(`${API_URL}/api/course/get_by_ids`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +67,7 @@ export const MainFeed = () => {
   // Function to fetch the saved post IDs from the User API
   const fetchSavedPosts = async () => {
     try {
-      const response = await fetch(`/api/user/savedPosts`);
+      const response = await fetch(`${API_URL}/api/user/savedPosts`);
 
       if (response.ok) {
         const data = await response.json();
@@ -85,7 +86,7 @@ export const MainFeed = () => {
   const getPostById = async (postId) => {
     try {
       // Call the backend API to get the post by ID
-      const response = await fetch(`/api/post/${postId}`);
+      const response = await fetch(`${API_URL}/api/post/${postId}`);
       const data = await response.json();
       return data;
     } catch (err) {
