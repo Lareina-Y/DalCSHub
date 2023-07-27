@@ -34,13 +34,17 @@ Please follow the following instructions to start the application locally:
 ### React Application
 
 1. Open a command line interface and navigate to the _dalcshub-react_ directory.
-2. Run "npm install" to ensure that npm is up to date.
-3. Run "npm start" to start the React application.
-4. Access the application via http://localhost:3000 (default address, may differ for different setups).
+2. Create a .evn file: 
+```dotenv
+REACT_APP_API_URL=https://csci4177-dalcshub-api.onrender.com
+# REACT_APP_API_URL=http://localhost:8080
+```
+3. Run "npm install" to ensure that npm is up to date.
+4. Run "npm start" to start the React application.
+5. Access the application via http://localhost:3000 (default address, may differ for different setups).
 
 Alternatively, you can access the application via its live deployment link listed at the top of this document.
 
-If you hope to use the hosted API, please go to 'setupProxy.js' to change the target to <https://csci4177-dalcshub-api.onrender.com/>.
 
 ## Assets
 
