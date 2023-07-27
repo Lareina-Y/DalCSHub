@@ -7,7 +7,7 @@ DalCSHub is a platform for students, instructors, and alumni to come together an
 
 - _Date Created_: 22 May 2023
 - _Last Modification Date_: 26 July 2023
-- _Host URL_: <https://csci4177-dalcshub.netlify.app/>
+- _Host URL_: <https://csci4177-dalcshub.onrender.com>
 - _API Host URL_: <https://csci4177-dalcshub-api.onrender.com/>
 - _Group Repository_: <https://git.cs.dal.ca/chew/4177-group-22>
 

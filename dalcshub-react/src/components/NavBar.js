@@ -78,6 +78,7 @@ export const NavBar = () => {
 
   const logoutOnClick = () => {
     localStorage.setItem("currentUser", null);
+    setAnchorElUser(null);
     navigate("/login");
   }
 
@@ -132,7 +133,10 @@ export const NavBar = () => {
               {pages.map((page) => (
                 <MenuItem
                   key={page.name}
-                  onClick={() => navigate(`..${page.link}`)}
+                  onClick={() => { 
+                    navigate(`..${page.link}`);
+                    setAnchorElNav(null);
+                  }}
                 >
                   <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>

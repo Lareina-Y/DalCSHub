@@ -25,7 +25,6 @@ export const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(loginInput);
 
     const loginError = validateInput();
     setLoginError(loginError);
