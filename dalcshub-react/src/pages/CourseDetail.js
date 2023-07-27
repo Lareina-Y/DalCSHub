@@ -4,18 +4,18 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Typography, useMediaQuery, Grid, Divider, Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { Page, Post, CircularProgress } from "../components";
-import { useUser } from "../providers";
+import { useUser, useSnackbar } from "../providers";
 import { handleFollowOrUnfollowQuery } from "../utils";
 import "../App.css";
 // [4] Default Course Background Image from :
 // https://www.buytvinternetphone.com/blog/images/programming-the-rca-universal-remote-without-a-code-search-button.jpg
 import defaultCoursebg from "../assets/images/default-course-bg.jpeg";
 
-
 export const CourseDetail = () => {
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const { openSnackbar } = useSnackbar();
   const { user: currentUser, userDetailRefresh } = useUser();
   const { _id: userId, followedCourses: followedCoursesIds } = currentUser;
 
@@ -44,6 +44,7 @@ export const CourseDetail = () => {
   };
 
   // get post based on course number
+  // TODO: determine if this is the best way to get author details, given the GuardedRoute in place
   const getPostsByCourse = async (courseNumber) => {
     try {
       const response = await fetch(`/api/post/course/${courseNumber}`);
@@ -69,22 +70,22 @@ export const CourseDetail = () => {
   }, [courseNumber]);
 
   const handlePostClick = (post_id) => {
-    console.log(post_id)
+    console.log(post_id);
     navigate(`/comment/:${post_id}`);
   };
 
-  console.log(posts)
+  const handleCreatePostClick = () => {
+    navigate(`/create-post/${courseNumber}`);
+  };
 
-  // set button href to create post page with course number
-  const createPostHref = `/create-post/${course.number}`;
-
-  const followOrUnfollowOnclick = (courseId) => {
-    handleFollowOrUnfollowQuery(
+  const followOrUnfollowOnclick = async (courseId) => {
+    const response = await handleFollowOrUnfollowQuery(
       userId,
       courseId,
       !followedCoursesIds.includes(courseId),
       userDetailRefresh
     );
+    openSnackbar(response.message, response.success ? "success" : "error");
   };
 
   if (loading) return <CircularProgress fullScreen />;
@@ -149,8 +150,8 @@ export const CourseDetail = () => {
             style={{ marginBottom: "1em" }}
             variant="contained"
             size="large"
-            color="primary"
-            href={createPostHref}
+            color="secondary"
+            onClick={handleCreatePostClick}
             fullWidth
           >
             Create Post
@@ -178,11 +179,10 @@ export const CourseDetail = () => {
           postDescription={post.postDescription}
           postRating={post.postRating}
         >
-          <Button variant="contained" color="primary" onClick={() => handlePostClick(post._id)}>
-            Reply
+          <Button variant="outlined" color="secondary" onClick={() => handlePostClick(post._id)}>
+            Details
           </Button>
         </Post>
-
       ))}
       {posts.length === 0 && (
         <Typography variant="body1" sx={{ paddingTop: "20px" }}>

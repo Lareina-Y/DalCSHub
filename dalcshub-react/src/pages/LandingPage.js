@@ -1,3 +1,4 @@
+//Author:
 import video from "../assets/videos/background.mp4";
 import { useNavigate } from "react-router-dom";
 import arrow from "../assets/images/arrow.png";
@@ -184,7 +185,6 @@ export const LandingPage = () => {
           </div>
           <Button
             variant="contained"
-            color="primary"
             onClick={buttonClicked}
             style={{ marginTop: "2rem" }}
           >

@@ -13,7 +13,7 @@ import {
   DialogContentText
 } from "@mui/material";
 import { useState } from "react";
-import { useUser } from '../providers';
+import { useUser, useSnackbar } from '../providers';
 import { useNavigate } from 'react-router-dom';
 import { styled } from "@mui/material/styles";
 import { handleFollowOrUnfollowQuery } from "../utils"
@@ -21,25 +21,34 @@ import { handleFollowOrUnfollowQuery } from "../utils"
 // https://www.buytvinternetphone.com/blog/images/programming-the-rca-universal-remote-without-a-code-search-button.jpg
 import defaultCoursebg from "../assets/images/default-course-bg.jpeg";
 
-const MuiCard = styled(Card)(({ deleting }) => ({
+const MuiCard = styled(Card)(({ opacity }) => ({
   display: "flex", 
   flexDirection: "column", 
   height: "100%",
-  opacity: deleting ? 0 : 1,
+  opacity: opacity,
   transition: 'all 1s ease-in',
 }));
 
 export const CourseCard = (props) => {
   const navigate = useNavigate();
+
+  const { userDetailRefresh } = useUser();
+  const { openSnackbar } = useSnackbar();
+
   const { userId, courseId, title, courseNumber, flags, creditHours, followed, bgImage } = props;
   const [dialogOpen, setDialogOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
-  const { userDetailRefresh } = useUser();
-
+  
   const handleFollowOrUnfollowOnClick = async () => {
-    setDeleting(true);
-    await handleFollowOrUnfollowQuery(userId, courseId, !followed, userDetailRefresh);
     setDialogOpen(false);
+    setDeleting(true);
+    const response = await handleFollowOrUnfollowQuery(
+      userId, 
+      courseId, 
+      !followed,
+      userDetailRefresh
+    )
+    openSnackbar(response.message, response.success ? "success" : "error");
     setDeleting(false);
   }
 
@@ -67,7 +76,7 @@ export const CourseCard = (props) => {
         </DialogActions>
       </Dialog>
 
-      <MuiCard deleting={deleting}>
+      <MuiCard opacity={deleting ? 0 : 1}>
         <CardMedia
           component="img"
           alt="course background"
@@ -82,7 +91,7 @@ export const CourseCard = (props) => {
             Credit hours: {creditHours}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {flags}
+            {flags.join(", ")}
           </Typography>
         </CardContent>
         <CardActions style={{ marginTop: "auto" }}>

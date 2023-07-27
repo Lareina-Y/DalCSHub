@@ -16,13 +16,14 @@ import {
 } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import { Page, PageTitle, CircularProgress } from "../components";
-import { useUser } from '../providers';
+import { useUser, useSnackbar } from '../providers';
 import { handleFollowOrUnfollowQuery } from "../utils"
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
 
 export const BrowseCourses = () => {
   const navigate = useNavigate();
+  const { openSnackbar } = useSnackbar();
   const { user : currentUser, userDetailRefresh } = useUser();
   const { _id: userId, followedCourses : followedCoursesIds } = currentUser;
 
@@ -55,15 +56,27 @@ export const BrowseCourses = () => {
       const courseDetails = `${course.subject} ${course.number} ${
         course.title
       } ${course.description} ${course.flags.join(" ")}`;
-      return courseDetails.toLowerCase().includes(searchKey.toLowerCase());
+
+      return courseDetails.toLowerCase().includes(searchKey?.toLowerCase() ?? '');
     });
     setFilteredCourses(newfilteredCourses);
   }, [searchKey, courses]);
 
-  const followOrUnfollowOnclick = (event, courseId) => {
+  const followOrUnfollowOnclick = async (event, courseId) => {
     event.stopPropagation(); // Prevent the event from propagating to the parent CardActionArea
-    handleFollowOrUnfollowQuery(userId, courseId, !followedCoursesIds.includes(courseId), userDetailRefresh)
+    const response = await handleFollowOrUnfollowQuery(
+        userId, 
+        courseId, 
+        !followedCoursesIds.includes(courseId), 
+        userDetailRefresh
+    )
+    openSnackbar(response.message, response.success ? "success" : "error");
   };
+
+  const flagOnClick = (event, flag) => {
+    event.stopPropagation(); // Prevent the event from propagating to the parent CardActionArea
+    setSearchKey(flag);
+  }
 
   const courseCardOnclick = (courseNumber) => {
     navigate(`/course-details/${courseNumber}`)
@@ -125,7 +138,7 @@ export const BrowseCourses = () => {
                         {course.subject} {course.number} | {course.title}{" "}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        - 20 Followers
+                        {/* TODO: Lareina - count the number of followers for each course */}
                       </Typography>
                     </Stack>
                     <Typography variant="body2">
@@ -146,7 +159,7 @@ export const BrowseCourses = () => {
                           color="primary"
                           size="small"
                           variant="outlined"
-                          onClick={() => setSearchKey(flag)}
+                          onClick={(event) => flagOnClick(event, flag)}
                         />
                       ))}
                     </Stack>

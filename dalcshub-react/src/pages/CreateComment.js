@@ -6,7 +6,7 @@ import {
     Typography,
 } from '@mui/material';
 import { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams , useNavigate} from 'react-router-dom';
 import { Page, Post } from "../components";
 import { Comment } from '../components/Comment';
 
@@ -15,6 +15,11 @@ export const CreateComment = () => {
     const [posts, setPosts] = useState([]);
     const [previousComments, setpreviousComments] = useState([]);
     const [showPost, setshowPost] = useState(true);
+    const navigate = useNavigate();
+
+    // extract user from local storage for author details
+    // TODO: determine if this is the best way to get author details, given the GuardedRoute in place
+    const userFromStorage = JSON.parse(localStorage.getItem("currentUser"));
     const getPosts = async () => {
         try {
             const response = await fetch("/api/post");
@@ -79,8 +84,8 @@ export const CreateComment = () => {
                 body: JSON.stringify({
                     replied_post_id: formattedPostId,
                     commentDescription: content,
-                    author_name: "John Snow",  // for testing purpose
-                    date: new Date().toISOString(),
+                    author_name:userFromStorage.firstName + " " + userFromStorage.lastName, 
+                    date: new Date().toISOString().slice(0, 10),
                 }),
             });
 
@@ -88,6 +93,8 @@ export const CreateComment = () => {
             console.log("Successfully created post: ", data);
 
             setContent("");
+            navigate(-1)
+
         } catch (error) {
             console.error("Error creating post:", error);
         }
@@ -105,7 +112,7 @@ export const CreateComment = () => {
                         postDescription={post.postDescription}
                         postRating={post.postRating}
                     >
-                        <Button variant="contained" color="primary" onClick={() => handleshowPost()}>
+                        <Button variant="contained" onClick={() => handleshowPost()}>
                             Reply
                         </Button>
                     </Post>
@@ -124,7 +131,7 @@ export const CreateComment = () => {
             </>
         ) : (
             <Container
-                maxWidth="sm" 
+                maxWidth="sm"
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -144,6 +151,7 @@ export const CreateComment = () => {
                     value={(filteredPost[0].postTitle)}
                     fullWidth
                     margin="normal"
+                    disabled
                 />
                 <TextField
                     label="Content"
@@ -162,10 +170,10 @@ export const CreateComment = () => {
                         width: '100%',
                     }}
                 >
-                    <Button onClick={handleSubmit} color="primary" variant="contained">
+                    <Button onClick={handleSubmit} variant="contained">
                         Submit Comment
                     </Button>
-                    <Button onClick={handleshowPost} color="primary" variant="contained">
+                    <Button onClick={handleshowPost} variant="contained">
                         Cancel Comment
                     </Button>
                 </div>

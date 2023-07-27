@@ -6,9 +6,10 @@
 DalCSHub is a platform for students, instructors, and alumni to come together and share their learning experiences with one another. The platform is written in ReactJS framework along with the MaterialUI library.
 
 - _Date Created_: 22 May 2023
-- _Last Modification Date_: 20 June 2023
-- _Lab URL_: <https://git.cs.dal.ca/chew/4177-group-22>
-- _Hosted URL_: <https://csci4177-dalcshub.netlify.app/>
+- _Last Modification Date_: 26 July 2023
+- _Host URL_: <https://csci4177-dalcshub.netlify.app/>
+- _API Host URL_: <https://csci4177-dalcshub-api.onrender.com/>
+- _Group Repository_: <https://git.cs.dal.ca/chew/4177-group-22>
 
 ## Authors
 
@@ -20,11 +21,26 @@ DalCSHub is a platform for students, instructors, and alumni to come together an
 
 ## Instructions
 
-1. Clone the GitLab repository using the provided URL and navigate to the local directory
-2. Run "npm install"
-3. Run "npm start"
-4. Visit the application on your local browser via <http://localhost:3000/>
-5. Alternatively, you may visit the website using the live deployment link above.
+Please follow the following instructions to start the application locally:
+
+### API Server
+
+1. Open a command line interface and navigate to the _dalcshub-api_ directory.
+2. Run "npm install" to ensure that npm is up to date.
+3. Run "npm start" to start the API server.
+4. Use <http://localhost:8080/> on browser/Postman
+5. Alternatively, you may use the hosted API url above.
+
+### React Application
+
+1. Open a command line interface and navigate to the _dalcshub-react_ directory.
+2. Run "npm install" to ensure that npm is up to date.
+3. Run "npm start" to start the React application.
+4. Access the application via http://localhost:3000 (default address, may differ for different setups).
+
+Alternatively, you can access the application via its live deployment link listed at the top of this document.
+
+If you hope to use the hosted API, please go to 'setupProxy.js' to change the target to <https://csci4177-dalcshub-api.onrender.com/>.
 
 ## Assets
 
@@ -36,7 +52,7 @@ DalCSHub is a platform for students, instructors, and alumni to come together an
    https://www.pngmart.com/image/518501
    [Accessed: Jun-2023].
 
-3. Course Background Image, [Online]. Available:
+3. Course Background Images, [Online]. Available:
    https://github.com/wrappixel/materialpro-react-lite/tree/master/package/src/assets/images/bg
    [Accessed: Jun-2023].
 
@@ -48,6 +64,10 @@ DalCSHub is a platform for students, instructors, and alumni to come together an
    https://www.pexels.com/video/high-speed-photography-of-blue-ink-diffusion-in-water-9669109/
    [Accessed: 20-Jun-2023].
 
+6. Freeiconspng.com “White Down Arrow PNG Transparent Background, Free Download #41944 - FreeIconsPNG,” [Online]. Available:
+   https://www.freeiconspng.com/img/41944
+   [Accessed: 20-Jun-2023].
+
 ## References and Acknowledgements
 
 1. Material UI [Online]. Available: https://mui.com/ [Accessed: May-2023].
@@ -56,7 +76,10 @@ DalCSHub is a platform for students, instructors, and alumni to come together an
    https://academiccalendar.dal.ca/Catalog/ViewCatalog.aspx?pageid=viewcatalog&catalogid=105&chapterid=6392&topicgroupid=27853&loaduseredits=False
    [Accessed: 20-Jun-2023].
 
-3. Freeiconspng.com “White Down Arrow PNG Transparent Background, Free Download #41944 - FreeIconsPNG,” [Online]. Available:
-   https://www.freeiconspng.com/img/41944
+3. AppBar from Material UI, The starter code of './src/components/NavBar.js'. [Online]. Available:
+   https://mui.com/material-ui/react-app-bar/
    [Accessed: 20-Jun-2023].
-   ‌
+
+4. React Documentation [Online]. Available:
+   https://legacy.reactjs.org/docs/getting-started.html
+   [Accessed: May-2023].
