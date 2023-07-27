@@ -138,7 +138,7 @@ export const CreatePost = () => {
       <Grid container spacing={2} style={{ padding: "1em", marginBottom: "15px" }}>
         <Grid item sm={3} xs={12}>
           <Typography variant="body1" gutterBottom>
-            <b>Instructor:</b> Dr. Marriot Klassen
+            <b>Instructor:</b> Dr. Jane Doe
           </Typography>
           <Typography variant="body1" gutterBottom>
             <b>Offering:</b> Fall/Winter/Summer

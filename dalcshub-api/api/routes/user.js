@@ -81,7 +81,63 @@ router.put("/unfollow", async (req, res) => {
   }
 });
 
+// Khaled: add saved post
+router.post('/savePost', async (req, res) =>{
+  const body = req.body;
+  const { postId } = req.body;
+  const userId = body;
 
+  try {
+    if (!userId) {
+      return res.status(404).json({ success: false, data: "Incorrect Request!" });
+    }
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    // Add postID to the savedPosts array
+    User.savedPosts.push(postId);
+    User.save()
+    .then(() =>{
+      return res.status(200).json({ message: 'Post saved successfully' });
+    })
+    .catch((err) =>{
+      return res.status(400).json({ message: 'Failed to save post' + err });
+    })
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error!" } + error);
+  }
+
+    
+})
+
+// Khaled: Get saved posts
+router.get('/savedPosts', async (req, res) =>{
+  const body = req.body;
+  const { postId } = req.body;
+  const userId = body;
+
+  try {
+    if (!userId) {
+      return res.status(404).json({ success: false, data: "Incorrect Request!" });
+    }
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    // Display saved posts
+    return res.status(200).json(user.savedPosts);
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error!" + error});
+  }
+
+})
 //Author: Vrund Patel
 //adding user's details to the database (user's registration)
 router.post('/x', async(req, res) => {

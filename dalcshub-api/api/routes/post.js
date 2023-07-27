@@ -3,7 +3,7 @@ const express = require("express");
 const Post = require("../models/post");
 const router = express.Router();
 
-// get post by ID
+// khaled: get post by ID
 router.get("/:id", (req, res) => {
   const id = req.params.id;
 
@@ -12,7 +12,15 @@ router.get("/:id", (req, res) => {
       if (response == null) {
         res.status(404).send("This post does not exist");
       } else {
-        res.status(200).send("Post information: " + response);
+        res.status(200).send({
+            id: response._id,
+            postTitle: response.postTitle,
+            postDescription: result.postDescription,
+            postDate: result.timeCreated,
+            postAuthor: result.postAuthor,
+            postDescription: result.postDescription,
+            postRating: result.postRating
+        });
       }
     });
   } catch (err) {
