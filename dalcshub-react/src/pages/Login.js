@@ -72,8 +72,8 @@ export const Login = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: loginEmail,
-        password: loginPassword,
+        "email": loginEmail,
+        "password": loginPassword,
       }),
     });
 
