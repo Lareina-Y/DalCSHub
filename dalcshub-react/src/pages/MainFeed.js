@@ -139,7 +139,6 @@ export const MainFeed = () => {
         </TabPanel>
         <TabPanel value={tabIndex} index={1}>
           {/* <Typography>No post has been saved yet !</Typography> */}
-          <Typography>Saved Posts</Typography>
           {savedPosts.map((postId) => (
             <div key={postId}>
               <Post post={getPostById(postId)} />
