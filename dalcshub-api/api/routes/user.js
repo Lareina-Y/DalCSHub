@@ -115,29 +115,26 @@ router.post('/savePost', async (req, res) =>{
 })
 
 // Khaled: Get saved posts
-router.get('/savedPosts', async (req, res) =>{
-  const body = req.body;
-
-  const userId = body;
-
+router.get('/savedPosts/:id', async (req, res) =>{
+  const userId = req.params.id;
+  
   try {
-    if (!userId) {
-      return res.status(404).json({ success: false, data: "Incorrect Request!" });
-    }
-
-    const user = await User.findById(userId);
-
-    if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
-    }
-
-    // Display saved posts
-    return res.status(200).json(user.savedPosts);
-  } catch (error) {
-    res.status(500).json({ message: "Internal server error!" + error});
+      if(!userId) {
+          return res.status(404).json({success: false, data: "Incorrect Request!"});
+      }
+  } catch(err) {
+      return res.status(500).json({message: "Internal server error!"});
   }
 
+  try { 
+    User.findById(userId)
+      .then((user) => res.status(200).json({ savedPosts: user.savedPosts }))
+      .catch((err) => res.status(500).json({ success: false, error: 'Error fetching saved posts' }));
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Failed to user by Id" });
+  }
 })
+ 
 //Author: Vrund Patel
 //adding user's details to the database (user's registration)
 router.post('/x', async(req, res) => {
