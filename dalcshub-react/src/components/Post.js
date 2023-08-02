@@ -8,7 +8,7 @@ import { API_URL } from "../utils";
 import { useState, useEffect } from "react";
 
 export const Post = (props) => {
-  const { postTitle, postAuthor, postDate, postDescription, postRating, children } = props;
+  const {postId, postTitle, postAuthor, postDate, postDescription, postRating, children } = props;
 
   const [posts, setPosts] = useState([]);
 
@@ -134,7 +134,7 @@ export const Post = (props) => {
 
 
   //Khaled: Handle save button click
-  const handleSaveClick = async (postId) => {
+  const handleSaveClick = async () => {
     try {
       // Call the backend API to save the post
       const response = await fetch(`${API_URL}/api/user/savePost`, {
@@ -206,7 +206,6 @@ export const Post = (props) => {
               <IconButton
                 size="large"
                 color="secondary"
-                href=""
                 onClick={() => handleLike(postTitle)}
               >
                 <ArrowUpwardIcon />
@@ -217,7 +216,6 @@ export const Post = (props) => {
               <IconButton
                 size="large"
                 color="secondary"
-                href=""
                 onClick={() => handleDisLike(postTitle)}
               >
                 <ArrowDownwardIcon />
