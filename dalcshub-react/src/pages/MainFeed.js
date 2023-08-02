@@ -50,26 +50,26 @@ export const MainFeed = () => {
     }
   };
 
-  // Khaled: Function to fetch the saved post IDs from the User API
-  const fetchSavedPosts = async () => {
-    // try {
-    //   const response = await fetch(`${API_URL}/api/post/get_by_ids`, {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({ postIds: savedPostIds }),
-    //   });
-    //   if (response.status === 200) {
-    //     const result = await response.json();
-    //     setSavedPosts(result.data);
-    //   } else {
-    //     console.error("Failed to fetch posts");
-    //   }
-    //   setLoading(false);
-    // } catch (error) {
-    //   console.error(error);
-    // }
+  // Khaled: Function to fetch the saved post IDs from the Post API
+  const fetchSavedPosts = async (savedPostIds) => {
+    try {
+      const response = await fetch(`${API_URL}/api/post/get_by_ids`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ postIds: savedPostIds }),
+      });
+      if (response.status === 200) {
+        const result = await response.json();
+        setSavedPosts(result.data);
+      } else {
+        console.error("Failed to fetch posts");
+      }
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
 
