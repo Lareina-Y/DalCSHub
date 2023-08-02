@@ -5,26 +5,40 @@ const User =  require("../models/user");
 const router = express.Router();
 
 // khaled: get post by ID
-router.get("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
   const id = req.params.id;
 
   try {
-    Post.findById(id).then((response) => {
-      if (response == null) {
-        res.status(404).send("This post does not exist");
-      } else {
-        res.status(200).send({
-            id: response._id,
-            postTitle: response.postTitle,
-            postDescription: result.postDescription,
-            postDate: result.timeCreated,
-            postAuthor: result.postAuthor,
-            postRating: result.postRating
-        });
-      }
+    const post = await Post.findById(id);
+    res.status(200).json({
+      success: true,
+      data: post
     });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Failed to fetch post" });
+  }
+});
+
+// Khaled: Post call to fetch specific posts based on ids
+router.post("/get_by_ids", async (req, res) => {
+  const body = req.body;
+
+  try {
+    if (!body || Object.keys(body).length == 0 || !Array.isArray(body.postIds)) {
+      return res.status(400).json({ success: false,  error: 'Incorrect Request!' });
+    }
   } catch (err) {
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error!" });
+  }
+
+  try {
+    Post.find({ _id: { $in: body.postIds } })
+      .sort({ number: 1 })
+      .then((posts) => res.status(200).json({ success: true, data: posts}))
+      .catch((err) => res.status(500).json({ success: false, error: 'Error fetching posts' }));
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({ success: false, message: "Failed to fetch posts" });
   }
 });
 
