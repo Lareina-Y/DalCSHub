@@ -22,11 +22,12 @@ const TabPanel = (props) => {
 
 export const MainFeed = () => {
   const { user: currentUser } = useUser();
-  const { _id: userId, followedCourses: followedCoursesIds } = currentUser;
+  const { _id: userId, followedCourses: followedCoursesIds, savedPosts: savedPostIds } = currentUser;
 
   const [tabIndex, setTabIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [followedCourses, setFollowedCourses] = useState([]);
+  const [savedPosts, setSavedPosts] = useState([]); // Khaled
 
   const fetchFollowedCourses = async (followedCoursesIds) => {
     try {
@@ -49,51 +50,34 @@ export const MainFeed = () => {
     }
   };
 
+  // Khaled: Function to fetch the saved post IDs from the User API
+  const fetchSavedPosts = async () => {
+    // try {
+    //   const response = await fetch(`${API_URL}/api/post/get_by_ids`, {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({ postIds: savedPostIds }),
+    //   });
+    //   if (response.status === 200) {
+    //     const result = await response.json();
+    //     setSavedPosts(result.data);
+    //   } else {
+    //     console.error("Failed to fetch posts");
+    //   }
+    //   setLoading(false);
+    // } catch (error) {
+    //   console.error(error);
+    // }
+  };
+
+
   useEffect(() => {
     fetchFollowedCourses(followedCoursesIds);
-  }, [followedCoursesIds]);
+    fetchSavedPosts(savedPostIds);
+  }, [followedCoursesIds, savedPostIds]);
 
-  // Khaled: fetching saved posts by Id, lines (58-98 and some lines in return)
-  
-  const [savedPosts, setSavedPosts] = useState([]);
-
-  useEffect(() => {
-    // Call the backend API to retrieve the saved post IDs
-    fetchSavedPosts().then((savedPostIds) => {
-      setSavedPosts(savedPostIds);
-    });
-  }, []);
-
-  // Function to fetch the saved post IDs from the User API
-  const fetchSavedPosts = async () => {
-    try {
-      const response = await fetch(`${API_URL}/api/user/savedPosts`);
-
-      if (response.ok) {
-        const data = await response.json();
-        return data; // Return the array of saved post IDs
-      } else {
-        console.error('Failed to fetch saved posts:', response.status);
-        return []; // Return empty array 
-      }
-    } catch (err) {
-      console.error('Error fetching saved posts:', err);
-      return []; // Return empty array 
-    }
-  };
-
-  // Fetch the post information using the post ID from the Post API
-  const getPostById = async (postId) => {
-    try {
-      // Call the backend API to get the post by ID
-      const response = await fetch(`${API_URL}/api/post/${postId}`);
-      const data = await response.json();
-      return data;
-    } catch (err) {
-      console.error('Error fetching post:', err);
-      return null;
-    }
-  };
   return (
     <Page>
       <PageTitle title={"Main Feed"} link={"/"} />
@@ -138,12 +122,19 @@ export const MainFeed = () => {
           )}
         </TabPanel>
         <TabPanel value={tabIndex} index={1}>
-          {/* <Typography>No post has been saved yet !</Typography> */}
-          {savedPosts.map((postId) => (
-            <div key={postId}>
-              <Post post={getPostById(postId)} />
-            </div>
-          ))}          
+          {loading && <CircularProgress fullScreen />}
+          {!loading && savedPosts.length === 0 && <Typography>No post has been saved yet !</Typography> }
+          {!loading && savedPosts.length !== 0 && 
+            savedPosts.map((post) => 
+              <Post
+                key={post._id}
+                postTitle={post.postTitle}
+                postDate={post.timeCreated}
+                postAuthor={post.postAuthor}
+                postDescription={post.postDescription}
+                postRating={post.postRating}
+              />
+          )}          
         </TabPanel>
       </Box>
     </Page>
