@@ -3,6 +3,7 @@ import { Grid, Divider, IconButton, Typography } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { useUser } from '../providers';
 import { API_URL } from "../utils";
 import { useState, useEffect } from "react";
@@ -15,7 +16,9 @@ export const Post = (props) => {
   // convert postDate to just show YYYY-MM-DD as string
   const formattedDate = new Date(postDate).toISOString().slice(0, 10);
 
-  const { user: currentUser } = useUser();
+  const { user: currentUser, userDetailRefresh } = useUser();
+  const { _id: userId, savedPosts: savedPostIds } = currentUser;
+  const isSaved = savedPostIds.includes(postId);
 
   const checkIsLiked = (likedByArray) => {
     return likedByArray.includes(currentUser._id);
@@ -147,7 +150,7 @@ export const Post = (props) => {
 
       if (response.ok) {
         console.log('Post saved!');
-        // update UI here to indicate that saved
+        userDetailRefresh(userId);
       } else {
         console.error('Failed to save post:', response.status);
       }
@@ -200,8 +203,8 @@ export const Post = (props) => {
                 height: "100%",
               }}
             >
-              <IconButton onClick={handleSaveClick} size="large" color="secondary" href="">
-                <BookmarkBorderIcon />
+              <IconButton onClick={handleSaveClick} size="large" color="secondary">
+                { isSaved ? <BookmarkIcon /> : <BookmarkBorderIcon />}
               </IconButton>
               <IconButton
                 size="large"
