@@ -13,7 +13,6 @@ import {
   MenuItem,
   Menu,
   Container,
-  ListItemIcon
 } from "@mui/material";
 import { useMode } from "../providers";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -195,16 +194,14 @@ export const NavBar = () => {
               onClose={handleCloseUserMenu}
             >
               <MenuItem key={'mode'} disableRipple>
-                {mode} mode
-                <IconButton sx={{ ml: 1 }} onClick={toggleMode} color="inherit">
-                    {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-                </IconButton>
+                  {mode === 'light' ? "Light" : "Dark"} mode
+                  <IconButton sx={{ ml: 1 }} onClick={toggleMode} color="inherit">
+                      {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                  </IconButton>
               </MenuItem>
-              <MenuItem key={'logout'} onClick={logoutOnClick}>
-                Logout
-                {/* <ListItemIcon>
-                  <Logout fontSize="small" />
-                </ListItemIcon> */}
+              <MenuItem key={'logout'} onClick={logoutOnClick}>        
+                  Log out
+                  <Logout sx={{ ml: 6.2 }} fontSize="small" />
               </MenuItem>
             </Menu>
           </Box>
