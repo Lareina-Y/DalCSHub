@@ -157,7 +157,7 @@ export const CreatePost = () => {
       <Grid
         container
         style={{
-          backgroundColor: "#F9F9F9",
+          backgroundColor: theme.palette.background.dark,
           marginTop: "15px",
           padding: "3em",
         }}

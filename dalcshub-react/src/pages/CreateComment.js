@@ -106,6 +106,7 @@ export const CreateComment = () => {
                 {filteredPost.map((post) => (
                     <Post
                         key={post._id}
+                        postId={post._id}
                         postTitle={post.postTitle}
                         postDate={post.timeCreated}
                         postAuthor={post.postAuthor}
