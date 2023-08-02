@@ -5,27 +5,38 @@ const User =  require("../models/user");
 const router = express.Router();
 
 // khaled: get post by ID
-router.get("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
   const id = req.params.id;
 
   try {
-    Post.findById(id).then((response) => {
-      if (response == null) {
-        res.status(404).send("This post does not exist");
-      } else {
-        res.status(200).send({
-            id: response._id,
-            postTitle: response.postTitle,
-            postDescription: result.postDescription,
-            postDate: result.timeCreated,
-            postAuthor: result.postAuthor,
-            postRating: result.postRating
-        });
-      }
+    const post = await Post.findById(id);
+    res.status(200).json({
+      success: true,
+      data: post
     });
-  } catch (err) {
-    return res.status(500).json({ message: "Internal server error" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Failed to fetch post" });
   }
+
+
+  // try {
+  //   Post.findById(id).then((response) => {
+  //     if (response == null) {
+  //       res.status(404).send("This post does not exist");
+  //     } else {
+  //       res.status(200).send({
+  //           id: response._id,
+  //           postTitle: response.postTitle,
+  //           postDescription: result.postDescription,
+  //           postDate: result.timeCreated,
+  //           postAuthor: result.postAuthor,
+  //           postRating: result.postRating
+  //       });
+  //     }
+  //   });
+  // } catch (err) {
+  //   return res.status(500).json({ message: "Internal server error" });
+  // }
 });
 
 // Kent: get all posts
