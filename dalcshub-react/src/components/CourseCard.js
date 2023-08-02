@@ -71,7 +71,7 @@ export const CourseCard = (props) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDialogOpen(false)} variant="contained" color="neutral">Discard</Button>
+          <Button onClick={() => setDialogOpen(false)} variant="contained" color="inherit">Discard</Button>
           <Button onClick={handleFollowOrUnfollowOnClick} autoFocus variant="contained">Unfollow</Button>
         </DialogActions>
       </Dialog>
