@@ -14,8 +14,12 @@ import {
   Menu,
   Container,
 } from "@mui/material";
+import { useMode } from "../providers";
 import MenuIcon from "@mui/icons-material/Menu";
 import userImage from "../assets/images/user.jpg";
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import Logout from '@mui/icons-material/Logout';
 import "../App.css";
 
 const pages = [
@@ -37,23 +41,15 @@ const pages = [
   },
 ];
 
-const getSettingActions = (logoutOnClick) => [
-  {
-    name: "Profile",
-    onClick: () => {}
-  },
-  {
-    name: "Logout",
-    onClick: logoutOnClick
-  }
-];
-
 export const NavBar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const { mode, toggleMode } = useMode();
+
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
-  const location = useLocation();
   const hideNavBarOnPaths = ['/', '/login', '/register'];
 
   if (hideNavBarOnPaths.includes(location.pathname)) {
@@ -81,8 +77,6 @@ export const NavBar = () => {
     setAnchorElUser(null);
     navigate("/login");
   }
-
-  const settings = getSettingActions(logoutOnClick);
 
   return (
     <AppBar position="static">
@@ -185,7 +179,7 @@ export const NavBar = () => {
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: "45px" }}
+              sx={{ mt: "32px" }}
               anchorEl={anchorElUser}
               anchorOrigin={{
                 vertical: "top",
@@ -199,11 +193,16 @@ export const NavBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting.name} onClick={setting.onClick}>
-                  <Typography textAlign="center">{setting.name}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem key={'mode'} disableRipple>
+                  {mode === 'light' ? "Light" : "Dark"} mode
+                  <IconButton sx={{ ml: 1 }} onClick={toggleMode} color="inherit">
+                      {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                  </IconButton>
+              </MenuItem>
+              <MenuItem key={'logout'} onClick={logoutOnClick}>        
+                  Log out
+                  <Logout sx={{ ml: 6.2 }} fontSize="small" />
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

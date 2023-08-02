@@ -4,11 +4,15 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-import { useUser } from '../providers';
+import { useUser, useSnackbar } from '../providers';
 import { API_URL } from "../utils";
 import { useState, useEffect } from "react";
+import { useTheme } from "@mui/material/styles";
 
 export const Post = (props) => {
+  const theme = useTheme();
+  const { openSnackbar } = useSnackbar();
+  
   const {postId, postTitle, postAuthor, postDate, postDescription, postRating, children } = props;
 
   const [posts, setPosts] = useState([]);
@@ -148,12 +152,17 @@ export const Post = (props) => {
         body: JSON.stringify({ userId: currentUser._id, postId: postId}), // Send the user and post ID in the request body
       });
 
-      if (response.ok) {
+      const result = await response.json();
+
+      if (result.success) {
         console.log('Post saved!');
         userDetailRefresh(userId);
       } else {
         console.error('Failed to save post:', response.status);
       }
+
+      openSnackbar(result.message, result.success ? "success" : "error");
+
     } catch (error) {
       console.error('Error saving post:', error);
     }
@@ -180,7 +189,7 @@ export const Post = (props) => {
 
   return (
     <Grid container spacing={2} style={{ padding: "1em", marginTop: "15px" }}>
-      <Grid item sm={12} style={{ backgroundColor: "#F9F9F9", padding: "3em" }}>
+      <Grid item sm={12} style={{ backgroundColor: theme.palette.background.dark, padding: "3em" }}>
         <Grid container spacing={2}>
           <Grid item sm={11} xs={11}>
             <Typography variant="h4" gutterBottom>

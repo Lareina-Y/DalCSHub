@@ -7,10 +7,12 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Page, PageTitle } from "../components";
-import { theme } from "../utils";
+import { useTheme } from "@mui/material/styles";
 import "../App.css";
 
 export const FAQ = () => {
+  const theme = useTheme();
+
   return (
     <Page>
       <PageTitle title={"Frequently Asked Questions"} link={"/faq"} />
@@ -20,7 +22,7 @@ export const FAQ = () => {
 
       <Accordion>
         <AccordionSummary
-          sx={{ backgroundColor: theme.palette.background.light }}
+          sx={{ backgroundColor: theme.palette.background.dark }}
           id="panel1a-header"
           aria-controls="panel1a-content"
           expandIcon={<ExpandMoreIcon />}
@@ -41,7 +43,7 @@ export const FAQ = () => {
 
       <Accordion>
         <AccordionSummary
-          sx={{ backgroundColor: theme.palette.background.light }}
+          sx={{ backgroundColor: theme.palette.background.dark }}
           id="panel2a-header"
           aria-controls="panel2a-content"
           expandIcon={<ExpandMoreIcon />}
@@ -61,7 +63,7 @@ export const FAQ = () => {
 
       <Accordion>
         <AccordionSummary
-          sx={{ backgroundColor: theme.palette.background.light }}
+          sx={{ backgroundColor: theme.palette.background.dark }}
           id="panel3a-header"
           aria-controls="panel3a-content"
           expandIcon={<ExpandMoreIcon />}

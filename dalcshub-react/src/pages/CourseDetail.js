@@ -1,7 +1,7 @@
 // Author: Kent Chew
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Typography, useMediaQuery, Grid, Divider, Button } from "@mui/material";
+import { Typography, useMediaQuery, Grid, Divider, Button, Chip, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { Page, Post, CircularProgress } from "../components";
 import { useUser, useSnackbar } from "../providers";
@@ -125,20 +125,38 @@ export const CourseDetail = () => {
         </Grid>
       </Grid>
       <Grid container spacing={2} style={{ padding: "1em", marginBottom: "15px" }}>
-        {/* TODO: kent - connect to backend */}
         <Grid item xs={12} sm={5} md={3}>
           <Typography variant="body1" gutterBottom>
             <b>Number:</b> {course.subject} {course.number}
           </Typography>
           <Typography variant="body1" gutterBottom>
-            <b>Instructor:</b> Dr. Jane Doe
+            <b>Credit Hours:</b> {course.subject} {course.credit_hours}
           </Typography>
           <Typography variant="body1" gutterBottom>
+            <b>Flags:</b>
+          </Typography>
+          <Stack
+            direction="column"
+            justifyContent="flex-start"
+            alignItems="flex-start"
+            spacing={1}
+          >
+            {course.flags.map((flag) => (
+              <Chip
+                key={course.number + flag}
+                label={flag}
+                color="primary"
+                size="small"
+                variant="outlined"
+              />
+            ))}
+          </Stack>
+          {/* <Typography variant="body1" gutterBottom>
             <b>Offering:</b> Fall/Winter/Summer
           </Typography>
           <Typography variant="body1" gutterBottom>
             <b>Status:</b> Active - Summer 2023
-          </Typography>
+          </Typography> */}
         </Grid>
         <Grid item xs={12} sm={7} md={6}>
           <Typography variant="body1" gutterBottom>

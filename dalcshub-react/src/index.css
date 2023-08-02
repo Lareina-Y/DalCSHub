@@ -28,34 +28,10 @@ code {
   box-shadow: 10px 10px 20px gray;
 }
 
-.contact1 textarea {
-  max-width: 100%;
-  box-sizing: border-box;
-  resize: vertical;
-  overflow: auto;
-}
-
-.contact1 input[type="text"] {
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
 @media screen and (max-width: 685px) {
   .contactbox {
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 5px;
-  }
-
-  .contact1 textarea {
-    max-width: 100%;
-    box-sizing: border-box;
-    resize: vertical;
-    overflow: auto;
-  }
-
-  .contact1 input[type="text"] {
-    max-width: 100%;
-    box-sizing: border-box;
   }
 }

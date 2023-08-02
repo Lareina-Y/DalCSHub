@@ -1,7 +1,7 @@
 //Author:
 import MailImg from "../assets/images/mail-img.png";
 import { Page, PageTitle } from "../components";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, TextField } from "@mui/material";
 
 export const Contact = () => {
   return (
@@ -32,39 +32,21 @@ export const Contact = () => {
             >
               <Typography variant="h5">Send Us A Message</Typography>
             </Box>
-
-            <Box
-              sx={{
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              }}
-            >
-              <Typography variant="body1">
-                <label>Name:&nbsp;</label>
-                <input
-                  type="text"
-                  size={150}
-                  style={{ width: "100%", marginBottom: "15px" }}
-                ></input>
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              }}
-            >
-              <Typography variant="body1">
-                <textarea
-                  rows={10}
-                  cols={150}
-                  style={{ width: "100%" }}
-                  placeholder="Enter your quries here..."
-                ></textarea>
-              </Typography>
-            </Box>
+            <TextField
+              style={{ marginBottom: "1em" }}
+              label="Email"
+              variant="outlined"
+              required
+              fullWidth
+            />        
+            <TextField
+              label="Enter your message here..."
+              multiline
+              rows={4}
+              variant="outlined"
+              required
+              fullWidth
+            />
           </div>
 
           <Box textAlign="center">

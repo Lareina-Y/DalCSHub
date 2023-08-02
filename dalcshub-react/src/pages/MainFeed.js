@@ -1,7 +1,7 @@
 //Author: Shiwen(Lareina) Yang & Khaled Al-Mahbashi
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
-import { Tabs, Tab, Typography, Box, Grid } from "@mui/material";
+import { Tabs, Tab, Typography, Box, Grid, Button } from "@mui/material";
 import { Page, Post, PageTitle, CourseCard, CircularProgress } from "../components";
 import { useUser } from '../providers';
 import { API_URL } from "../utils";
@@ -21,6 +21,8 @@ const TabPanel = (props) => {
 };
 
 export const MainFeed = () => {
+  const navigate = useNavigate();
+
   const { user: currentUser } = useUser();
   const { _id: userId, followedCourses: followedCoursesIds, savedPosts: savedPostIds } = currentUser;
 
@@ -134,7 +136,11 @@ export const MainFeed = () => {
                 postAuthor={post.postAuthor}
                 postDescription={post.postDescription}
                 postRating={post.postRating}
-              />
+              >
+                <Button variant="outlined" onClick={() => navigate(`/comment/:${post._id}`)}>
+                  Details
+                </Button>
+              </Post>
           )}          
         </TabPanel>
       </Box>

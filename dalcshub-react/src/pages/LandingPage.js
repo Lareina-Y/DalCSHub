@@ -4,9 +4,10 @@ import { useNavigate } from "react-router-dom";
 import arrow from "../assets/images/arrow.png";
 import { Card, CardContent, Button } from "@mui/material";
 import "../App.css";
-import { theme } from "../utils";
+import { useTheme } from "@mui/material/styles";
 
 export const LandingPage = () => {
+  const theme = useTheme();
   const navigate = useNavigate();
 
   const buttonClicked = () => {
