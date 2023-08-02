@@ -4,13 +4,14 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-import { useUser } from '../providers';
+import { useUser, useSnackbar } from '../providers';
 import { API_URL } from "../utils";
 import { useState, useEffect } from "react";
 import { useTheme } from "@mui/material/styles";
 
 export const Post = (props) => {
   const theme = useTheme();
+  const { openSnackbar } = useSnackbar();
   
   const {postId, postTitle, postAuthor, postDate, postDescription, postRating, children } = props;
 
@@ -151,12 +152,17 @@ export const Post = (props) => {
         body: JSON.stringify({ userId: currentUser._id, postId: postId}), // Send the user and post ID in the request body
       });
 
-      if (response.ok) {
+      const result = await response.json();
+
+      if (result.success) {
         console.log('Post saved!');
         userDetailRefresh(userId);
       } else {
         console.error('Failed to save post:', response.status);
       }
+
+      openSnackbar(result.message, result.success ? "success" : "error");
+
     } catch (error) {
       console.error('Error saving post:', error);
     }
