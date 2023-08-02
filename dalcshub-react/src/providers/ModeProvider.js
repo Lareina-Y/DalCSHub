@@ -14,8 +14,9 @@ export const ModeProvider = ({ children }) => {
 
     const toggleMode = useCallback (() => 
         {
-            setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-            localStorage.setItem("mode", mode);
+            const newMode = mode === 'light' ? 'dark' : 'light';
+            setMode(newMode);
+            localStorage.setItem("mode", newMode);
         }, [mode]
     );
 
