@@ -10,7 +10,7 @@ export const generateTheme = (modeStytle) => {
     },
     background: {
       secondary: "#962061",
-      light: "#F3F3F3",
+      // light: "#F3F3F3",
       dark: "#1212120D"
     },
   };

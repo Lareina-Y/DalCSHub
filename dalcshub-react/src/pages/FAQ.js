@@ -22,11 +22,7 @@ export const FAQ = () => {
 
       <Accordion>
         <AccordionSummary
-          sx={{ backgroundColor: 
-            theme.palette.mode === 'light' 
-              ? theme.palette.background.light
-              : theme.palette.background.dark
-          }}
+          sx={{ backgroundColor: theme.palette.background.dark }}
           id="panel1a-header"
           aria-controls="panel1a-content"
           expandIcon={<ExpandMoreIcon />}
@@ -47,11 +43,7 @@ export const FAQ = () => {
 
       <Accordion>
         <AccordionSummary
-          sx={{ backgroundColor: 
-            theme.palette.mode === 'light' 
-              ? theme.palette.background.light
-              : theme.palette.background.dark
-          }}
+          sx={{ backgroundColor: theme.palette.background.dark }}
           id="panel2a-header"
           aria-controls="panel2a-content"
           expandIcon={<ExpandMoreIcon />}
@@ -71,11 +63,7 @@ export const FAQ = () => {
 
       <Accordion>
         <AccordionSummary
-          sx={{ backgroundColor: 
-            theme.palette.mode === 'light' 
-              ? theme.palette.background.light
-              : theme.palette.background.dark
-          }}
+          sx={{ backgroundColor: theme.palette.background.dark }}
           id="panel3a-header"
           aria-controls="panel3a-content"
           expandIcon={<ExpandMoreIcon />}
