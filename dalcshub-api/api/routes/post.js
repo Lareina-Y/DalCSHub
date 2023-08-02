@@ -33,7 +33,7 @@ router.post("/get_by_ids", async (req, res) => {
 
   try {
     Post.find({ _id: { $in: body.postIds } })
-      .sort({ number: 1 })
+      .sort({ timeCreated: -1 })
       .then((posts) => res.status(200).json({ success: true, data: posts}))
       .catch((err) => res.status(500).json({ success: false, error: 'Error fetching posts' }));
   } catch (error) {
