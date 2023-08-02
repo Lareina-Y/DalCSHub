@@ -1,7 +1,7 @@
 // Author: Kent Chew
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Typography, useMediaQuery, Grid, Divider, Button, Chip } from "@mui/material";
+import { Typography, useMediaQuery, Grid, Divider, Button, Chip, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { Page, Post, CircularProgress } from "../components";
 import { useUser, useSnackbar } from "../providers";
@@ -135,15 +135,22 @@ export const CourseDetail = () => {
           <Typography variant="body1" gutterBottom>
             <b>Flags:</b>
           </Typography>
-          {course.flags.map((flag) => (<>
-            <Chip
-              key={course.number + flag}
-              label={flag}
-              color="primary"
-              size="small"
-              variant="outlined"
-            /><br /></>
-          ))}
+          <Stack
+            direction="column"
+            justifyContent="flex-start"
+            alignItems="flex-start"
+            spacing={1}
+          >
+            {course.flags.map((flag) => (
+              <Chip
+                key={course.number + flag}
+                label={flag}
+                color="primary"
+                size="small"
+                variant="outlined"
+              />
+            ))}
+          </Stack>
           {/* <Typography variant="body1" gutterBottom>
             <b>Offering:</b> Fall/Winter/Summer
           </Typography>
