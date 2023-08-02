@@ -179,7 +179,7 @@ export const NavBar = () => {
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: "37px" }}
+              sx={{ mt: "32px" }}
               anchorEl={anchorElUser}
               anchorOrigin={{
                 vertical: "top",
