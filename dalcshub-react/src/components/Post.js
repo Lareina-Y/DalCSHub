@@ -141,11 +141,11 @@ export const Post = (props) => {
     try {
       // Call the backend API to save the post
       const response = await fetch(`${API_URL}/api/user/savePost`, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ postId }), // Send the post ID in the request body
+        body: JSON.stringify({ userId: currentUser._id, postId: postId}), // Send the user and post ID in the request body
       });
 
       if (response.ok) {
