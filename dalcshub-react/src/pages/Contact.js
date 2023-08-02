@@ -61,7 +61,7 @@ export const Contact = () => {
                   rows={10}
                   cols={150}
                   style={{ width: "100%" }}
-                  placeholder="Enter your quries here..."
+                  placeholder="Enter your message here..."
                 ></textarea>
               </Typography>
             </Box>
