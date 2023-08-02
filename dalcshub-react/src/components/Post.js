@@ -3,6 +3,7 @@ import { Grid, Divider, IconButton, Typography } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { useUser } from '../providers';
 import { API_URL } from "../utils";
 import { useState, useEffect } from "react";
@@ -10,15 +11,17 @@ import { useTheme } from "@mui/material/styles";
 
 export const Post = (props) => {
   const theme = useTheme();
-
-  const { postTitle, postAuthor, postDate, postDescription, postRating, children } = props;
+  
+  const {postId, postTitle, postAuthor, postDate, postDescription, postRating, children } = props;
 
   const [posts, setPosts] = useState([]);
 
   // convert postDate to just show YYYY-MM-DD as string
   const formattedDate = new Date(postDate).toISOString().slice(0, 10);
 
-  const { user: currentUser } = useUser();
+  const { user: currentUser, userDetailRefresh } = useUser();
+  const { _id: userId, savedPosts: savedPostIds } = currentUser;
+  const isSaved = savedPostIds.includes(postId);
 
   const checkIsLiked = (likedByArray) => {
     return likedByArray.includes(currentUser._id);
@@ -137,20 +140,20 @@ export const Post = (props) => {
 
 
   //Khaled: Handle save button click
-  const handleSaveClick = async (postId) => {
+  const handleSaveClick = async () => {
     try {
       // Call the backend API to save the post
       const response = await fetch(`${API_URL}/api/user/savePost`, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ postId }), // Send the post ID in the request body
+        body: JSON.stringify({ userId: currentUser._id, postId: postId}), // Send the user and post ID in the request body
       });
 
       if (response.ok) {
         console.log('Post saved!');
-        // update UI here to indicate that saved
+        userDetailRefresh(userId);
       } else {
         console.error('Failed to save post:', response.status);
       }
@@ -203,13 +206,12 @@ export const Post = (props) => {
                 height: "100%",
               }}
             >
-              <IconButton onClick={handleSaveClick} size="large" color="secondary" href="">
-                <BookmarkBorderIcon />
+              <IconButton onClick={handleSaveClick} size="large" color="secondary">
+                { isSaved ? <BookmarkIcon /> : <BookmarkBorderIcon />}
               </IconButton>
               <IconButton
                 size="large"
                 color="secondary"
-                href=""
                 onClick={() => handleLike(postTitle)}
               >
                 <ArrowUpwardIcon />
@@ -220,7 +222,6 @@ export const Post = (props) => {
               <IconButton
                 size="large"
                 color="secondary"
-                href=""
                 onClick={() => handleDisLike(postTitle)}
               >
                 <ArrowDownwardIcon />
