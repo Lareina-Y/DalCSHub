@@ -8,6 +8,7 @@ import { useUser, useSnackbar } from '../providers';
 import { API_URL } from "../utils";
 import { useState, useEffect } from "react";
 import { useTheme } from "@mui/material/styles";
+import { format } from 'date-fns';
 
 export const Post = (props) => {
   const theme = useTheme();
@@ -17,8 +18,8 @@ export const Post = (props) => {
 
   const [posts, setPosts] = useState([]);
 
-  // convert postDate to just show YYYY-MM-DD as string
-  const formattedDate = new Date(postDate).toISOString().slice(0, 10);
+  // convert postDate to just show MMM dd, y HH:mm as string
+  const formattedDate = format(new Date(postDate), 'MMM dd, y HH:mm');
 
   const { user: currentUser, userDetailRefresh } = useUser();
   const { _id: userId, savedPosts: savedPostIds } = currentUser;
@@ -153,7 +154,7 @@ export const Post = (props) => {
           body: JSON.stringify({ userId: currentUser._id, postId: postId}), // Send the user and post ID in the request body
         });
         const result = await response.json();
-        if (response.status === 200) {
+        if (response.ok) {
           console.log('Post saved!');
           userDetailRefresh(userId);
         } else {
@@ -175,7 +176,7 @@ export const Post = (props) => {
         });
 
         const result = await response.json();
-        if (response.status === 200) {
+        if (response.ok) {
           console.log('Post unsaved!');
           userDetailRefresh(userId);
         } else {

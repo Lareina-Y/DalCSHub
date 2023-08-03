@@ -1,12 +1,16 @@
 // Author: Meet Kumar Patel
 import { Grid, Divider, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { format } from 'date-fns';
 
 export const Comment = (props) => {
   const theme = useTheme();
 
   const { title, author, date, description, children} =
     props;
+
+  // convert commentDate to just show MMM dd, y HH:mm as string
+  const formattedDate = format(new Date(date), 'MMM dd, y HH:mm');
   
   return (
     <Grid container spacing={2} style={{ padding: "1em", marginTop: "15px" }}>
@@ -17,7 +21,7 @@ export const Comment = (props) => {
               {title} 
             </Typography>
             <Typography variant="subtitle2" gutterBottom>
-              posted {date} by {author}
+              posted {formattedDate} by {author}
             </Typography>
             <Divider />
             <Typography
