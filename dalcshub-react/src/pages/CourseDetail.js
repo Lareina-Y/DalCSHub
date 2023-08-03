@@ -71,7 +71,7 @@ export const CourseDetail = () => {
 
   const handlePostClick = (post_id) => {
     console.log(post_id);
-    navigate(`/comment/:${post_id}`);
+    navigate(`/comment/${post_id}`);
   };
 
   const handleCreatePostClick = () => {
