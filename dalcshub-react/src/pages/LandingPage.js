@@ -5,13 +5,19 @@ import arrow from "../assets/images/arrow.png";
 import { Card, CardContent, Button, IconButton } from "@mui/material";
 import "../App.css";
 import { useTheme } from "@mui/material/styles";
+import { useUser } from "../providers";
 
 export const LandingPage = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const { user } = useUser();
 
   const buttonClicked = () => {
-    navigate("/login");
+    if (user._id === '' ) {
+      navigate("/login");
+    } else {
+      navigate("/main");
+    }
   };
 
   return (

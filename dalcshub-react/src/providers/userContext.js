@@ -29,7 +29,7 @@ export function UserProvider({ children }) {
       const res = await fetch(`${API_URL}/api/user/${userId}`);
       if (res.status === 200) {
         const result = await res.json();
-        setUser(result.data);
+        setUser(result.data ?? defaultUserDetail);
         const currentUserString = JSON.stringify(result.data);
         localStorage.setItem("currentUser", currentUserString);
       } else {
@@ -38,9 +38,15 @@ export function UserProvider({ children }) {
     }, []
   );
 
+  const removeUser = useCallback ( 
+    () => {
+      setUser(defaultUserDetail);
+    }, []
+  );
+
   const userContextValue = useMemo(
-    () => ({user, setUser, userDetailRefresh}),
-    [user, setUser, userDetailRefresh]
+    () => ({user, setUser, userDetailRefresh, removeUser}),
+    [user, setUser, userDetailRefresh, removeUser]
   );
 
   return (
