@@ -14,7 +14,12 @@ export const Comment = (props) => {
   
   return (
     <Grid container spacing={2} style={{ padding: "1em", marginTop: "15px" }}>
-      <Grid item sm={12} style={{ backgroundColor: theme.palette.background.dark, padding: "3em" }}>
+      <Grid item sm={12} 
+        style={{ 
+          backgroundColor: theme.palette.mode === 'light' ? theme.palette.background.dark : theme.palette.grey[900],
+          padding: "3em" 
+        }}
+      >
         <Grid container spacing={2}>
           <Grid item sm={11} xs={11}>
             <Typography variant="h4" gutterBottom>
