@@ -159,9 +159,7 @@ export const Post = (props) => {
         } else {
           console.error('Failed to save post:', response.status);
         }
-        
-        openSnackbar(response.message, response.success ? "success" : "error");
-
+        openSnackbar(response.message, response.ok ? "success" : "error");
       } catch (error) {
         console.error('Error saving post:', error);
       }
@@ -182,6 +180,7 @@ export const Post = (props) => {
         } else {
           console.error('Failed to unsave post:', response.status);
         }
+        openSnackbar(response.message, response.ok ? "success" : "error");
       } catch (error) {
         console.error('Error unsaving post:', error);
       }
