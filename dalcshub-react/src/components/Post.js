@@ -142,29 +142,49 @@ export const Post = (props) => {
 
   //Khaled: Handle save button click
   const handleSaveClick = async () => {
-    try {
-      // Call the backend API to save the post
-      const response = await fetch(`${API_URL}/api/user/savePost`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userId: currentUser._id, postId: postId}), // Send the user and post ID in the request body
-      });
+    if(!isSaved){
+      try {
+        // Call the backend API to save the post
+        const response = await fetch(`${API_URL}/api/user/savePost`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userId: currentUser._id, postId: postId}), // Send the user and post ID in the request body
+        });
 
-      const result = await response.json();
+        if (response.ok) {
+          console.log('Post saved!');
+          userDetailRefresh(userId);
+        } else {
+          console.error('Failed to save post:', response.status);
+        }
+        
+        openSnackbar(result.message, result.success ? "success" : "error");
 
-      if (result.success) {
-        console.log('Post saved!');
-        userDetailRefresh(userId);
-      } else {
-        console.error('Failed to save post:', response.status);
+      } catch (error) {
+        console.error('Error saving post:', error);
       }
+    } else {
+      try {
+        // Call the backend API to save the post
+        const response = await fetch(`${API_URL}/api/user/unsavePost`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userId: currentUser._id, postId: postId}), // Send the user and post ID in the request body
+        });
 
-      openSnackbar(result.message, result.success ? "success" : "error");
-
-    } catch (error) {
-      console.error('Error saving post:', error);
+        if (response.ok) {
+          console.log('Post unsaved!');
+          userDetailRefresh(userId);
+        } else {
+          console.error('Failed to unsave post:', response.status);
+        }
+      } catch (error) {
+        console.error('Error unsaving post:', error);
+      }
     }
   };
 
