@@ -1,4 +1,4 @@
-// Authors: Shiwen(Lareina), Vrund Patel, Khaled
+// Authors: Shiwen(Lareina), Vrund Patel, Khaled Al-Mahbashi
 
 const express = require("express");
 const User = require("../models/user");
@@ -116,6 +116,49 @@ router.put('/savePost', async (req, res) =>{
     await user.save();
 
     res.json({ success: true, message: "Post added successfully" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal server error!" });
+  }
+})
+
+// Khaled: remove saved post
+router.put('/unsavePost', async (req, res) =>{
+  
+  const body = req.body;
+  const { userId, postId } = body;
+
+  try {
+    if (!userId || !postId) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Incorrect Request!" });
+    }
+
+    const user = await User.findById(userId);
+    const post = await Post.findById(postId);
+    const savedPosts = user.savedPosts;
+
+
+    if (!post || !user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User or Post not found" });
+    }
+    
+    // Check if the user has not saved the post
+    if (!savedPosts.includes(postId)) {
+      return res
+        .status(409)
+        .json({ success: false, message: "Post is not saved" });
+    }
+
+    const index = savedPosts.indexOf(postId);
+    if (index !== -1) {
+      savedPosts.splice(index, 1);
+    } 
+    await user.save();  
+
+    res.json({ success: true, message: "Post unsaved successfully", data: savedPosts });
   } catch (error) {
     res.status(500).json({ success: false, message: "Internal server error!" });
   }
