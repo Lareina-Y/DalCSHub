@@ -152,14 +152,14 @@ export const Post = (props) => {
           },
           body: JSON.stringify({ userId: currentUser._id, postId: postId}), // Send the user and post ID in the request body
         });
-
-        if (response.ok) {
+        const result = await response.json();
+        if (response.status === 200) {
           console.log('Post saved!');
           userDetailRefresh(userId);
         } else {
           console.error('Failed to save post:', response.status);
         }
-        openSnackbar(response.message, response.ok ? "success" : "error");
+        openSnackbar(result.message, result.success ? "success" : "error");
       } catch (error) {
         console.error('Error saving post:', error);
       }
@@ -174,13 +174,14 @@ export const Post = (props) => {
           body: JSON.stringify({ userId: currentUser._id, postId: postId}), // Send the user and post ID in the request body
         });
 
-        if (response.ok) {
+        const result = await response.json();
+        if (response.status === 200) {
           console.log('Post unsaved!');
           userDetailRefresh(userId);
         } else {
           console.error('Failed to unsave post:', response.status);
         }
-        openSnackbar(response.message, response.ok ? "success" : "error");
+        openSnackbar(result.message, result.success ? "success" : "error");
       } catch (error) {
         console.error('Error unsaving post:', error);
       }

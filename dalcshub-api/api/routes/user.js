@@ -115,7 +115,7 @@ router.put('/savePost', async (req, res) =>{
     user.savedPosts.push(postId);
     await user.save();
 
-    res.json({ success: true, message: "Post added successfully" });
+    res.json({ success: true, message: "Post saved successfully" });
   } catch (error) {
     res.status(500).json({ success: false, message: "Internal server error!" });
   }
