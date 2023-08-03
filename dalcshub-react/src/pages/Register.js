@@ -1,11 +1,15 @@
 //Author: Vrund Patel
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { API_URL } from "../utils";
-import { Grid, TextField, Button, Typography } from '@mui/material';
+import { Grid, TextField, Button, Typography, Select, MenuItem, FormHelperText, Stack, FormControl } from '@mui/material';
+import { useSnackbar } from '../providers';
 
 export const Register = () => {
+  const navigate = useNavigate();
+  const { openSnackbar } = useSnackbar();
+
   const [input, setInput] = useState({
     fName: '',
     lName: '',
@@ -79,6 +83,13 @@ export const Register = () => {
       error.lName = '';
     }
 
+    // type
+    if (!input.type) {
+      error.type = 'Account Type is required';
+    } else {
+      error.type = '';
+    }
+
     // email
     if (!input.email) {
       error.email = 'Email is required';
@@ -113,7 +124,7 @@ export const Register = () => {
     const { fName, lName, type, email, password } = input;
 
     if (!fName || !lName || !type || !email || !password) {
-      window.alert('Please fill in all required fields.');
+      openSnackbar("Please fill in all required fields.", "warning");
       return;
     }
 
@@ -132,18 +143,18 @@ export const Register = () => {
         })
       });
 
-      const data = await res.json();
+      const result = await res.json();
+      openSnackbar(result.message, result.success? "success" : "error");
 
-      if (data.status === 422 || !data) {
-        window.alert('Invalid Registration');
+      if (result.success) {
+        navigate("/login");
         console.log("Invalid user's registration");
       } else {
-        window.alert('Registration Successful');
         console.log('User registration Completed');
       }
     } catch (error) {
       console.error('Error:', error);
-      window.alert('An error occurred. Please try again later.');
+      openSnackbar("An error occurred. Please try again later.", "error");
     }
   };
 
@@ -180,25 +191,27 @@ export const Register = () => {
                 error={Boolean(errors.lName)}
                 helperText={errors.lName}
               />
-              <div>
-                <label>Account Type</label>
-                <select
-                  className="form-control"
-                  name="type"
-                  value={input.accountType}
-                  onChange={handleChange}
-                  error={Boolean(errors.type)}
-                  helperText={errors.type}
-                  defaultValue={'Select'}
-                >
-                  <option value={'Select'} disabled>
-                    Select Type
-                  </option>
-                  <option value={'Instructor'}>Instructor</option>
-                  <option value={'Student'}>Student</option>
-                  <option value={'Alumni'}>Alumni</option>
-                </select>
-              </div>
+              <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
+                <label>Account Type: </label>
+                <FormControl error={Boolean(errors.type)}>
+                  <Select
+                    className="form-control"
+                    name="type"
+                    value={input.accountType}
+                    onChange={handleChange}
+                    defaultValue={'Select'}
+                    size="small"
+                  >
+                    <MenuItem value={'Select'} disabled>
+                      Select Type
+                    </MenuItem>
+                    <MenuItem value={'Student'}>Student</MenuItem>
+                    <MenuItem value={'Instructor'}>Instructor</MenuItem>
+                    <MenuItem value={'Alumni'}>Alumni</MenuItem>
+                  </Select>
+                  <FormHelperText>{errors.type}</FormHelperText>
+                </FormControl>
+              </Stack>
               <TextField
                 label="Email"
                 type="email"

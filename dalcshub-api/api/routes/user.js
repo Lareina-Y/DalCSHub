@@ -173,7 +173,7 @@ router.get('/savedPosts/:id', async (req, res) =>{
           return res.status(404).json({success: false, data: "Incorrect Request!"});
       }
   } catch(err) {
-      return res.status(500).json({message: "Internal server error!"});
+      return res.status(500).json({ success: false, message: "Internal server error!"});
   }
 
   try { 
@@ -192,7 +192,7 @@ router.post('/x', async(req, res) => {
     const {firstName, lastName, type, email, password} = req.body
 
     if( !firstName || !lastName || !type || !email || !password ){
-        return res.status(422).json({ error: "At least one of field is missing" });
+        return res.status(422).json({ success: false, message: "At least one of field is missing" });
     }
 
     try {
@@ -200,17 +200,17 @@ router.post('/x', async(req, res) => {
         const exist = await User.findOne({ email: email });
 
         if(exist){
-            return res.status(422).json({ error: "Email already exist" })
+            return res.status(422).json({ success: false, message: "Email already exist" })
         }
 
         const user = new User({firstName, lastName, type, email, password});
         const userRegister = await user.save()
 
         if(userRegister){
-            res.status(201).json({ message: "User registerd successfully :)"})
+            res.status(200).json({ success: true, message: "User registerd successfully :)"})
         }
         else{
-            res.status(500).json({ error: "Registration Failed :(" })
+            res.status(500).json({ success: false, message: "Registration Failed :(" })
         }
     } catch (error) {
         console.log(` error ${error}`)
@@ -226,7 +226,7 @@ router.post('/signin', async(req, res) => {
         const {email, password} = req.body
 
         if( !email || !password){
-            return res.status(400).json({error: "At least one of the field is empty from backend"});
+            return res.status(400).json({success: false, message: "At least one of the field is empty :("});
         }
 
         const userLogin = await User.findOne( {email: email} )
@@ -234,14 +234,14 @@ router.post('/signin', async(req, res) => {
         if(userLogin){
 
             if(password === userLogin.password){
-                return res.status(200).json({message: "Signin Successful :)", data: userLogin});
+                return res.status(200).json({success: true, message: "Signin Successful :)", data: userLogin});
             }
             else{
-                return res.status(400).json({error: "Invalid Credentails :( "});
+                return res.status(400).json({success: false, message: "Invalid Credentails :( "});
             }
         }
         else{
-            return res.status(400).json({error: "Invalid Credentials :( "});
+            return res.status(400).json({success: false, message: "Email not found :( "});
         }
         
     } catch (error) {

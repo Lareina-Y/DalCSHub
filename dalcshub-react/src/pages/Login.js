@@ -2,13 +2,15 @@
 
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useUser } from "../providers";
+import { useUser, useSnackbar } from "../providers";
 import { API_URL } from "../utils";
 import { Grid, TextField, Button, Typography } from "@mui/material";
 
 export const Login = () => {
   const { setUser } = useUser();
+  const { openSnackbar } = useSnackbar();
   const navigate = useNavigate();
+
   const [loginInput, setLoginInput] = useState({
     loginEmail: "",
     loginPassword: "",
@@ -77,10 +79,9 @@ export const Login = () => {
           "password": loginPassword
         }),
       });
+      const result = await response.json();
 
       if (response.ok) {
-        const result = await response.json();
-
         console.log("user: ", result.data)
         setUser(result.data);
 
@@ -91,8 +92,8 @@ export const Login = () => {
         navigate("/main");
       } else {
         console.log("console.log(response.status);", response.status);
-        window.alert("At least one of the fields is invalid");
       }
+      openSnackbar(result.message, result.success? "success" : "error");
     } catch (e) {
       console.error(e);
     }
