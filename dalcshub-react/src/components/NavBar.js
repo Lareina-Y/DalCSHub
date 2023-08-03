@@ -14,9 +14,8 @@ import {
   Menu,
   Container,
 } from "@mui/material";
-import { useMode } from "../providers";
+import { useMode, useUser } from "../providers";
 import MenuIcon from "@mui/icons-material/Menu";
-import userImage from "../assets/images/user.jpg";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import Logout from '@mui/icons-material/Logout';
@@ -46,6 +45,8 @@ export const NavBar = () => {
   const location = useLocation();
 
   const { mode, toggleMode } = useMode();
+  const { user: currentUser } = useUser();
+  const { firstName, lastName } = currentUser;
 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -175,7 +176,9 @@ export const NavBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Avatar Image" src={userImage} />
+                <Avatar alt="Avatar Image">
+                  {firstName[0]?.toUpperCase()}{lastName[0]?.toUpperCase()}
+                </Avatar>
               </IconButton>
             </Tooltip>
             <Menu

@@ -2,7 +2,7 @@
 import video from "../assets/videos/background.mp4";
 import { useNavigate } from "react-router-dom";
 import arrow from "../assets/images/arrow.png";
-import { Card, CardContent, Button } from "@mui/material";
+import { Card, CardContent, Button, IconButton } from "@mui/material";
 import "../App.css";
 import { useTheme } from "@mui/material/styles";
 
@@ -35,7 +35,7 @@ export const LandingPage = () => {
           width: "100%",
           height: "100%",
           overflowY: "scroll",
-          scrollSnapType: "y mandatory",
+          // scrollSnapType: "y mandatory",
         }}
       >
         <div
@@ -72,15 +72,19 @@ export const LandingPage = () => {
                 marginTop: "2rem",
               }}
             >
+              <IconButton 
+                href="#section2"
+              >
               {/* Reference Link:  https://www.freeiconspng.com/img/41944
-              Date accessed: 19 June, 2023
-              Help taken: The arrow image was taken from this link
-          */}
+                  Date accessed: 19 June, 2023
+                  Help taken: The arrow image was taken from this link
+              */}
               <img
                 src={arrow}
                 alt={"arrow"}
                 style={{ width: "100px", height: "100px" }}
               />
+            </IconButton>
             </div>
           </div>
 
@@ -108,6 +112,7 @@ export const LandingPage = () => {
         </div>
 
         <div
+          id="section2"
           style={{
             height: "100vh",
             scrollSnapAlign: "start",
@@ -115,7 +120,6 @@ export const LandingPage = () => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "white",
             position: "relative",
             zIndex: 1,
           }}
