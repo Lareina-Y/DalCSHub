@@ -159,9 +159,12 @@ export const Post = (props) => {
         } else {
           console.error('Failed to save post:', response.status);
         }
+<<<<<<< HEAD
         
         openSnackbar(result.message, result.success ? "success" : "error");
 
+=======
+>>>>>>> b8ff22b (added unsave post functionality)
       } catch (error) {
         console.error('Error saving post:', error);
       }
