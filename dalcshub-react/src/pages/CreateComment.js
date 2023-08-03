@@ -171,11 +171,11 @@ export const CreateComment = () => {
                         width: '100%',
                     }}
                 >
-                    <Button onClick={handleSubmit} variant="contained">
-                        Submit Comment
-                    </Button>
                     <Button onClick={handleshowPost} variant="contained">
-                        Cancel Comment
+                        Cancel
+                    </Button>
+                    <Button onClick={handleSubmit} variant="contained">
+                        Submit
                     </Button>
                 </div>
             </Container>

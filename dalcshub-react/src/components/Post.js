@@ -8,6 +8,7 @@ import { useUser, useSnackbar } from '../providers';
 import { API_URL } from "../utils";
 import { useState, useEffect } from "react";
 import { useTheme } from "@mui/material/styles";
+import { format } from 'date-fns';
 
 export const Post = (props) => {
   const theme = useTheme();
@@ -17,8 +18,8 @@ export const Post = (props) => {
 
   const [posts, setPosts] = useState([]);
 
-  // convert postDate to just show YYYY-MM-DD as string
-  const formattedDate = new Date(postDate).toISOString().slice(0, 10);
+  // convert postDate to just show MMM dd, y HH:mm as string
+  const formattedDate = format(new Date(postDate), 'MMM dd, y HH:mm');
 
   const { user: currentUser, userDetailRefresh } = useUser();
   const { _id: userId, savedPosts: savedPostIds } = currentUser;
@@ -142,29 +143,49 @@ export const Post = (props) => {
 
   //Khaled: Handle save button click
   const handleSaveClick = async () => {
-    try {
-      // Call the backend API to save the post
-      const response = await fetch(`${API_URL}/api/user/savePost`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userId: currentUser._id, postId: postId}), // Send the user and post ID in the request body
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        console.log('Post saved!');
-        userDetailRefresh(userId);
-      } else {
-        console.error('Failed to save post:', response.status);
+    if(!isSaved){
+      try {
+        // Call the backend API to save the post
+        const response = await fetch(`${API_URL}/api/user/savePost`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userId: currentUser._id, postId: postId}), // Send the user and post ID in the request body
+        });
+        const result = await response.json();
+        if (response.ok) {
+          console.log('Post saved!');
+          userDetailRefresh(userId);
+        } else {
+          console.error('Failed to save post:', response.status);
+        }
+        openSnackbar(result.message, result.success ? "success" : "error");
+      } catch (error) {
+        console.error('Error saving post:', error);
       }
+    } else {
+      try {
+        // Call the backend API to unsave the post
+        const response = await fetch(`${API_URL}/api/user/unsavePost`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userId: currentUser._id, postId: postId}), // Send the user and post ID in the request body
+        });
 
-      openSnackbar(result.message, result.success ? "success" : "error");
-
-    } catch (error) {
-      console.error('Error saving post:', error);
+        const result = await response.json();
+        if (response.ok) {
+          console.log('Post unsaved!');
+          userDetailRefresh(userId);
+        } else {
+          console.error('Failed to unsave post:', response.status);
+        }
+        openSnackbar(result.message, result.success ? "success" : "error");
+      } catch (error) {
+        console.error('Error unsaving post:', error);
+      }
     }
   };
 
@@ -189,7 +210,12 @@ export const Post = (props) => {
 
   return (
     <Grid container spacing={2} style={{ padding: "1em", marginTop: "15px" }}>
-      <Grid item sm={12} style={{ backgroundColor: theme.palette.background.dark, padding: "3em" }}>
+      <Grid item sm={12} 
+        style={{ 
+          backgroundColor: theme.palette.mode === 'light' ? theme.palette.background.dark : theme.palette.grey[900], 
+          padding: "3em" 
+        }}
+      >
         <Grid container spacing={2}>
           <Grid item sm={11} xs={11}>
             <Typography variant="h4" gutterBottom>
