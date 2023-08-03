@@ -3,19 +3,27 @@ import { Grid, Divider, IconButton, Typography } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import { useUser } from '../providers';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import { useUser, useSnackbar } from '../providers';
 import { API_URL } from "../utils";
 import { useState, useEffect } from "react";
+import { useTheme } from "@mui/material/styles";
+import { format } from 'date-fns';
 
 export const Post = (props) => {
-  const { postTitle, postAuthor, postDate, postDescription, postRating, children } = props;
+  const theme = useTheme();
+  const { openSnackbar } = useSnackbar();
+  
+  const {postId, postTitle, postAuthor, postDate, postDescription, postRating, children } = props;
 
   const [posts, setPosts] = useState([]);
 
-  // convert postDate to just show YYYY-MM-DD as string
-  const formattedDate = new Date(postDate).toISOString().slice(0, 10);
+  // convert postDate to just show MMM dd, y HH:mm as string
+  const formattedDate = format(new Date(postDate), 'MMM dd, y HH:mm');
 
-  const { user: currentUser } = useUser();
+  const { user: currentUser, userDetailRefresh } = useUser();
+  const { _id: userId, savedPosts: savedPostIds } = currentUser;
+  const isSaved = savedPostIds.includes(postId);
 
   const checkIsLiked = (likedByArray) => {
     return likedByArray.includes(currentUser._id);
@@ -134,25 +142,50 @@ export const Post = (props) => {
 
 
   //Khaled: Handle save button click
-  const handleSaveClick = async (postId) => {
-    try {
-      // Call the backend API to save the post
-      const response = await fetch(`${API_URL}/api/user/savePost`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ postId }), // Send the post ID in the request body
-      });
-
-      if (response.ok) {
-        console.log('Post saved!');
-        // update UI here to indicate that saved
-      } else {
-        console.error('Failed to save post:', response.status);
+  const handleSaveClick = async () => {
+    if(!isSaved){
+      try {
+        // Call the backend API to save the post
+        const response = await fetch(`${API_URL}/api/user/savePost`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userId: currentUser._id, postId: postId}), // Send the user and post ID in the request body
+        });
+        const result = await response.json();
+        if (response.ok) {
+          console.log('Post saved!');
+          userDetailRefresh(userId);
+        } else {
+          console.error('Failed to save post:', response.status);
+        }
+        openSnackbar(result.message, result.success ? "success" : "error");
+      } catch (error) {
+        console.error('Error saving post:', error);
       }
-    } catch (error) {
-      console.error('Error saving post:', error);
+    } else {
+      try {
+        // Call the backend API to unsave the post
+        const response = await fetch(`${API_URL}/api/user/unsavePost`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ userId: currentUser._id, postId: postId}), // Send the user and post ID in the request body
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+          console.log('Post unsaved!');
+          userDetailRefresh(userId);
+        } else {
+          console.error('Failed to unsave post:', response.status);
+        }
+        openSnackbar(result.message, result.success ? "success" : "error");
+      } catch (error) {
+        console.error('Error unsaving post:', error);
+      }
     }
   };
 
@@ -177,7 +210,12 @@ export const Post = (props) => {
 
   return (
     <Grid container spacing={2} style={{ padding: "1em", marginTop: "15px" }}>
-      <Grid item sm={12} style={{ backgroundColor: "#F9F9F9", padding: "3em" }}>
+      <Grid item sm={12} 
+        style={{ 
+          backgroundColor: theme.palette.mode === 'light' ? theme.palette.background.dark : theme.palette.grey[900], 
+          padding: "3em" 
+        }}
+      >
         <Grid container spacing={2}>
           <Grid item sm={11} xs={11}>
             <Typography variant="h4" gutterBottom>
@@ -200,13 +238,12 @@ export const Post = (props) => {
                 height: "100%",
               }}
             >
-              <IconButton onClick={handleSaveClick} size="large" color="secondary" href="">
-                <BookmarkBorderIcon />
+              <IconButton onClick={handleSaveClick} size="large" color="secondary">
+                { isSaved ? <BookmarkIcon /> : <BookmarkBorderIcon />}
               </IconButton>
               <IconButton
                 size="large"
                 color="secondary"
-                href=""
                 onClick={() => handleLike(postTitle)}
               >
                 <ArrowUpwardIcon />
@@ -217,7 +254,6 @@ export const Post = (props) => {
               <IconButton
                 size="large"
                 color="secondary"
-                href=""
                 onClick={() => handleDisLike(postTitle)}
               >
                 <ArrowDownwardIcon />

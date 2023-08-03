@@ -1,8 +1,9 @@
-// Authors: Shiwen(Lareina), Vrund Patel
+// Authors: Shiwen(Lareina), Vrund Patel, Khaled Al-Mahbashi
 
 const express = require("express");
 const User = require("../models/user");
 const Course = require("../models/course");
+const Post = require("../models/post");
 const router = express.Router();
 
 // Lareina: PUT call to follow course
@@ -82,62 +83,108 @@ router.put("/unfollow", async (req, res) => {
 });
 
 // Khaled: add saved post
-router.post('/savePost', async (req, res) =>{
+router.put('/savePost', async (req, res) =>{
+  
   const body = req.body;
-  const { postId } = req.body;
-  const userId = body;
+  const { userId, postId } = body;
 
   try {
-    if (!userId) {
-      return res.status(404).json({ success: false, data: "Incorrect Request!" });
+    if (!userId || !postId) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Incorrect Request!" });
     }
 
     const user = await User.findById(userId);
+    const post = await Post.findById(postId);
 
-    if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
+    if (!post || !user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User or Post not found" });
+    }
+    
+    // Check if the user has already added the post
+    if (user.savedPosts.includes(postId)) {
+      return res
+        .status(409)
+        .json({ success: false, message: "User has already saved the post" });
     }
 
-    // Add postID to the savedPosts array
-    User.savedPosts.push(postId);
-    User.save()
-    .then(() =>{
-      return res.status(200).json({ message: 'Post saved successfully' });
-    })
-    .catch((err) =>{
-      return res.status(400).json({ message: 'Failed to save post' + err });
-    })
-  } catch (error) {
-    res.status(500).json({ message: "Internal server error!" } + error);
-  }
+    // Update the user's savedPosts array with the post ID
+    user.savedPosts.push(postId);
+    await user.save();
 
+    res.json({ success: true, message: "Post saved successfully" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal server error!" });
+  }
+})
+
+// Khaled: remove saved post
+router.put('/unsavePost', async (req, res) =>{
+  
+  const body = req.body;
+  const { userId, postId } = body;
+
+  try {
+    if (!userId || !postId) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Incorrect Request!" });
+    }
+
+    const user = await User.findById(userId);
+    const post = await Post.findById(postId);
+    const savedPosts = user.savedPosts;
+
+
+    if (!post || !user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User or Post not found" });
+    }
     
+    // Check if the user has not saved the post
+    if (!savedPosts.includes(postId)) {
+      return res
+        .status(409)
+        .json({ success: false, message: "Post is not saved" });
+    }
+
+    const index = savedPosts.indexOf(postId);
+    if (index !== -1) {
+      savedPosts.splice(index, 1);
+    } 
+    await user.save();  
+
+    res.json({ success: true, message: "Post unsaved successfully", data: savedPosts });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal server error!" });
+  }
 })
 
 // Khaled: Get saved posts
-router.get('/savedPosts', async (req, res) =>{
-  const body = req.body;
-
-  const userId = body;
+router.get('/savedPosts/:id', async (req, res) =>{
+  const userId = req.params.id;
 
   try {
-    if (!userId) {
-      return res.status(404).json({ success: false, data: "Incorrect Request!" });
-    }
-
-    const user = await User.findById(userId);
-
-    if (!user) {
-      return res.status(404).json({ success: false, message: "User not found" });
-    }
-
-    // Display saved posts
-    return res.status(200).json(user.savedPosts);
-  } catch (error) {
-    res.status(500).json({ message: "Internal server error!" + error});
+      if(!userId) {
+          return res.status(404).json({success: false, data: "Incorrect Request!"});
+      }
+  } catch(err) {
+      return res.status(500).json({message: "Internal server error!"});
   }
 
+  try { 
+    User.findById(userId)
+      .then((user) => res.status(200).json({ savedPosts: user.savedPosts }))
+      .catch((err) => res.status(500).json({ success: false, error: 'Error fetching saved posts' }));
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Failed to user by Id" });
+  }
 })
+ 
 //Author: Vrund Patel
 //adding user's details to the database (user's registration)
 router.post('/x', async(req, res) => {

@@ -106,6 +106,7 @@ export const CreateComment = () => {
                 {filteredPost.map((post) => (
                     <Post
                         key={post._id}
+                        postId={post._id}
                         postTitle={post.postTitle}
                         postDate={post.timeCreated}
                         postAuthor={post.postAuthor}
@@ -170,11 +171,11 @@ export const CreateComment = () => {
                         width: '100%',
                     }}
                 >
-                    <Button onClick={handleSubmit} variant="contained">
-                        Submit Comment
-                    </Button>
                     <Button onClick={handleshowPost} variant="contained">
-                        Cancel Comment
+                        Cancel
+                    </Button>
+                    <Button onClick={handleSubmit} variant="contained">
+                        Submit
                     </Button>
                 </div>
             </Container>
