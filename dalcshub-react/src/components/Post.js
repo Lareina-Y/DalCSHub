@@ -160,7 +160,7 @@ export const Post = (props) => {
           console.error('Failed to save post:', response.status);
         }
         
-        openSnackbar(result.message, result.success ? "success" : "error");
+        openSnackbar(response.message, response.success ? "success" : "error");
 
       } catch (error) {
         console.error('Error saving post:', error);
