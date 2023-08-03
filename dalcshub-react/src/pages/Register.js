@@ -19,6 +19,8 @@ export const Register = () => {
     confirmPassword: ''
   });
 
+  const [errors, setError] = useState({});
+
   const handleChange = (e) => {
     let name = e.target.name;
     let value = e.target.value;
@@ -36,15 +38,15 @@ export const Register = () => {
     const errors = validate();
     setError(errors);
 
-    console.log(errors);
-    console.log(Object.values(errors)[4].length);
+    console.log("errors: ", errors);
 
     if (
       Object.values(errors)[0].length === 0 &&
       Object.values(errors)[1].length === 0 &&
       Object.values(errors)[2].length === 0 &&
       Object.values(errors)[3].length === 0 &&
-      Object.values(errors)[4].length === 0
+      Object.values(errors)[4].length === 0 &&
+      Object.values(errors)[5].length === 0 
     ) {
       //const addToDatabase = registerUser()
       registerUser();
@@ -59,8 +61,6 @@ export const Register = () => {
       });
     }
   };
-
-  const [errors, setError] = useState({});
 
   const validate = () => {
     const error = {};
@@ -150,7 +150,7 @@ export const Register = () => {
         navigate("/login");
         console.log("Invalid user's registration");
       } else {
-        console.log('User registration Completed');
+        console.log('User registration unsuccessfully');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -197,7 +197,7 @@ export const Register = () => {
                   <Select
                     className="form-control"
                     name="type"
-                    value={input.accountType}
+                    value={input.type === '' ? 'Select' : input.type}
                     onChange={handleChange}
                     defaultValue={'Select'}
                     size="small"
