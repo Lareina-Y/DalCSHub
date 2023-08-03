@@ -170,7 +170,7 @@ export const Post = (props) => {
       }
     } else {
       try {
-        // Call the backend API to save the post
+        // Call the backend API to unsave the post
         const response = await fetch(`${API_URL}/api/user/unsavePost`, {
           method: 'PUT',
           headers: {
