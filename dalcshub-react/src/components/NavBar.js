@@ -45,7 +45,7 @@ export const NavBar = () => {
   const location = useLocation();
 
   const { mode, toggleMode } = useMode();
-  const { user: currentUser } = useUser();
+  const { user: currentUser, removeUser} = useUser();
   const { firstName, lastName } = currentUser;
 
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -76,7 +76,8 @@ export const NavBar = () => {
   const logoutOnClick = () => {
     localStorage.setItem("currentUser", null);
     setAnchorElUser(null);
-    navigate("/login");
+    removeUser();
+    navigate("/");
   }
 
   return (
