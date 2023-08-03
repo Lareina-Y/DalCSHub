@@ -130,7 +130,7 @@ export const CourseDetail = () => {
             <b>Number:</b> {course.subject} {course.number}
           </Typography>
           <Typography variant="body1" gutterBottom>
-            <b>Credit Hours:</b> {course.subject} {course.credit_hours}
+            <b>Credit Hours: </b>{course.credit_hours}
           </Typography>
           <Typography variant="body1" gutterBottom>
             <b>Flags:</b>
