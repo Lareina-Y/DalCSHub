@@ -137,7 +137,7 @@ export const MainFeed = () => {
                 postDescription={post.postDescription}
                 postRating={post.postRating}
               >
-                <Button variant="outlined" onClick={() => navigate(`/comment/:${post._id}`)}>
+                <Button variant="outlined" onClick={() => navigate(`/comment/${post._id}`)}>
                   Details
                 </Button>
               </Post>
