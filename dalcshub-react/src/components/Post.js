@@ -1,4 +1,4 @@
-//Author: Kent Chew
+//Authors: Kent Chew, Khaled, Meet Kumar Patel
 import { Grid, Divider, IconButton, Typography } from "@mui/material";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -9,7 +9,6 @@ import { API_URL } from "../utils";
 import { useState, useEffect } from "react";
 import { useTheme } from "@mui/material/styles";
 import { format } from 'date-fns';
-
 
 export const Post = (props) => {
   const theme = useTheme();
@@ -30,7 +29,6 @@ export const Post = (props) => {
     return likedByArray.includes(currentUser._id);
   };
 
-
   // Author : Meet Kumar Patel : liking and disliking of a post
   const handleLike = async (title) => {
     await getLatest();
@@ -42,18 +40,18 @@ export const Post = (props) => {
       isLiked = checkIsLiked(updatedLikedBy);
 
       if (!isLiked) {
-        updatedLikedBy.push(currentUser._id);
+        updatedLikedBy.push(userId);
         requiredPost[0].likedBy = updatedLikedBy;
       } else {
         
-        const index = updatedLikedBy.indexOf(currentUser._id);
+        const index = updatedLikedBy.indexOf(userId);
         if (index !== -1) {
           updatedLikedBy.splice(index, 1);
           requiredPost[0].likedBy = updatedLikedBy;
         }
       }
 
-      console.log(currentUser._id);
+      console.log(userId);
       console.log(requiredPost[0]._id);
       var alreadyLiked = '';
       try {
@@ -63,7 +61,7 @@ export const Post = (props) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            userId: currentUser._id,
+            userId: userId,
             postId: requiredPost[0]._id,
           }),
         });
@@ -106,7 +104,7 @@ export const Post = (props) => {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
-                userId: currentUser._id,
+                userId: userId,
                 postId: requiredPost[0]._id,
               }),
             });
@@ -144,10 +142,7 @@ export const Post = (props) => {
           } catch (error) {
             console.error('Error:', error);
           }
-
-          
         }
-
       } catch (error) {
         console.error('Error:', error);
       }
@@ -155,7 +150,6 @@ export const Post = (props) => {
   };
 
   //Khaled: Handle save button click
-
   const handleSaveClick = async () => {
     if (!isSaved) {
       try {
@@ -165,7 +159,7 @@ export const Post = (props) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ userId: currentUser._id, postId: postId }), // Send the user and post ID in the request body
+          body: JSON.stringify({ userId: userId, postId: postId }), // Send the user and post ID in the request body
         });
         const result = await response.json();
         if (response.ok) {
@@ -186,7 +180,7 @@ export const Post = (props) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ userId: currentUser._id, postId: postId }), // Send the user and post ID in the request body
+          body: JSON.stringify({ userId: userId, postId: postId }), // Send the user and post ID in the request body
         });
 
         const result = await response.json();
@@ -203,8 +197,6 @@ export const Post = (props) => {
     }
   };
 
-
-
   const getLatest = async () => {
     try {
       const response = await fetch(`${API_URL}/api/post`);
@@ -214,7 +206,7 @@ export const Post = (props) => {
         // Initialize the disableRating property for each post based on currentUser._id
         const updatedPosts = result.data.map((post) => ({
           ...post,
-          disableHeart: post.likedBy.includes(currentUser._id),
+          disableHeart: post.likedBy.includes(userId),
         }));
         setPosts(updatedPosts);
       } else {
@@ -227,7 +219,7 @@ export const Post = (props) => {
 
   useEffect(() => {
     getLatest();
-  }, []);
+  });
 
   return (
     <Grid container spacing={2} style={{ padding: "1em", marginTop: "15px" }}>
@@ -274,7 +266,6 @@ export const Post = (props) => {
               </Typography>
               {children}
             </div >
-
           </Grid>
         </Grid >
       </Grid >
