@@ -1,7 +1,7 @@
-//Author: Kent Chew
+//Authors: Kent Chew, Khaled, Meet Kumar Patel
 import { Grid, Divider, IconButton, Typography } from "@mui/material";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { useUser, useSnackbar } from '../providers';
@@ -13,9 +13,8 @@ import { format } from 'date-fns';
 export const Post = (props) => {
   const theme = useTheme();
   const { openSnackbar } = useSnackbar();
-  
-  const {postId, postTitle, postAuthor, postDate, postDescription, postRating, children } = props;
-
+  const { postId, postTitle, postAuthor, postDate, postDescription, postRating, children } = props;
+  const [rating, setRating] = useState(postRating);
   const [posts, setPosts] = useState([]);
 
   // convert postDate to just show MMM dd, y HH:mm as string
@@ -25,11 +24,12 @@ export const Post = (props) => {
   const { _id: userId, savedPosts: savedPostIds } = currentUser;
   const isSaved = savedPostIds.includes(postId);
 
+  const disableHeart = posts.find((post) => post.postTitle === postTitle)?.disableHeart || false;
   const checkIsLiked = (likedByArray) => {
     return likedByArray.includes(currentUser._id);
   };
 
-  // Author : Meet Kumar Patel
+  // Author : Meet Kumar Patel : liking and disliking of a post
   const handleLike = async (title) => {
     await getLatest();
     let requiredPost = posts.filter((post) => post.postTitle === title);
@@ -40,12 +40,20 @@ export const Post = (props) => {
       isLiked = checkIsLiked(updatedLikedBy);
 
       if (!isLiked) {
-        updatedLikedBy.push(currentUser._id);
-        requiredPost.likedBy = updatedLikedBy;
+        updatedLikedBy.push(userId);
+        requiredPost[0].likedBy = updatedLikedBy;
+      } else {
+        
+        const index = updatedLikedBy.indexOf(userId);
+        if (index !== -1) {
+          updatedLikedBy.splice(index, 1);
+          requiredPost[0].likedBy = updatedLikedBy;
+        }
       }
 
-      console.log(currentUser._id)
-      console.log(requiredPost[0]._id)
+      console.log(userId);
+      console.log(requiredPost[0]._id);
+      var alreadyLiked = '';
       try {
         const res = await fetch(`${API_URL}/api/post/updateLikedBy`, {
           method: 'POST',
@@ -53,97 +61,97 @@ export const Post = (props) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            userId: currentUser._id,
+            userId: userId,
             postId: requiredPost[0]._id,
           }),
         });
 
-        const data = await res.json();
-        console.log(data);
+        alreadyLiked = await res.json();
+
+        if (alreadyLiked.message !== 'User has already liked the post') {
+          setRating(Math.max(0, parseInt(rating, 10) + 1));
+          try {
+            const res = await fetch(`${API_URL}/api/post/updatePostRating`, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                rating: Math.max(0, parseInt(rating, 10) + 1),
+                postId: requiredPost[0]._id,
+              }),
+            });
+
+            const data = await res.json();
+            console.log(data)
+
+            const updatedPosts = posts.map((post) => {
+              if (post.postTitle === title) {
+                return { ...post, disableHeart: true };
+              }
+              return post;
+            });
+
+            setPosts(updatedPosts);
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        } else {
+          try {
+            const res = await fetch(`${API_URL}/api/post/removeLikedBy`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                userId: userId,
+                postId: requiredPost[0]._id,
+              }),
+            });
+
+            const data = await res.json();
+            console.log(data);
+          } catch (error) {
+            console.error('Error:', error);
+          }
+
+          try {
+            setRating(Math.max(0, parseInt(rating, 10) - 1))
+            const res = await fetch(`${API_URL}/api/post/updatePostRating`, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                rating: Math.max(0, parseInt(rating, 10) - 1),
+                postId: requiredPost[0]._id,
+              }),
+            });
+
+            const data = await res.json();
+            console.log(data)
+
+            const updatedPosts = posts.map((post) => {
+              if (post.postTitle === title) {
+                return { ...post, disableHeart: false };
+              }
+              return post;
+            });
+
+            setPosts(updatedPosts);
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        }
       } catch (error) {
         console.error('Error:', error);
       }
-
-
-      try {
-        const res = await fetch(`${API_URL}/api/post/updatePostRating`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            rating: parseInt(postRating, 10) + 1,
-            postId: requiredPost[0]._id,
-          }),
-        });
-
-        const data = await res.json();
-        console.log(data);
-      } catch (error) {
-        console.error('Error:', error);
-      }
-
     }
-    
-
   };
-
-  // Author : Meet Kumar Patel
-  const handleDisLike = async (title) => {
-
-    await getLatest();
-
-    let requiredPost = posts.filter((post) => post.postTitle === title);
-
-    if (requiredPost.length > 0) {
-      const updatedLikedBy = [...requiredPost[0].likedBy];
-      const isLiked = checkIsLiked(updatedLikedBy);
-
-      if (isLiked) {
-        try {
-          const res = await fetch(`${API_URL}/api/post/removeLikedBy`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              userId: currentUser._id,
-              postId: requiredPost[0]._id,
-            }),
-          });
-
-          const data = await res.json();
-          console.log(data);
-        } catch (error) {
-          console.error('Error:', error);
-        }
-
-        try {
-          const res = await fetch(`${API_URL}/api/post/updatePostRating`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              rating: parseInt(postRating, 10) - 1,
-              postId: requiredPost[0]._id,
-            }),
-          });
-
-          const data = await res.json();
-          console.log(data);
-        } catch (error) {
-          console.error('Error:', error);
-        }
-
-      }
-    };
-  }
-
 
   //Khaled: Handle save button click
   const handleSaveClick = async () => {
-    if(!isSaved){
+    if (!isSaved) {
       try {
         // Call the backend API to save the post
         const response = await fetch(`${API_URL}/api/user/savePost`, {
@@ -151,7 +159,7 @@ export const Post = (props) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ userId: currentUser._id, postId: postId}), // Send the user and post ID in the request body
+          body: JSON.stringify({ userId: userId, postId: postId }), // Send the user and post ID in the request body
         });
         const result = await response.json();
         if (response.ok) {
@@ -172,7 +180,7 @@ export const Post = (props) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ userId: currentUser._id, postId: postId}), // Send the user and post ID in the request body
+          body: JSON.stringify({ userId: userId, postId: postId }), // Send the user and post ID in the request body
         });
 
         const result = await response.json();
@@ -189,13 +197,18 @@ export const Post = (props) => {
     }
   };
 
-
   const getLatest = async () => {
     try {
       const response = await fetch(`${API_URL}/api/post`);
       if (response.status === 200) {
         const result = await response.json();
-        setPosts(result.data);
+
+        // Initialize the disableRating property for each post based on currentUser._id
+        const updatedPosts = result.data.map((post) => ({
+          ...post,
+          disableHeart: post.likedBy.includes(userId),
+        }));
+        setPosts(updatedPosts);
       } else {
         console.error("Failed");
       }
@@ -206,14 +219,14 @@ export const Post = (props) => {
 
   useEffect(() => {
     getLatest();
-  }, []);
+  });
 
   return (
     <Grid container spacing={2} style={{ padding: "1em", marginTop: "15px" }}>
-      <Grid item sm={12} 
-        style={{ 
-          backgroundColor: theme.palette.mode === 'light' ? theme.palette.background.dark : theme.palette.grey[900], 
-          padding: "3em" 
+      <Grid item sm={12}
+        style={{
+          backgroundColor: theme.palette.mode === 'light' ? theme.palette.background.dark : theme.palette.grey[900],
+          padding: "3em"
         }}
       >
         <Grid container spacing={2}>
@@ -239,28 +252,20 @@ export const Post = (props) => {
               }}
             >
               <IconButton onClick={handleSaveClick} size="large" color="secondary">
-                { isSaved ? <BookmarkIcon /> : <BookmarkBorderIcon />}
+                {isSaved ? <BookmarkIcon /> : <BookmarkBorderIcon />}
               </IconButton>
               <IconButton
                 size="large"
                 color="secondary"
                 onClick={() => handleLike(postTitle)}
               >
-                <ArrowUpwardIcon />
-              </IconButton >
-              <Typography variant="h6" gutterBottom>
-                {postRating}
-              </Typography>
-              <IconButton
-                size="large"
-                color="secondary"
-                onClick={() => handleDisLike(postTitle)}
-              >
-                <ArrowDownwardIcon />
+                {disableHeart ? <FavoriteIcon /> : <FavoriteBorderIcon />}
               </IconButton>
+              <Typography variant="h6" gutterBottom>
+                {rating}
+              </Typography>
               {children}
             </div >
-
           </Grid>
         </Grid >
       </Grid >
