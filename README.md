@@ -6,7 +6,7 @@
 DalCSHub is a platform for students, instructors, and alumni to come together and share their learning experiences with one another. The platform is written in ReactJS framework along with the MaterialUI library.
 
 - _Date Created_: 22 May 2023
-- _Last Modification Date_: 26 July 2023
+- _Last Modification Date_: 11 Aug 2023
 - _Host URL_: <https://csci4177-dalcshub.netlify.app/>
 - _API Host URL_: <https://csci4177-dalcshub-api.onrender.com/>
 - _Group Repository_: <https://git.cs.dal.ca/chew/4177-group-22>
@@ -34,17 +34,18 @@ Please follow the following instructions to start the application locally:
 ### React Application
 
 1. Open a command line interface and navigate to the _dalcshub-react_ directory.
-2. Create a .evn file: 
+2. Create a .evn file:
+
 ```dotenv
 REACT_APP_API_URL=https://csci4177-dalcshub-api.onrender.com
 # REACT_APP_API_URL=http://localhost:8080
 ```
+
 3. Run "npm install" to ensure that npm is up to date.
 4. Run "npm start" to start the React application.
 5. Access the application via http://localhost:3000 (default address, may differ for different setups).
 
 Alternatively, you can access the application via its live deployment link listed at the top of this document.
-
 
 ## Assets
 
