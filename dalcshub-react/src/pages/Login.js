@@ -90,7 +90,7 @@ export const Login = () => {
         
         navigate("/main");
       } else {
-        console.log("console.log(response.status);", response.status);
+        console.log("response.status: ", response.status);
       }
       openSnackbar(result.message, result.success? "success" : "error");
     } catch (e) {

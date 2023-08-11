@@ -69,7 +69,7 @@ export const Post = (props) => {
         if (alreadyLiked.message !== 'User has already liked the post') {
           setRating(Math.max(0, parseInt(rating, 10) + 1));
           try {
-            const res = await fetch(`${API_URL}/api/post/updatePostRating`, {
+            await fetch(`${API_URL}/api/post/updatePostRating`, {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
@@ -79,8 +79,6 @@ export const Post = (props) => {
                 postId: requiredPost[0]._id,
               }),
             });
-
-            const data = await res.json();
 
             const updatedPosts = posts.map((post) => {
               if (post.postTitle === title) {

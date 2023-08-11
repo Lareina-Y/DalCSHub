@@ -19,17 +19,13 @@ export const CreatePost = () => {
 
   const { openSnackbar } = useSnackbar();
   const { user: currentUser} = useUser();
-  const { _id: userId } = currentUser;
+  const { firstName, lastName } = currentUser;
 
   const { courseNumber } = useParams();
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [course, setCourse] = useState({});
   const navigate = useNavigate();
-
-  // extract user from local storage for author details
-  // TODO: determine if this is the best way to get author details, given the GuardedRoute in place
-  const userFromStorage = JSON.parse(localStorage.getItem("currentUser"));
 
   // get and identify course to display based on course number
   const getCourseDetails = async (courseNumber) => {
@@ -66,7 +62,7 @@ export const CreatePost = () => {
         body: JSON.stringify({
           title: title,
           message: message,
-          author: userFromStorage.firstName + " " + userFromStorage.lastName,
+          author: firstName + " " + lastName,
           date: new Date().toLocaleString(),
           courseId: course.number,
         }),
