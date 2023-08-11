@@ -7,19 +7,20 @@ import {
 } from '@mui/material';
 import { API_URL } from "../utils";
 import { useState, useEffect } from "react";
-import { useParams , useNavigate} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Post, Comment } from "../components";
+import { useUser } from "../providers";
 
 export const CreateComment = () => {
     const { post_id } = useParams();
+
+    const { user: currentUser} = useUser();
+    const { firstName, lastName } = currentUser;
+
     const [posts, setPosts] = useState([]);
     const [previousComments, setpreviousComments] = useState([]);
     const [showPost, setshowPost] = useState(true);
-    const navigate = useNavigate();
-
-    // extract user from local storage for author details
-    // TODO: determine if this is the best way to get author details, given the GuardedRoute in place
-    const userFromStorage = JSON.parse(localStorage.getItem("currentUser"));
+   
     const getPosts = async () => {
         try {
             const response = await fetch(`${API_URL}/api/post`);
@@ -52,12 +53,11 @@ export const CreateComment = () => {
     useEffect(() => {
         getPosts();
         fetchComments();
-    }, []);
+    }, [showPost]);
 
-    const formattedPostId = post_id.replace(':', '');
-    const filteredPost = posts.filter((post) => post._id === formattedPostId);
+    const filteredPost = posts.filter((post) => post._id === post_id);
 
-    const filteredPreviousPost = previousComments.filter((previousComments) => previousComments.replied_post_id === formattedPostId);
+    const filteredPreviousPost = previousComments.filter((previousComments) => previousComments.replied_post_id === post_id);
 
     const [content, setContent] = useState('');
 
@@ -66,8 +66,7 @@ export const CreateComment = () => {
     };
 
     const handleshowPost = () => {
-        let result = !showPost;
-        setshowPost(result);
+        setshowPost(true);
     };
 
 
@@ -81,10 +80,10 @@ export const CreateComment = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    replied_post_id: formattedPostId,
+                    replied_post_id: post_id,
                     commentDescription: content,
-                    author_name:userFromStorage.firstName + " " + userFromStorage.lastName, 
-                    date: new Date().toISOString().slice(0, 10),
+                    author_name: firstName + " " + lastName, 
+                    date: new Date().toLocaleString(),
                 }),
             });
 
@@ -92,7 +91,7 @@ export const CreateComment = () => {
             console.log("Successfully created post: ", data);
 
             setContent("");
-            navigate(-1)
+            setshowPost(true);
 
         } catch (error) {
             console.error("Error creating post:", error);
@@ -112,7 +111,7 @@ export const CreateComment = () => {
                         postDescription={post.postDescription}
                         postRating={post.postRating}
                     >
-                        <Button variant="contained" onClick={() => handleshowPost()}>
+                        <Button variant="contained" onClick={() => setshowPost(false)}>
                             Reply
                         </Button>
                     </Post>
