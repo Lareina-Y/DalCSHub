@@ -39,8 +39,6 @@ export const CreatePost = () => {
       if (response.status === 200) {
         const result = await response.json();
         setCourse(result.data);
-        console.log("Course details: ", result);
-        console.log("User: ", userId);
       } else {
         console.error("Failed");
       }

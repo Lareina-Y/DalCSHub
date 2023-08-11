@@ -22,11 +22,6 @@ router.get("/fetch", async (req, res) => {
 router.post("/addComment", async (req, res) => {
   try {
     const { replied_post_id, author_name, date, commentDescription} = req.body;
-    console.log("title: ", replied_post_id);
-    console.log("message: ", author_name);
-    console.log("author: ", commentDescription);
-    console.log("date: ", date);
-    
 
     if (!replied_post_id || !author_name || !commentDescription || !date ) {
  

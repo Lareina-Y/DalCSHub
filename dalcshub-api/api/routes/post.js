@@ -77,10 +77,7 @@ router.post("/add", async (req, res) => {
     if (!title || !message || !author || !date || !courseId) {
       return res.status(400).json({ success: false, message: "Incorrect request" });
     }
-    console.log("title: ", title);
-    console.log("message: ", message);
-    console.log("author: ", author);
-    console.log("date: ", date);
+
     const newPost = await Post.create({
       postTitle: title,
       postDescription: message,
@@ -108,7 +105,6 @@ router.post("/updateLikedBy", async (req, res) => {
     }
 
     const user = await User.findById(userId);
-    console.log(user)
 
     if (!user) {
       return res
@@ -117,7 +113,6 @@ router.post("/updateLikedBy", async (req, res) => {
     }
 
     const post = await Post.findById(postId);
-    console.log(post)
     if (!post) {
       return res
         .status(404)
@@ -160,7 +155,6 @@ router.put("/updatePostRating", async (req, res) => {
         .status(404)
         .json({ success: false, message: "Post not found" });
     }
-    console.log("post.likedBy")
   
     post.postRating = (rating);
 
@@ -185,7 +179,6 @@ router.post("/removeLikedBy", async (req, res) => {
     }
 
     const user = await User.findById(userId);
-    console.log(user)
 
     if (!user) {
       return res
@@ -194,7 +187,7 @@ router.post("/removeLikedBy", async (req, res) => {
     }
 
     const post = await Post.findById(postId);
-    console.log(post)
+
     if (!post) {
       return res
         .status(404)
