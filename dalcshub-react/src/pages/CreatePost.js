@@ -31,7 +31,6 @@ export const CreatePost = () => {
   const getCourseDetails = async (courseNumber) => {
     try {
       const response = await fetch(`${API_URL}/api/course/${courseNumber}`);
-      console.log(response.status);
       if (response.status === 200) {
         const result = await response.json();
         setCourse(result.data);
@@ -90,7 +89,7 @@ export const CreatePost = () => {
 
   useEffect(() => {
     getCourseDetails(courseNumber);
-  });
+  }, [courseNumber]);
 
   return (
     <Page>

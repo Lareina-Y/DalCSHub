@@ -1,9 +1,21 @@
 //Author:
+import { useState } from 'react';
 import MailImg from "../assets/images/mail-img.png";
 import { Page, PageTitle } from "../components";
 import { Box, Button, Typography, TextField } from "@mui/material";
 
 export const Contact = () => {
+
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleOnSubmit = (event) => {
+    event.preventDefault();
+    console.log("Send us message.");
+    setEmail('');
+    setMessage('');
+  }
+
   return (
     <Page>
       <PageTitle title={"Contact DalCSHub"} link={"/contact"} center />
@@ -19,8 +31,8 @@ export const Contact = () => {
           Have a Question? We are here to help!
         </Typography>
       </Box>
-      <div class="contactbox">
-        <form class="contact1" style={{ padding: "3%" }}>
+      <div className="contactbox">
+        <form className="contact1" style={{ padding: "3%" }} onSubmit={handleOnSubmit}>
           <div style={{ padding: "3%", height: "350px" }}>
             <Box
               sx={{
@@ -37,15 +49,19 @@ export const Contact = () => {
               label="Email"
               variant="outlined"
               required
+              value={email}
               type="email"
+              onChange={(event) => setEmail(event.target.value)}
               fullWidth
             />        
             <TextField
               label="Enter your message here..."
               multiline
               rows={4}
+              value={message}
               variant="outlined"
               required
+              onChange={(event) => setMessage(event.target.value)}
               fullWidth
             />
           </div>
@@ -57,7 +73,7 @@ export const Contact = () => {
           </Box>
         </form>
 
-        <div class="contact2" style={{ padding: "3%" }}>
+        <div className="contact2" style={{ padding: "3%" }}>
           <div style={{ padding: "3%", height: "350px" }}>
             <Box
               sx={{
