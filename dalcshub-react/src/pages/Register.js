@@ -33,12 +33,9 @@ export const Register = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(input);
 
     const errors = validate();
     setError(errors);
-
-    console.log("errors: ", errors);
 
     if (
       Object.values(errors)[0].length === 0 &&

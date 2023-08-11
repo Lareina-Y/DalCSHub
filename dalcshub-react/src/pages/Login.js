@@ -82,7 +82,6 @@ export const Login = () => {
       const result = await response.json();
 
       if (response.ok) {
-        console.log("user: ", result.data)
         setUser(result.data);
 
         // TODO: Store the "token" instead

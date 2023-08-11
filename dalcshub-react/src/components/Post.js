@@ -51,8 +51,6 @@ export const Post = (props) => {
         }
       }
 
-      console.log(userId);
-      console.log(requiredPost[0]._id);
       var alreadyLiked = '';
       try {
         const res = await fetch(`${API_URL}/api/post/updateLikedBy`, {
@@ -83,7 +81,6 @@ export const Post = (props) => {
             });
 
             const data = await res.json();
-            console.log(data)
 
             const updatedPosts = posts.map((post) => {
               if (post.postTitle === title) {

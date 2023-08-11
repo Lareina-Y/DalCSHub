@@ -30,11 +30,9 @@ export const CourseDetail = () => {
     try {
       const response = await fetch(`${API_URL}/api/course/${courseNumber}`);
 
-      console.log(response.status);
       if (response.status === 200) {
         const result = await response.json();
         setCourse(result.data);
-        console.log("Course details: ", result);
       } else {
         console.error("Failed");
       }
@@ -51,7 +49,6 @@ export const CourseDetail = () => {
       if (response.status === 200) {
         const result = await response.json();
         setPosts(result.data);
-        console.log("Posts:", result);
       } else {
         console.error("Failed");
       }
@@ -70,7 +67,6 @@ export const CourseDetail = () => {
   }, [courseNumber]);
 
   const handlePostClick = (post_id) => {
-    console.log(post_id);
     navigate(`/comment/${post_id}`);
   };
 
