@@ -26,7 +26,6 @@ export const CreateComment = () => {
             if (response.status === 200) {
                 const result = await response.json();
                 setPosts(result.data);
-                console.log("Posts:", result);
             } else {
                 console.error("Failed");
             }
