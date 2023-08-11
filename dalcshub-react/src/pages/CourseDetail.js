@@ -147,12 +147,6 @@ export const CourseDetail = () => {
               />
             ))}
           </Stack>
-          {/* <Typography variant="body1" gutterBottom>
-            <b>Offering:</b> Fall/Winter/Summer
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            <b>Status:</b> Active - Summer 2023
-          </Typography> */}
         </Grid>
         <Grid item xs={12} sm={7} md={6}>
           <Typography variant="body1" gutterBottom>
