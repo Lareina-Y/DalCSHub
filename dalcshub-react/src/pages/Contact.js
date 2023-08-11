@@ -20,7 +20,7 @@ export const Contact = () => {
         </Typography>
       </Box>
       <div class="contactbox">
-        <div class="contact1" style={{ padding: "3%" }}>
+        <form class="contact1" style={{ padding: "3%" }}>
           <div style={{ padding: "3%", height: "350px" }}>
             <Box
               sx={{
@@ -37,6 +37,7 @@ export const Contact = () => {
               label="Email"
               variant="outlined"
               required
+              type="email"
               fullWidth
             />        
             <TextField
@@ -54,7 +55,7 @@ export const Contact = () => {
               Submit
             </Button>
           </Box>
-        </div>
+        </form>
 
         <div class="contact2" style={{ padding: "3%" }}>
           <div style={{ padding: "3%", height: "350px" }}>
