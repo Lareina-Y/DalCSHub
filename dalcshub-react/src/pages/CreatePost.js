@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Typography, useMediaQuery, TextField, Grid, Divider, Button } from "@mui/material";
+import { Typography, useMediaQuery, TextField, Grid, Divider, Button, Stack, Chip } from "@mui/material";
 import { Page } from "../components";
 import { API_URL } from "../utils";
 import { useTheme } from "@mui/material/styles";
@@ -128,15 +128,31 @@ export const CreatePost = () => {
 
       <Grid container spacing={2} style={{ padding: "1em", marginBottom: "15px" }}>
         <Grid item sm={3} xs={12}>
-          <Typography variant="body1" gutterBottom>
-            <b>Instructor:</b> Dr. Jane Doe
+        <Typography variant="body1" gutterBottom>
+            <b>Number:</b> {course.subject} {course.number}
           </Typography>
           <Typography variant="body1" gutterBottom>
-            <b>Offering:</b> Fall/Winter/Summer
+            <b>Credit Hours: </b>{course.credit_hours}
           </Typography>
           <Typography variant="body1" gutterBottom>
-            <b>Status:</b> Active - Summer 2023
+            <b>Flags:</b>
           </Typography>
+          <Stack
+            direction="column"
+            justifyContent="flex-start"
+            alignItems="flex-start"
+            spacing={1}
+          >
+            {course.flags?.map((flag) => (
+              <Chip
+                key={course.number + flag}
+                label={flag}
+                color="primary"
+                size="small"
+                variant="outlined"
+              />
+            ))}
+          </Stack>
         </Grid>
         <Grid item sm={9} xs={12}>
           <Typography variant="body1" gutterBottom>
