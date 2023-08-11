@@ -45,7 +45,7 @@ export const Register = () => {
       Object.values(errors)[4].length === 0 &&
       Object.values(errors)[5].length === 0 
     ) {
-      //const addToDatabase = registerUser()
+
       registerUser();
 
       setInput({
