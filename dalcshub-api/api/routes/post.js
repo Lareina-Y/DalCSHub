@@ -149,7 +149,6 @@ router.put("/updatePostRating", async (req, res) => {
     }
 
     const post = await Post.findById(postId);
-    console.log(post)
     if (!post) {
       return res
         .status(404)
